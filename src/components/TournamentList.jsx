@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import { motion } from 'framer-motion';
+
 
 const TournamentList = () => {
   const [selectedGender, setSelectedGender] = useState('Masculino');
@@ -57,7 +59,14 @@ const TournamentList = () => {
           style={{ textAlign: 'center' }}
         />
       </div>
-      <div className="flex justify-center mb-8 transition-all duration-1000 ease-in-out">
+      <motion.div
+        className="flex justify-center mb-8"
+        key={showAll ? 'table' : 'carousel'}
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 50 }}
+        transition={{ duration: 0.7 }}
+      >
         <div className="w-full max-w-4xl">
           {showAll ? (
             <div className="grid grid-cols-2 gap-4">
@@ -103,7 +112,7 @@ const TournamentList = () => {
             </Slider>
           )}
         </div>
-      </div>
+      </motion.div>
       <div className="flex justify-center mb-8">
         <button onClick={toggleShowAll} className="mb-4 px-5 py-2 bg-gray-300 text-black rounded-full focus:outline-none">
           {showAll ? '⬆️' : '⬇️'}
@@ -114,6 +123,6 @@ const TournamentList = () => {
       </div>
     </section>
   );
-}
+};
 
 export default TournamentList;

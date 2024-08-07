@@ -1,7 +1,7 @@
 const ContactSection = () => {
   return (
-    <section id="contacto" className="p-8 bg-pblue text-white text-center">
-      <h2 className="text-4xl font-semibold mb-4">¡No dudes en escribirnos!</h2>
+    <section id="contacto" className="p-8 bg-pblue text-white text-center font-daysone">
+      <h2 className="text-5xl mb-4">¡No dudes en escribirnos!</h2>
       <p className="text-m mb-4">
         Consultanos cual es la fecha del próximo torneo
       </p>

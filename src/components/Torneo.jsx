@@ -8,12 +8,15 @@ const Torneo = () => {
 
   useEffect(() => {
     // Sincroniza el estado con la URL cuando el componente se monta
+    let cur = window.location.href.split("/")[window.location.href.split("/").length-1]
+    if(cur == "playoff")
+      setSelectedOption("PlayOff")
     if (option === 'qualify') {
       setSelectedOption('Qualify');
     } else if (option === 'playoff') {
       setSelectedOption('PlayOff');
     }
-  }, [option]);
+  }, [option, id, navigate]);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -23,7 +26,7 @@ const Torneo = () => {
   return (
     <section id="torneos" className="bg-white">
       <h2 className="text-5xl font-daysone font-normal text-center text-pblue mb-8">
-        Torneos
+        Torneo {id} - 2024
       </h2>
       <div className="flex justify-center">
         <div className="flex py-1 mb-8 space-x-4 font-daysone font-normal">
