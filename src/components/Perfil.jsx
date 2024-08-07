@@ -12,7 +12,7 @@ const Perfil = () => {
         <input
           type="text"
           placeholder="Buscar por Nombre/Id"
-          className="border rounded-full p-2 w-1/2 text-center placeholder-gray-500"
+          className="border rounded-full p-2 w-1/2 text-center placeholder-pgrey"
           onClick={(placeholder) => (placeholder.target.placeholder = "")} // Limpiar placeholder al hacer click
           onBlur={(placeholder) =>
             (placeholder.target.placeholder = "Buscar por Fecha/Lugar/Nombre")

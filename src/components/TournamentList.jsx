@@ -38,7 +38,7 @@ const TournamentList = () => {
             {['Masculino', 'Mixto', 'Femenino'].map(gender => (
               <button
                 key={gender}
-                className={`px-4 py-2 ${selectedGender === gender ? 'text-pblue border-blue-600' : 'text-gray-600 border-transparent'} hover:text-pblue focus:outline-none border-b-2`}
+                className={`px-4 py-2 ${selectedGender === gender ? 'text-pblue border-blue-600' : 'text-pgrey border-transparent'} hover:text-pblue focus:outline-none border-b-2`}
                 onClick={() => setSelectedGender(gender)}
               >
                 {gender}
@@ -51,7 +51,7 @@ const TournamentList = () => {
         <input 
           type="text" 
           placeholder="Buscar por Fecha/Lugar/Nombre" 
-          className="border rounded-full p-2 w-1/2 text-center placeholder-gray-500"
+          className="border rounded-full p-2 w-1/2 text-center placeholder-pgrey"
           onClick={placeholder => placeholder.target.placeholder = ''} 
           onBlur={placeholder => placeholder.target.placeholder = 'Buscar por Fecha/Lugar/Nombre'} 
           style={{ textAlign: 'center' }}
@@ -65,7 +65,7 @@ const TournamentList = () => {
                 <div key={index} className="flex flex-col items-center text-center p-2 border rounded-lg transition-transform transform hover:scale-105">
                   <div className="flex flex-col items-center">
                     <button
-                      className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-gray-600 text-xl font-bold focus:outline-none"
+                      className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-pgrey text-xl font-bold focus:outline-none"
                       style={{ backgroundColor: 'lightgray' }}
                       onClick={() => handleTournamentClick(index)}
                     >
@@ -73,8 +73,8 @@ const TournamentList = () => {
                     </button>
                     <div className="text-center font-medium">
                       <span className="font-bold mb-1">Nombre torneo {index}</span><br/>
-                      <span className="text-gray-600 mb-1">Localidad</span><br/>
-                      <span className="text-gray-600">Categoría</span>
+                      <span className="text-pgrey mb-1">Localidad</span><br/>
+                      <span className="text-pgrey">Categoría</span>
                     </div>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ const TournamentList = () => {
                 <div key={index} className="flex flex-col items-center text-center p-2 transition-transform transform hover:scale-105">
                   <div className="flex flex-col items-center">
                     <button
-                      className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-gray-600 text-xl font-bold focus:outline-none"
+                      className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-pgrey text-xl font-bold focus:outline-none"
                       style={{ backgroundColor: 'lightgray' }}
                       onClick={() => handleTournamentClick(index)}
                     >
@@ -94,8 +94,8 @@ const TournamentList = () => {
                     </button>
                     <div className="text-center font-medium">
                       <span className="font-bold mb-1">Nombre torneo {index}</span><br/>
-                      <span className="text-gray-600 mb-1">Localidad</span><br/>
-                      <span className="text-gray-600">Categoría</span>
+                      <span className="text-pgrey mb-1">Localidad</span><br/>
+                      <span className="text-pgrey">Categoría</span>
                     </div>
                   </div>
                 </div>

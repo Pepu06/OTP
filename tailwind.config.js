@@ -6,6 +6,8 @@ export default {
       colors: {
         'pblue': '#1338BB',
         'pgreen': '#4DD263',
+        'pgrey': '#A3A3A3',
+        'verdeclaro': '#71DD28',
       },
       boxShadow: {
         'bottom-lg': '0 4px 6px rgba(0, 0, 0, 0.1)',

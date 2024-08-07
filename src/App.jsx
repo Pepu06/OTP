@@ -4,6 +4,8 @@ import TournamentList from "./components/TournamentList";
 import ContactSection from "./components/ContactSection";
 import Perfil from "./components/Perfil";
 import Torneo from "./components/Torneo";
+import FinalTorneo from "./components/FinalTorneo";
+import TablaQually from "./components/TablaQually";
 
 const App = () => {
   return (
@@ -27,6 +29,9 @@ const App = () => {
               <>
                 <Header />
                 <Torneo />
+                <TablaQually />
+                <FinalTorneo />
+                <ContactSection />
               </>
             }
           />
@@ -36,6 +41,8 @@ const App = () => {
               <>
                 <Header />
                 <Torneo />
+                <FinalTorneo />
+                <ContactSection />
               </>
             }
           />

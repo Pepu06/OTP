@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import Logo from '../assets/logo.png'
 
 const Header = () => {
   return (
     <>
       <header className="flex justify-between items-center p-4 bg-white shadow-lg">
         <img
-          src="logo.png" // Reemplaza con la ruta a tu imagen
+          src={Logo} // Reemplaza con la ruta a tu imagen
           alt="Logo"
           className="h-12 ml-10 mt-1" // Ajusta el tamaño según sea necesario
         />
