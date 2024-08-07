@@ -5,8 +5,10 @@ export default {
     extend: {
       colors: {
         'pblue': '#1338BB',
-        'pgreen': '#4DD263',
+        'plightblue': '#2584F4',
         'pgrey': '#A3A3A3',
+        'pgreen': '#4DD263',
+        'plightgreen': '#6CD37D',
         'verdeclaro': '#71DD28',
       },
       boxShadow: {

@@ -1,0 +1,26 @@
+.team-box::before, .team-box::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: #ccc;
+}
+
+.team-box::before {
+    top: 50%;
+    left: -20px; /* Adjust based on the width of your gaps */
+    height: 50%; /* Adjust as necessary */
+}
+
+.team-box::after {
+    top: 50%;
+    right: -20px; /* Adjust based on the width of your gaps */
+    height: 50%; /* Adjust as necessary */
+}
+
+.team-box:first-child::before, .team-box:last-child::before {
+    height: 25%; /* Adjust as necessary */
+}
+
+.team-box:first-child::after, .team-box:last-child::after {
+    height: 25%; /* Adjust as necessary */
+}

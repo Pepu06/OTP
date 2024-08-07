@@ -3,7 +3,7 @@ import paletader from '../assets/paletader.png';  // Ajusta la ruta según tu es
 
 const FinalTorneo = () => {
   return (
-    <div className="relative flex items-center justify-between px-4 py-8 bg-white z-10">
+    <div className="relative flex items-center justify-between px-4 py-8 bg-white z-10 mt-10">
       {/* Primera imagen */}
       <img
         src={paletaizq}
