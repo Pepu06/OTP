@@ -65,18 +65,28 @@ const TablaPlayoff = () => {
                             <div class="w-16 h-4 border-b-2 border-r-2 border-gray-500"></div>
                         </div>
                     </div>
-                    <div className="space-y-[265px] mt-[115px]">
-                        <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
-                            Nombre del equipo
+                    <div className="space-y-[155px]">
+                        <div>
+                            <div class="mt-14 w-16 h-16 border-t-2 border-r-2 border-gray-500"></div>
+                            <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                                Nombre del equipo
+                            </div>
+                            <div class="w-16 h-14 border-b-2 border-r-2 border-gray-500"></div>
                         </div>
-                        <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
-                            Nombre del equipo
+                        <div>
+                            <div class="w-16 h-16 border-t-2 border-r-2 border-gray-500"></div>
+                            <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                                Nombre del equipo
+                            </div>
+                            <div class="w-16 h-14 border-b-2 border-r-2 border-gray-500"></div>
                         </div>
                     </div>
                     <div className="mt-52">
+                    <div class="w-16 h-16 border-t-2 border-r-2 border-gray-500"></div>
                         <div className="bg-pgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                             Nombre del equipo
                         </div>
+                        <div class="w-16 h-14 border-b-2 border-r-2 border-gray-500"></div>
                     </div>
                 </div>
                 <div className="flex flex-col items-center m-4">
