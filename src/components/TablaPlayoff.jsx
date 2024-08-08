@@ -7,33 +7,67 @@ const TablaPlayoff = () => {
         <div className='flex justify-center items-center m-4 relative bg-cover bg-center'>
             <div
                 className="flex justify-center items-center m-4 relative bg-cover bg-center"
-                style={{ backgroundImage: `url(${tabla})`, backgroundSize: '71vw', backgroundRepeat: 'no-repeat' }}
             >
-                <div className="grid grid-cols-4 gap-2">
-                    <div className="space-y-8">
-                        {Array(4).fill("").map((_, colIndex) => (
-                            <div key={colIndex} className="space-y-4">
-                                {Array(2).fill("").map((_, rowIndex) => (
-                                    <div key={rowIndex} className="bg-pblue text-white p-2 rounded-lg text-center text-[1.02vw]">
-                                        Nombre del equipo
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
+                <div className="grid grid-cols-4">
+                    <div className="space-y-10">
+                        <div className="bg-pblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
+                        <div className="bg-pblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
+                        <div className="bg-pblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
+                        <div className="bg-pblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
+                        <div className="bg-pblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
+                        <div className="bg-pblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
+                        <div className="bg-pblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
+                        <div className="bg-pblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
                     </div>
-                    <div className="space-y-[85px] mt-6">
-                        {Array(4).fill("").map((_, index) => (
-                            <div key={index} className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
+                    <div className="space-y-[115px]">
+                        <div className=''>
+                            <div class=" mt-6 w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+                            <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                                 Nombre del equipo
                             </div>
-                        ))}
-                    </div>
-                    <div className="space-y-[205px] mt-[85px]">
-                        {Array(2).fill("").map((_, index) => (
-                            <div key={index} className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                        </div>
+                        <div className=''>
+                            <div class=" mt-6 w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+                            <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                                 Nombre del equipo
                             </div>
-                        ))}
+                        </div>
+                        <div className=''>
+                            <div class=" mt-6 w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+                            <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
+                                Nombre del equipo
+                            </div>
+                        </div>
+                        <div className=''>
+                            <div class=" mt-6 w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+                            <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
+                                Nombre del equipo
+                            </div>
+                        </div>
+                    </div>
+                    <div className="space-y-[265px] mt-[115px]">
+                        <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
+                        <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
+                            Nombre del equipo
+                        </div>
                     </div>
                     <div className="mt-52">
                         <div className="bg-pgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
