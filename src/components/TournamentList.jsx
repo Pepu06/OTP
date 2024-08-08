@@ -4,12 +4,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import { motion } from 'framer-motion';
-
+import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa"; // Asegúrate de importar ambos íconos
 
 const TournamentList = () => {
   const [selectedGender, setSelectedGender] = useState('Masculino');
   const [showAll, setShowAll] = useState(false);
-  const navigate = useNavigate(); // Hook de navegación
+  const navigate = useNavigate();
 
   const settings = {
     dots: true,
@@ -24,12 +24,32 @@ const TournamentList = () => {
   };
 
   const handleTournamentClick = (index) => {
-    navigate(`/torneo/${index}/qualify`); // Redirigir a la página del torneo
+    navigate(`/torneo/${index}/qualify`);
   };
 
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
+
+  const renderTournamentItem = (index) => (
+    <div key={index} className="flex flex-col items-center text-center p-2 transition-transform transform hover:scale-105">
+      <div className="flex flex-col items-center">
+        <button
+          className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-pgrey text-xl font-bold focus:outline-none"
+          style={{ backgroundColor: 'lightgray' }}
+          onClick={() => handleTournamentClick(index)}
+          aria-label={`Ver torneo ${index}`}
+        >
+          <span className="text-2xl">🏆</span>
+        </button>
+        <div className="text-center font-medium">
+          <span className="font-bold mb-1">Nombre torneo {index}</span><br/>
+          <span className="text-pgrey mb-1">Localidad</span><br/>
+          <span className="text-pgrey">Categoría</span>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <section id="torneos" className="mb-8 bg-white">
@@ -56,7 +76,6 @@ const TournamentList = () => {
           className="border rounded-full p-2 w-1/2 text-center placeholder-pgrey"
           onClick={placeholder => placeholder.target.placeholder = ''} 
           onBlur={placeholder => placeholder.target.placeholder = 'Buscar por Fecha/Lugar/Nombre'} 
-          style={{ textAlign: 'center' }}
         />
       </div>
       <motion.div
@@ -70,52 +89,18 @@ const TournamentList = () => {
         <div className="w-full max-w-4xl">
           {showAll ? (
             <div className="grid grid-cols-2 gap-4">
-              {[1, 2, 3, 4, 5, 6].map(index => (
-                <div key={index} className="flex flex-col items-center text-center p-2 border rounded-lg transition-transform transform hover:scale-105">
-                  <div className="flex flex-col items-center">
-                    <button
-                      className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-pgrey text-xl font-bold focus:outline-none"
-                      style={{ backgroundColor: 'lightgray' }}
-                      onClick={() => handleTournamentClick(index)}
-                    >
-                      <span className="text-2xl">🏆</span>
-                    </button>
-                    <div className="text-center font-medium">
-                      <span className="font-bold mb-1">Nombre torneo {index}</span><br/>
-                      <span className="text-pgrey mb-1">Localidad</span><br/>
-                      <span className="text-pgrey">Categoría</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {[1, 2, 3, 4, 5, 6].map(index => renderTournamentItem(index))}
             </div>
           ) : (
             <Slider {...settings}>
-              {[1, 2, 3, 4, 5, 6].map(index => (
-                <div key={index} className="flex flex-col items-center text-center p-2 transition-transform transform hover:scale-105">
-                  <div className="flex flex-col items-center">
-                    <button
-                      className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-pgrey text-xl font-bold focus:outline-none"
-                      style={{ backgroundColor: 'lightgray' }}
-                      onClick={() => handleTournamentClick(index)}
-                    >
-                      <span className="text-2xl">🏆</span>
-                    </button>
-                    <div className="text-center font-medium">
-                      <span className="font-bold mb-1">Nombre torneo {index}</span><br/>
-                      <span className="text-pgrey mb-1">Localidad</span><br/>
-                      <span className="text-pgrey">Categoría</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              {[1, 2, 3, 4, 5, 6].map(index => renderTournamentItem(index))}
             </Slider>
           )}
         </div>
       </motion.div>
       <div className="flex justify-center mb-8">
-        <button onClick={toggleShowAll} className="mb-4 px-5 py-2 bg-gray-300 text-black rounded-full focus:outline-none">
-          {showAll ? '⬆️' : '⬇️'}
+        <button onClick={toggleShowAll} className="mb-4 px-3 py-3 bg-gray-300 text-black rounded-full focus:outline-none">
+          {showAll ? <FaArrowAltCircleUp /> : <FaArrowAltCircleDown />}
         </button>
       </div>
       <div className="flex justify-center mt-4">
