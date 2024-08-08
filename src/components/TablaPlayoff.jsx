@@ -35,30 +35,34 @@ const TablaPlayoff = () => {
                             Nombre del equipo
                         </div>
                     </div>
-                    <div className="space-y-[115px]">
-                        <div className=''>
-                            <div class=" mt-6 w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+                    <div className="space-y-[85px]">
+                        <div className='mt-6'>
+                            <div class="w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
                             <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                                 Nombre del equipo
                             </div>
+                            <div class="w-16 h-4 border-b-2 border-r-2 border-gray-500"></div>
                         </div>
                         <div className=''>
-                            <div class=" mt-6 w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+                            <div class=" w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
                             <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                                 Nombre del equipo
                             </div>
+                            <div class="w-16 h-4 border-b-2 border-r-2 border-gray-500"></div>
                         </div>
                         <div className=''>
-                            <div class=" mt-6 w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+                            <div class="w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
                             <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                                 Nombre del equipo
                             </div>
+                            <div class="w-16 h-4 border-b-2 border-r-2 border-gray-500"></div>
                         </div>
                         <div className=''>
-                            <div class=" mt-6 w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+                            <div class="w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
                             <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                                 Nombre del equipo
                             </div>
+                            <div class="w-16 h-4 border-b-2 border-r-2 border-gray-500"></div>
                         </div>
                     </div>
                     <div className="space-y-[265px] mt-[115px]">
