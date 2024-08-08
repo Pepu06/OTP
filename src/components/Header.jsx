@@ -25,9 +25,6 @@ const Header = () => {
           </Link>
         </nav>
       </header>
-      <div className="overflow-hidden relative h-20">
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-11/12 h-8 bg-white rounded-full "></div>
-      </div>
     </>
   );
 };

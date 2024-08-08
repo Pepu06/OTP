@@ -6,6 +6,7 @@ export default {
       colors: {
         'pblue': '#1338BB',
         'plightblue': '#2584F4',
+        'pdarkblue': '#020583',
         'pgrey': '#A3A3A3',
         'pgreen': '#4DD263',
         'plightgreen': '#6CD37D',

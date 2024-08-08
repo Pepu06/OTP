@@ -25,7 +25,7 @@ const Torneo = () => {
 
   return (
     <section id="torneos" className="bg-white">
-      <h2 className="text-5xl font-daysone font-normal text-center text-pblue mb-8">
+      <h2 className="text-5xl mt-10 font-daysone font-normal text-center text-pblue mb-8">
         Torneo {id} - 2024
       </h2>
       <div className="flex justify-center">

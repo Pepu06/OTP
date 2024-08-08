@@ -33,7 +33,7 @@ const TournamentList = () => {
 
   return (
     <section id="torneos" className="mb-8 bg-white">
-      <h2 className="text-5xl font-daysone font-normal text-center text-pblue mb-8">Torneos</h2>
+      <h2 className="text-5xl font-daysone font-normal text-center text-pblue mt-10 mb-8">Torneos</h2>
       <div className="flex justify-center">
         <div className="w-max border-t border-b py-1 mb-8">
           <div className="flex space-x-4 font-inter font-bold">

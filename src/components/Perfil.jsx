@@ -22,9 +22,9 @@ const Perfil = () => {
       </div>
 
       <div className="flex justify-center mt-4">
-        <button className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
+        <a href="/perfil" className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
           VER PERFIL
-        </button>
+        </a>
       </div>
       <img src="pelotas.png" alt="pelotas" className="mt-5 w-full"/>
     </section>

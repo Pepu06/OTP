@@ -9,6 +9,8 @@ import Torneo from "./components/Torneo";
 import FinalTorneo from "./components/FinalTorneo";
 import TablaQually from "./components/TablaQually";
 import TablaPlayoff from "./components/TablaPlayoff";
+import PerfilJugador from "./components/PerfilJugador";
+import Administracion from "./components/Administracion";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -73,6 +75,24 @@ const MainContent = () => {
                   <Torneo />
                   <TablaPlayoff />
                   <FinalTorneo />
+                  <ContactSection />
+                </>
+              }
+            />
+            <Route
+              path="/perfil"
+              element={
+                <>
+                  <PerfilJugador />
+                  <ContactSection />
+                </>
+              }
+            />
+            <Route
+              path="/adm"
+              element={
+                <>
+                  <Administracion />
                   <ContactSection />
                 </>
               }
