@@ -1,26 +1,38 @@
+import TablaDeRankings from "./TablaDeRankings";
+
 const PerfilJugador = () => {
+  const scrollToTable = () => {
+    const element = document.getElementById("Tabla");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="relative p-4">
       {/* Contenedor del perfil */}
-      <div className="absolute h-[450px] top-16 left-0 w-1/5 ml-16 mr-16 bg-white p-4 rounded-lg shadow-md z-20">
+      <div className="absolute h-[409px] top-16 left-0 w-1/5 ml-16 mr-16 bg-white p-4 rounded-lg shadow-md z-20">
         <div className="text-center">
-          <div className="bg-green-200 rounded-full w-40 h-40 mx-auto mb-4 mt-2"></div>
-          <div className="w-50 h-28 bg-[#D9D9D9] flex flex-col items-center justify-center text-center text-[#373B3A] mb-1">
-            <h2 className="text-xs font-inter font-semibold">Ranking</h2>
-            <p className="text-3xl font-inter font-bold">20000</p>
-          </div>
-          <div className="w-50 h-28 bg-[#D9D9D9] flex flex-col items-center justify-center text-center text-[#373B3A]">
+          <div className="bg-green-200 rounded-full w-40 h-40 mx-auto mb-4 mt-1"></div>
+          <div className="w-50 h-24 bg-[#D9D9D9] flex flex-col items-center justify-center text-center text-[#373B3A] mb-1">
             <h2 className="text-xs font-inter font-semibold">Categoria</h2>
             <p className="text-3xl font-inter font-bold">Masculino</p>
+          </div>
+          <div className="w-50 h-24 bg-[#D9D9D9] flex flex-col items-center justify-center text-center text-[#373B3A]">
+            <h2 className="text-xs font-inter font-semibold">Ranking</h2>
+            <p className="text-3xl font-inter font-bold">20000</p>
           </div>
         </div>
       </div>
 
       {/* Contenedor azul */}
-      <div className="bg-pdarkblue text-white flex justify-between items-end py-10 px-4 z-10">
+      <div className="bg-pdarkblue text-white flex justify-between items-end py-8 px-4 z-10">
         <p className="ml-96 font-inter font-bold text-2xl">5° Matias Garcia</p>
-        <button className="bg-white text-black mr-5 px-4 py-2 rounded-lg">
-          Calculadora de Ranking
+        <button
+          onClick={scrollToTable}
+          className="bg-white text-black mr-5 px-4 py-2 rounded-lg"
+        >
+          Tabla de Rankings
         </button>
       </div>
 
@@ -67,18 +79,6 @@ const PerfilJugador = () => {
                   </li>
                   <li className="flex justify-between border-b py-2">
                     <span>Efectividad</span> <span>57%</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Efectividad anual</span> <span>33%</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Seis a favor</span> <span>16</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Seis en contra</span> <span>14</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Efectividad por sets</span> <span>53%</span>
                   </li>
                 </ul>
               </div>
@@ -138,6 +138,9 @@ const PerfilJugador = () => {
             </tbody>
           </table>
         </div>
+      </div>
+      <div id="Tabla" className="flex flex-col p-4">
+        <TablaDeRankings />
       </div>
     </div>
   );
