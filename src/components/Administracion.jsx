@@ -71,9 +71,11 @@ const Administracion = () => {
       </h1>
       <div className="flex justify-start mb-3">
         <input
-          className="border border-pgrey w-52 placeholder:text-center placeholder:text-pgrey rounded-lg"
+          className="border text-center border-pgrey w-52 placeholder:text-center placeholder:text-pgrey rounded-lg"
           type="text"
           placeholder="Buscar"
+          onClick={placeholder => placeholder.target.placeholder = ''} 
+          onBlur={placeholder => placeholder.target.placeholder = 'Buscar'}
         />
       </div>
       <div className="rounded-lg border overflow-hidden">

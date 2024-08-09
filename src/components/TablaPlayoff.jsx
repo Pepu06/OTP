@@ -34,56 +34,56 @@ const TablaPlayoff = () => {
           </div>
           <div className="space-y-[85px]">
             <div className="mt-6">
-              <div className="w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
               <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-4 border-b-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
             </div>
             <div className="">
-              <div className=" w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+              <div className=" w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
               <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-4 border-b-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
             </div>
             <div className="">
-              <div className="w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
               <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-4 border-b-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
             </div>
             <div className="">
-              <div className="w-16 h-4 border-t-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
               <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-4 border-b-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
             </div>
           </div>
           <div className="space-y-[155px]">
             <div>
-              <div className="mt-14 w-16 h-16 border-t-2 border-r-2 border-gray-500"></div>
+              <div className="mt-14 w-16 h-16 border-t-2 border-r-2 border-plightgreen"></div>
               <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-14 border-b-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-14 border-b-2 border-r-2 border-plightgreen"></div>
             </div>
             <div>
-              <div className="w-16 h-16 border-t-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-16 border-t-2 border-r-2 border-plightgreen"></div>
               <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-14 border-b-2 border-r-2 border-gray-500"></div>
+              <div className="w-16 h-14 border-b-2 border-r-2 border-plightgreen"></div>
             </div>
           </div>
           <div className="mt-[135px]">
-            <div className="w-16 h-[145px] border-t-2 border-r-2 border-gray-500"></div>
+            <div className="w-16 h-[145px] border-t-2 border-r-2 border-plightblue"></div>
             <div className="bg-pgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
               Nombre del equipo
             </div>
-            <div className="w-16 h-[135px] border-b-2 border-r-2 border-gray-500"></div>
+            <div className="w-16 h-[135px] border-b-2 border-r-2 border-plightblue"></div>
           </div>
         </div>
         <div className="flex flex-col items-center m-4">
@@ -93,56 +93,56 @@ const TablaPlayoff = () => {
         </div>
         <div className="grid grid-cols-4">
           <div className="mt-[135px]">
-          <div className="w-16 h-[145px] border-t-2 border-r-2 border-gray-500 transform -scale-x-100 translate-x-[83px]"></div>
+          <div className="w-16 h-[145px] border-t-2 border-r-2 border-plightblue transform -scale-x-100 translate-x-[83px]"></div>
             <div className="bg-pgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
               Nombre del equipo
             </div>
-            <div className="w-16 h-[135px] border-b-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+            <div className="w-16 h-[135px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[83px]"></div>
           </div>
           <div className="space-y-[155px]">
             <div>
-              <div className="mt-14 w-16 h-16 border-t-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="mt-14 w-16 h-16 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[83px]"></div>
               <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-14 border-b-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-16 h-14 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[83px]"></div>
             </div>
             <div>
-              <div className="w-16 h-16 border-t-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-16 h-16 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[83px]"></div>
               <div className="bg-plightblue text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-14 border-b-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-16 h-14 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[83px]"></div>
             </div>
           </div>
           <div className="space-y-[85px]">
             <div className="mt-6">
-              <div className="w-16 h-4 border-t-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-16 h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[83px]"></div>
               <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-4 border-b-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-[60px] h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[83px]"></div>
             </div>
             <div className="">
-              <div className=" w-16 h-4 border-t-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className=" w-16 h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[83px]"></div>
               <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-4 border-b-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-16 h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[83px]"></div>
             </div>
             <div className="">
-              <div className="w-16 h-4 border-t-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-16 h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[83px]"></div>
               <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-4 border-b-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-16 h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[83px]"></div>
             </div>
             <div className="">
-              <div className="w-16 h-4 border-t-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-16 h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[83px]"></div>
               <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-[1.02vw]">
                 Nombre del equipo
               </div>
-              <div className="w-16 h-4 border-b-2 border-r-2 border-gray-500 -scale-x-100 translate-x-[83px]"></div>
+              <div className="w-16 h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[83px]"></div>
             </div>
           </div>
           <div className="space-y-10">

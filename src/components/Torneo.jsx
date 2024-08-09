@@ -26,7 +26,7 @@ const Torneo = () => {
   return (
     <section id="torneos" className="bg-white">
       <h2 className="text-5xl mt-10 font-daysone font-normal text-center text-pblue mb-8">
-        Torneo {id} - 2024
+        {id}
       </h2>
       <div className="flex justify-center">
         <div className="flex py-1 mb-8 space-x-4 font-daysone font-normal">
