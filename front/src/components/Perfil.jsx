@@ -50,31 +50,28 @@ const Perfil = () => {
   };
 
   return (
-    <section id="torneos" className="bg-white">
-      <h2 className="text-4xl font-normal text-center text-pblue mb-8 font-daysone">
+    <section id="torneos" className="bg-white ml-2 mt-1">
+      {/* <h2 className="text-2xl font-normal text-center text-pblue mb-2 font-daysone">
         ¡Busca tu perfil!
-      </h2>
-
-      <div className="flex justify-center mb-8">
+      </h2> */}
+      <div className="flex justify-center mb-2">
         <Select
           options={jugadores}
           onChange={handleChange}
-          placeholder="Buscar por Nombre/ID"
-          className="w-1/2 text-center"
+          placeholder="Busca por Nombre/ID"
+          className="w-full text-center"
           isSearchable
         />
       </div>
-
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-start mt-2">
         <a
           href={`/perfil/${selectedJugador ? selectedJugador.value : ""}`}
-          className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins"
+          className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium text-sm font-poppins"
           disabled={!selectedJugador}
         >
-          VER PERFIL
+          BUSCAR PERFIL
         </a>
       </div>
-      <img src="pelotas.png" alt="pelotas" className="mt-5 w-full" />
     </section>
   );
 };

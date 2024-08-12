@@ -16,6 +16,7 @@ import TablaQually from "./components/TablaQually";
 import TablaPlayoff from "./components/TablaPlayoff";
 import PerfilJugador from "./components/PerfilJugador";
 import Administracion from "./components/Administracion";
+import AdminContactSection from "./components/AdminContactSection";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -57,8 +58,17 @@ const MainContent = () => {
               element={
                 <>
                   <TournamentList />
-                  <Perfil />
                   <ContactSection />
+                </>
+              }
+            />
+            <Route
+              path="/admotp"
+              element={
+                <>
+                  <TournamentList />
+                  <Perfil />
+                  <AdminContactSection />
                 </>
               }
             />

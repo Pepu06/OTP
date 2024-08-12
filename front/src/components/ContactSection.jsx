@@ -5,13 +5,10 @@ const ContactSection = () => {
       <p className="text-m mb-4">
         Consultanos cual es la fecha del próximo torneo
       </p>
-      <div className="relative flex justify-between items-center px-4 py-2 w-full">
-        <button className="absolute left-1/2 transform -translate-x-1/2 px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
+      <div className="relative flex justify-between items-center px-4 py-8 w-full">
+        <button className=" absolute left-1/2 transform -translate-x-1/2 px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
           CONTACTO
         </button>
-        <a href="/adm" className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium ml-auto font-poppins">
-          ADMINISTRACION
-        </a>
       </div>
     </section>
   );

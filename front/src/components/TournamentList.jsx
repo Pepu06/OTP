@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { motion } from "framer-motion";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
 import Papa from "papaparse"; // Importa papaparse
+import Perfil from "./Perfil"
 
 const TournamentList = () => {
   const [selectedGender, setSelectedGender] = useState("Todos");
@@ -81,21 +82,32 @@ const TournamentList = () => {
   );
 
   return (
-    <section id="torneos" className="mb-8 bg-white">
-      <h2 className="text-5xl font-daysone font-normal text-center text-pblue mt-10 mb-8">
-        Torneos
-      </h2>
+    <section id="torneos" className="bg-white">
+      <div className="flex items-center justify-between mt-5 mb-8">
+        {/* Contenedor para Perfil alineado a la izquierda */}
+        <div className="w-1/5">
+          <Perfil />
+        </div>
+        {/* Contenedor vacío para el espacio restante en la izquierda */}
+        {/* Contenedor para Torneos centrado */}
+        <div className="flex-1">
+          <h2 className="text-5xl font-daysone font-normal text-center text-pblue">
+            Torneos
+          </h2>
+        </div>
+        
+        <div className="w-1/5"></div>
+      </div>
       <div className="flex justify-center">
         <div className="w-max border-t border-b py-1 mb-8">
           <div className="flex space-x-4 font-inter font-bold">
             {["Todos", "Masculino", "Mixto", "Femenino"].map((gender) => (
               <button
                 key={gender}
-                className={`px-4 py-2 ${
-                  selectedGender === gender
-                    ? "text-pblue border-blue-600"
-                    : "text-pgrey border-transparent"
-                } hover:text-pblue focus:outline-none border-b-2`}
+                className={`px-4 py-2 ${selectedGender === gender
+                  ? "text-pblue border-blue-600"
+                  : "text-pgrey border-transparent"
+                  } hover:text-pblue focus:outline-none border-b-2`}
                 onClick={() => setSelectedGender(gender)}
               >
                 {gender}
@@ -154,6 +166,7 @@ const TournamentList = () => {
           INSCRIBIRME
         </button>
       </div>
+      <img src="pelotas.png" alt="pelotas" className="mt-5 w-full" />
     </section>
   );
 };

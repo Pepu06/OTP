@@ -16,7 +16,7 @@ const TablaQually = () => {
         // Filtra los partidos por el idTorneo
         const allPartidos = result.data;
         const filtered = allPartidos.filter(
-          (partido) => partido.IDTorneo === idTorneo
+          (partido) => partido.IDTorneo === idTorneo && (partido.Instancia === "Q1" || partido.Instancia === "Q2")
         );
         setPartidos(allPartidos);
         setFilteredPartidos(filtered);
