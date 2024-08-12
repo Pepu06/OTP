@@ -63,7 +63,7 @@ const MainContent = () => {
               }
             />
             <Route
-              path="/torneo/:id/qualify"
+              path="/torneo/:id/:idTorneo/qualify"
               element={
                 <>
                   <Torneo />
@@ -74,7 +74,7 @@ const MainContent = () => {
               }
             />
             <Route
-              path="/torneo/:id/playoff"
+              path="/torneo/:id/:idTorneo/playoff"
               element={
                 <>
                   <Torneo />
@@ -85,7 +85,7 @@ const MainContent = () => {
               }
             />
             <Route
-              path="/perfil"
+              path="/perfil/:jugadorId"
               element={
                 <>
                   <PerfilJugador />
