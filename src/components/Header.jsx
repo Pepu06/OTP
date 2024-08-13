@@ -101,7 +101,8 @@ const Header = () => {
             >
               CONTACTO
             </a>
-          </div>
+          </nav>
+        </div>
       )}
     </header>
   );
