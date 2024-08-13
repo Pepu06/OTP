@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
 import Papa from "papaparse"; // Importa papaparse
 import Perfil from "./Perfil"
+import { Pelotas } from "../assets/pelotas.png"
 
 const TournamentList = () => {
   const [selectedGender, setSelectedGender] = useState("Todos");
@@ -166,7 +167,7 @@ const TournamentList = () => {
           INSCRIBIRME
         </button>
       </div>
-      <img src="pelotas.png" alt="pelotas" className="mt-5 w-full" />
+      <img src={Pelotas} alt="pelotas" className="mt-5 w-full" />
     </section>
   );
 };

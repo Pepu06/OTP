@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Papa from "papaparse";
 import { useParams } from "react-router-dom";
 import copa from "../assets/copa.png"; // Asegúrate de ajustar la ruta según tu estructura
