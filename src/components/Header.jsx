@@ -43,9 +43,9 @@ const Header = () => {
         <Link to="/novedades" className="text-gray-600 hover:text-blue-600">
           NOVEDADES
         </Link>
-        <Link to="/contacto" className="text-gray-600 hover:text-blue-600">
+        <a href="https://wa.me/1140962011" className="text-gray-600 hover:text-blue-600">
           CONTACTO
-        </Link>
+        </a>
       </nav>
       <button
         className="sm:hidden flex items-center px-3 py-2 rounded hover:scale-110"
@@ -94,15 +94,14 @@ const Header = () => {
             >
               NOVEDADES
             </Link>
-            <Link
-              to="/contacto"
+            <a
+              href="https://wa.me/1140962011"
               className="text-gray-600 hover:text-blue-600"
               onClick={toggleMenu}
             >
               CONTACTO
-            </Link>
-          </nav>
-        </div>
+            </a>
+          </div>
       )}
     </header>
   );
