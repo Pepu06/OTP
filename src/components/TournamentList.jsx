@@ -163,7 +163,7 @@ const TournamentList = () => {
         </button>
       </div>
       <div className="flex justify-center mt-4">
-        <a href="https://wa.me/1140962011 className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
+        <a href="https://wa.me/1140962011" className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
           INSCRIBIRME
         </a>
       </div>
