@@ -104,7 +104,7 @@ const TournamentList = () => {
             {["Todos", "Masculino", "Mixto", "Femenino"].map((gender) => (
               <button
                 key={gender}
-                className={`px-4 py-2 ${selectedGender === gender
+                className={`sm:px-4 sm:py-2 ${selectedGender === gender
                   ? "text-pblue border-blue-600"
                   : "text-pgrey border-transparent"
                   } hover:text-pblue focus:outline-none border-b-2`}
@@ -120,7 +120,7 @@ const TournamentList = () => {
         <input
           type="text"
           placeholder="Buscar por Fecha/Lugar/Nombre"
-          className="border rounded-full p-2 w-1/2 text-center placeholder-pgrey"
+          className="border rounded-full p-2 mx-5 sm:mx-0 w-full sm:w-1/2 text-center placeholder-pgrey placeholder:text-sm sm:placeholder:text-base"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onClick={(placeholder) => (placeholder.target.placeholder = "")}

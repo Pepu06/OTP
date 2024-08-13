@@ -31,7 +31,7 @@ const Header = () => {
       <img
         src={Logo} // Reemplaza con la ruta a tu imagen
         alt="Logo"
-        className="h-12 ml-10 mt-1" // Ajusta el tamaño según sea necesario
+        className="h-12 sm:ml-10 mt-1" // Ajusta el tamaño según sea necesario
       />
       <nav className="hidden sm:flex space-x-5 font-inter font-bold">
         <Link to="/" className="text-gray-600 hover:text-blue-600">

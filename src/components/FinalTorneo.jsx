@@ -8,7 +8,7 @@ const FinalTorneo = () => {
       <img
         src={paletaizq}
         alt="PaletaI"
-        className="w-auto sm:pt-20 h-[150px] sm:h-[350px] object-cover absolute left-0 top-1/2 transform -translate-y-1/3 sm:-translate-y-1/2 z-20"
+        className="w-auto sm:pt-20 h-[80px] sm:h-[350px] object-cover absolute left-0 top-1/2 transform -translate-y-1/5 sm:-translate-y-1/2 z-20"
       />
 
       {/* Contenedor para el texto */}
@@ -28,7 +28,7 @@ const FinalTorneo = () => {
       <img
         src={paletader}
         alt="PaletaD"
-        className="w-auto sm:pt-20 h-[150px] sm:h-[350px] object-cover absolute right-0 top-1/2 transform -translate-y-1/3 sm:-translate-y-1/2 z-20"
+        className="w-auto sm:pt-20 h-[80px] sm:h-[350px] object-cover absolute right-0 top-1/2 transform -translate-y-1/5 sm:-translate-y-1/2 z-20"
       />
     </div>
   );

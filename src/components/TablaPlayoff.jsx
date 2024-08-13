@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import { useParams } from "react-router-dom";
 import copa from "../assets/copa.png"; // Asegúrate de ajustar la ruta según tu estructura
@@ -82,180 +82,175 @@ const TablaPlayoff = () => {
 
   return (
     <div className="flex justify-center items-center m-4 relative bg-cover bg-center">
-      <div className="flex justify-center items-center m-4 relative bg-cover bg-center">
-        <div className="grid grid-cols-4 max-w-[210px] sm:max-w-none">
-          {/* Octavos */}
-          <div className="space-y-4 sm:space-y-10">
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo1_1 ? equipo1_1 : "Nombre del Equipo"}
+      <div className="overflow-x-auto sm:overflow-x-visible w-full">
+        <div className="flex justify-start sm:justify-center items-center m-4 relative bg-cover bg-center">
+          <div className="grid grid-cols-4 min-w-[600px]">
+            <div className="space-y-10">
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo1_1 ? equipo1_1 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo2_1 ? equipo2_1 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo1_2 ? equipo1_2 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo2_2 ? equipo2_2 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo1_3 ? equipo1_3 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo2_3 ? equipo2_3 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo1_4 ? equipo1_4 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo2_4 ? equipo2_4 : "Nombre del Equipo"}
+              </div>
             </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo2_1 ? equipo2_1 : "Nombre del Equipo"}
+            <div className="space-y-[85px]">
+              <div className="mt-6">
+                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
+                  {cuartos1_1 ? cuartos1_1 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+              </div>
+              <div>
+                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
+                  {cuartos2_1 ? cuartos2_1 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+              </div>
+              <div>
+                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
+                  {cuartos1_2 ? cuartos1_2 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+              </div>
+              <div>
+                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
+                  {cuartos2_2 ? cuartos2_2 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+              </div>
             </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo1_2 ? equipo1_2 : "Nombre del Equipo"}
+            <div className="space-y-[155px]">
+              <div>
+                <div className="mt-14 w-16 h-16 border-t-2 border-r-2 border-plightgreen"></div>
+                <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm">
+                  {semis1_1 ? semis1_1 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-14 border-b-2 border-r-2 border-plightgreen"></div>
+              </div>
+              <div>
+                <div className="w-16 h-16 border-t-2 border-r-2 border-plightgreen"></div>
+                <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm">
+                  {semis2_1 ? semis2_1 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-14 border-b-2 border-r-2 border-plightgreen"></div>
+              </div>
             </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo2_2 ? equipo2_2 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo1_3 ? equipo1_3 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo2_3 ? equipo2_3 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo1_4 ? equipo1_4 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo2_4 ? equipo2_4 : "Nombre del Equipo"}
+            <div className="mt-[135px]">
+              <div className="w-16 h-[145px] border-t-2 border-r-2 border-plightblue"></div>
+              <div className="bg-pgreen text-white p-2 rounded-lg text-center text-sm">
+                {final_1 ? final_1 : "Nombre del Equipo"}
+              </div>
+              <div className="w-16 h-[135px] border-b-2 border-r-2 border-plightblue"></div>
             </div>
           </div>
-          {/* Cuartos */}
-          <div className="space-y-[26px] ml-[13px] sm:space-y-[85px] sm:ml-0">
-            <div className="mt-1 sm:mt-6">
-              <div className="w-10 h-3 sm:w-16 sm:h-4 border-t-2 border-r-2 border-pblue"></div>
-              <div className="bg-plightgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {cuartos1_1 ? cuartos1_1 : "Nombre del Equipo"}
-              </div>
-              <div className="w-10 h-3 sm:w-16 sm:h-4 border-b-2 border-r-2 border-pblue"></div>
+          <div className="flex flex-col items-center m-4">
+            <div className="font-inter font-bold text-pgrey text-xs">
+              CAMPEON
             </div>
-            <div>
-              <div className="w-10 h-3 sm:w-16 sm:h-4 border-t-2 border-r-2 border-pblue"></div>
-              <div className="bg-plightgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {cuartos2_1 ? cuartos2_1 : "Nombre del Equipo"}
-              </div>
-              <div className="w-10 h-3 sm:w-16 sm:h-4 border-b-2 border-r-2 border-pblue"></div>
-            </div>
-            <div>
-              <div className="w-10 h-3 sm:w-16 sm:h-4 border-t-2 border-r-2 border-pblue"></div>
-              <div className="bg-plightgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {cuartos1_2 ? cuartos1_2 : "Nombre del Equipo"}
-              </div>
-              <div className="w-10 h-3 sm:w-16 sm:h-4 border-b-2 border-r-2 border-pblue"></div>
-            </div>
-            <div>
-              <div className="w-10 h-3 sm:w-16 sm:h-4 border-t-2 border-r-2 border-pblue"></div>
-              <div className="bg-plightgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {cuartos2_2 ? cuartos2_2 : "Nombre del Equipo"}
-              </div>
-              <div className="w-10 h-3 sm:w-16 sm:h-4 border-b-2 border-r-2 border-pblue"></div>
-            </div>
+            <img src={copa} alt="copa" className=" mb-5" />
+            <img src={otp} alt="otp" className=" mt-5" />
           </div>
-          {/* Semis */}
-          <div className="space-y-[70px] ml-6 sm:space-y-[145px] sm:ml-0">
-            <div>
-              <div className="mt-[25px] w-10 h-6 sm:mt-14 sm:w-16 sm:h-16 border-t-2 border-r-2 border-plightgreen"></div>
-              <div className="bg-plightblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {semis1_1 ? semis1_1 : "Nombre del Equipo"}
+          <div className="grid grid-cols-4 min-w-[600px]">
+            <div className="mt-[135px]">
+              <div className="w-16 h-[145px] border-t-2 border-r-2 border-plightblue transform -scale-x-100 translate-x-[90px]"></div>
+              <div className="bg-pgreen text-white p-2 rounded-lg text-center text-sm">
+                {final_2 ? final_2 : "Nombre del Equipo"}
               </div>
-              <div className="w-10 h-6 sm:w-16 sm:h-16 border-b-2 border-r-2 border-plightgreen"></div>
+              <div className="w-16 h-[135px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[90px]"></div>
             </div>
-            <div>
-              <div className="w-10 h-6 sm:w-16 sm:h-16 border-t-2 border-r-2 border-plightgreen"></div>
-              <div className="bg-plightblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {semis2_1 ? semis2_1 : "Nombre del Equipo"}
+            <div className="space-y-[155px]">
+              <div>
+                <div className="mt-14 w-16 h-16 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[90px]"></div>
+                <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm">
+                  {semis1_2 ? semis1_1 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-14 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[90px]"></div>
               </div>
-              <div className="w-10 h-6 sm:w-16 sm:h-16 border-b-2 border-r-2 border-plightgreen"></div>
-            </div>
-          </div>
-          {/* Final */}
-          <div className="mt-[60px] ml-9 sm:mt-[135px] sm:ml-0">
-            <div className="w-10 h-14 sm:w-16 sm:h-[145px] border-t-2 border-r-2 border-plightblue"></div>
-            <div className="bg-pgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {final_1 ? final_1 : "Nombre del Equipo"}
-            </div>
-            <div className="w-10 h-[60px] sm:w-16 sm:h-[135px] border-b-2 border-r-2 border-plightblue"></div>
-          </div>
-        </div>
-        {/* Logos */}
-        <div className="flex flex-col items-center">
-          <div className="hidden sm:flex font-inter font-bold text-pgrey text-xs">CAMPEON</div>
-          <img src={copa} alt="copa" className=" mb-5" />
-          <img src={otp} alt="otp" className=" mt-5" />
-        </div>
-        <div className="grid grid-cols-4">
-          {/* Final */}
-          <div className="mt-[60px] ml-9 sm:mt-[135px] sm:ml-0">
-            <div className="w-8 h-14 sm:w-[78px] sm:h-[145px] border-t-2 border-r-2 border-plightblue transform -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-            <div className="bg-pgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {final_2 ? final_2 : "Nombre del Equipo"}
-            </div>
-            <div className="w-8 h-[60px] sm:w-[78px] sm:h-[135px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-          </div>
-          {/* Semis */}
-          <div className="space-y-[70px] ml-6 sm:space-y-[155px] sm:ml-0">
-            <div>
-              <div className="mt-[25px] w-8 h-6 sm:mt-14 sm:w-[78px] sm:h-16 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-              <div className="bg-plightblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {semis1_2 ? semis1_2 : "Nombre del Equipo"}
+              <div>
+                <div className="w-16 h-16 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[90px]"></div>
+                <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm">
+                  {semis2_2 ? semis2_2 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-14 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[90px]"></div>
               </div>
-              <div className="w-8 h-6 sm:w-[78px] sm:h-14 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
             </div>
-            <div>
-              <div className="w-8 h-6 sm:w-[78px] sm:h-16 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-              <div className="bg-plightblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {semis2_2 ? semis2_2 : "Nombre del Equipo"}
+            <div className="space-y-[85px]">
+              <div className="mt-6">
+                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[90px]"></div>
+                <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
+                  {cuartos1_3 ? cuartos1_3 : "Nombre del Equipo"}
+                </div>
+                <div className="w-[65px] h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[90px]"></div>
               </div>
-              <div className="w-8 h-6 sm:w-[78px] sm:h-14 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-            </div>
-          </div>
-          {/* Cuartos */}
-          <div className="space-y-[26px] ml-[13px] sm:space-y-[85px] sm:ml-0">
-            <div className="mt-1 sm:mt-6">
-              <div className="w-8 h-3 sm:w-[78px] sm:h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-              <div className="bg-plightgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {cuartos1_3 ? cuartos1_3 : "Nombre del Equipo"}
+              <div>
+                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[90px]"></div>
+                <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
+                  {cuartos2_3 ? cuartos2_3 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[90px]"></div>
               </div>
-              <div className="w-8 h-3 sm:w-[78px] sm:h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-            </div>
-            <div>
-              <div className="w-8 h-3 sm:w-[78px] sm:h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-              <div className="bg-plightgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {cuartos2_3 ? cuartos2_3 : "Nombre del Equipo"}
+              <div>
+                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[90px]"></div>
+                <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
+                  {cuartos1_4 ? cuartos1_4 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[90px]"></div>
               </div>
-              <div className="w-8 h-3 sm:w-[78px] sm:h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-            </div>
-            <div>
-              <div className="w-8 h-3 sm:w-[78px] sm:h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-              <div className="bg-plightgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {cuartos1_4 ? cuartos1_4 : "Nombre del Equipo"}
+              <div>
+                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[90px]"></div>
+                <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
+                  {cuartos2_4 ? cuartos2_4 : "Nombre del Equipo"}
+                </div>
+                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[90px]"></div>
               </div>
-              <div className="w-8 h-3 sm:w-[78px] sm:h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
             </div>
-            <div>
-              <div className="w-8 h-3 sm:w-[78px] sm:h-4 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-              <div className="bg-plightgreen text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-                {cuartos2_4 ? cuartos2_4 : "Nombre del Equipo"}
+            <div className="space-y-10">
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo1_5 ? equipo1_5 : "Nombre del Equipo"}
               </div>
-              <div className="w-8 h-3 sm:w-[78px] sm:h-4 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-8 sm:translate-x-[83px]"></div>
-            </div>
-          </div>
-          {/* Octavos */}
-          <div className="space-y-4 sm:space-y-10">
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo1_5 ? equipo1_5 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo2_5 ? equipo2_5 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo1_6 ? equipo1_6 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo2_6 ? equipo2_6 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo1_7 ? equipo1_7 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo2_7 ? equipo2_7 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo1_8 ? equipo1_8 : "Nombre del Equipo"}
-            </div>
-            <div className="bg-pblue text-white p-1 sm:p-2 rounded-lg text-center text-[1.1vw] sm:text-[1.02vw] w-20 sm:w-40">
-              {equipo2_8 ? equipo2_8 : "Nombre del Equipo"}
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo2_5 ? equipo2_5 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo1_6 ? equipo1_6 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo2_6 ? equipo2_6 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo1_7 ? equipo1_7 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo2_7 ? equipo2_7 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo1_8 ? equipo1_8 : "Nombre del Equipo"}
+              </div>
+              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                {equipo2_8 ? equipo2_8 : "Nombre del Equipo"}
+              </div>
             </div>
           </div>
         </div>

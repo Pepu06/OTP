@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Papa from "papaparse"; // Asegúrate de instalar la librería con `npm install papaparse`
-import { useParams } from "react-router-dom"; // Para acceder a los parámetros de la URL
+import Papa from "papaparse";
+import { useParams } from "react-router-dom";
 import TablaDeRankings from "./TablaDeRankings";
 
 const PerfilJugador = () => {
-  const { jugadorId } = useParams(); // Obtén el ID del jugador de los parámetros de la URL
+  const { jugadorId } = useParams();
   const [jugador, setJugador] = useState(null);
   const [historicoTorneos, setHistoricoTorneos] = useState([]);
 
@@ -20,7 +20,6 @@ const PerfilJugador = () => {
 
     console.log("Cargando datos para el ID del jugador:", jugadorId);
 
-    // Cargar datos del jugador
     fetch("/jugadores.csv")
       .then((response) => {
         if (!response.ok) throw new Error("Error al cargar jugadores.csv");
@@ -41,7 +40,6 @@ const PerfilJugador = () => {
         console.error("Error cargando datos del jugador:", error)
       );
 
-    // Cargar histórico de torneos
     fetch("/historicoTorneos.csv")
       .then((response) => {
         if (!response.ok)
@@ -65,6 +63,11 @@ const PerfilJugador = () => {
         console.error("Error cargando histórico de torneos:", error)
       );
   }, [jugadorId]);
+
+  // Verificar que jugador no sea null antes de renderizar
+  if (!jugador) {
+    return <div>Cargando datos del jugador...</div>;
+  }
 
   return (
     <div className="relative p-4">
@@ -90,7 +93,7 @@ const PerfilJugador = () => {
         </p>
         <button
           onClick={scrollToTable}
-          className="bg-white text-black mr-5 px-4 py-2 rounded-lg"
+          className="bg-white text-black mr-5 px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg"
         >
           Tabla de Rankings
         </button>
@@ -148,30 +151,32 @@ const PerfilJugador = () => {
       {/* Histórico de Torneos */}
       <div className="mt-8 bg-white p-4 rounded-lg shadow-md">
         <h2 className="text-lg font-bold mb-4">HISTÓRICO DE TORNEOS</h2>
-        <table className="min-w-full">
-          <thead>
-            <tr>
-              <th className="text-left p-2">Tipo</th>
-              <th className="text-left p-2">Competición</th>
-              <th className="text-left p-2">Fecha</th>
-              <th className="text-left p-2">Pareja</th>
-              <th className="text-left p-2">Categoría</th>
-              <th className="text-left p-2">Resultado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {historicoTorneos.map((torneo, index) => (
-              <tr key={index}>
-                <td className="border-t p-2">{torneo.Tipo}</td>
-                <td className="border-t p-2">{torneo.Competicion}</td>
-                <td className="border-t p-2">{torneo.Fecha}</td>
-                <td className="border-t p-2">{torneo.Pareja}</td>
-                <td className="border-t p-2">{torneo.Categoria}</td>
-                <td className="border-t p-2">{torneo.Resultado}</td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full">
+            <thead>
+              <tr>
+                <th className="text-left p-2">Tipo</th>
+                <th className="text-left p-2">Competición</th>
+                <th className="text-left p-2">Fecha</th>
+                <th className="text-left p-2">Pareja</th>
+                <th className="text-left p-2">Categoría</th>
+                <th className="text-left p-2">Resultado</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {historicoTorneos.map((torneo, index) => (
+                <tr key={index}>
+                  <td className="border-t p-2">{torneo.Tipo}</td>
+                  <td className="border-t p-2">{torneo.Competicion}</td>
+                  <td className="border-t p-2">{torneo.Fecha}</td>
+                  <td className="border-t p-2">{torneo.Pareja}</td>
+                  <td className="border-t p-2">{torneo.Categoria}</td>
+                  <td className="border-t p-2">{torneo.Resultado}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div id="Tabla" className="flex flex-col p-4">
