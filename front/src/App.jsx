@@ -63,11 +63,19 @@ const MainContent = () => {
               }
             />
             <Route
+              path="/torneos"
+              element={
+                <>
+                  <TournamentList />
+                  <ContactSection />
+                </>
+              }
+            />
+            <Route
               path="/admotp"
               element={
                 <>
                   <TournamentList />
-                  <Perfil />
                   <AdminContactSection />
                 </>
               }

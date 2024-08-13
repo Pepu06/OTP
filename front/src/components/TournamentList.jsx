@@ -38,11 +38,12 @@ const TournamentList = () => {
       tournament.Nombre.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const windowSmall = window.innerWidth < 640; // Define the 'windowSmall' variable based on the window width
   const settings = {
     dots: true,
     infinite: selectedGender === "Todos",
     speed: 500,
-    slidesToShow: Math.min(filteredTournaments.length, 4),
+    slidesToShow: windowSmall ? 3 : Math.min(filteredTournaments.length, 4),
     slidesToScroll: 2,
     autoplay: true,
     swipeToSlide: true,
@@ -83,12 +84,11 @@ const TournamentList = () => {
 
   return (
     <section id="torneos" className="bg-white">
-      <div className="flex items-center justify-between mt-5 mb-8">
+      <div className="flex flex-col sm:flex-row items-center justify-between mt-5 mb-8">
         {/* Contenedor para Perfil alineado a la izquierda */}
-        <div className="w-1/5">
+        <div className="w-1/2 mb-5 sm:w-1/5 sm:mb-0">
           <Perfil />
         </div>
-        {/* Contenedor vacío para el espacio restante en la izquierda */}
         {/* Contenedor para Torneos centrado */}
         <div className="flex-1">
           <h2 className="text-5xl font-daysone font-normal text-center text-pblue">

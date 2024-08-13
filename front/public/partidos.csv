@@ -1,29 +1,29 @@
-Instancia,Equipo1,Resultado,Equipo2,IDTorneo,Cancha,Horario, ID
-Q1,Equipo A,14 - 15,Club A,1,Cancha 1,10:00 AM, 1
-Q1,Equipo B,15 - 14,Club B,1,Cancha 2,10:30 AM, 2
-Q1,Equipo C,16 - 13,Club C,1,Cancha 3,11:00 AM, 3
-Q1,Equipo D,17 - 12,Club D,1,Cancha 4,11:30 AM, 4
-Q2,Equipo E,18 - 11,Club E,1,Cancha 1,12:00 PM, 1
-Q2,Equipo F,19 - 10,Club F,1,Cancha 2,12:30 PM, 2
-Q2,Equipo G,20 - 9,Club G,1,Cancha 3,01:00 PM, 3
-Q2,Equipo H,21 - 8,Club H,1,Cancha 4,01:30 PM, 4
-Octavos,Equipo I,22 - 7,Club I,1,Cancha 1,02:00 PM, 1
-Octavos,Equipo J,23 - 6,Club J,1,Cancha 2,02:30 PM, 2
-Octavos,Equipo K,24 - 5,Club K,1,Cancha 3,03:00 PM, 3
-Octavos,Equipo L,25 - 4,Club L,1,Cancha 4,03:30 PM, 4
-Octavos,Equipo M,26 - 3,Club M,1,Cancha 1,04:00 PM, 5
-Octavos,Equipo N,27 - 2,Club N,1,Cancha 2,04:30 PM, 6
-Octavos,Equipo O,28 - 1,Club O,1,Cancha 3,05:00 PM, 7
-Octavos,Equipo P,29 - 0,Club P,1,Cancha 4,05:30 PM, 8
-Cuartos,Equipo Q,30 - 29,Club Q,1,Cancha 1,06:00 PM, 1
-Cuartos,Equipo R,31 - 28,Club R,1,Cancha 2,06:30 PM, 2
-Cuartos,Equipo S,32 - 27,Club S,1,Cancha 3,07:00 PM, 3
-Cuartos,Equipo T,33 - 26,Club T,1,Cancha 4,07:30 PM, 4
-Semifinal,Equipo U,34 - 25,Club U,1,Cancha 1,08:00 PM, 1
-Semifinal,Equipo V,35 - 24,Club V,1,Cancha 2,08:30 PM, 2
-Final,Equipo W,36 - 23,Club W,1,Cancha 1,09:00 PM, 1
-Q1,Equipo G,17 - 16,Club G,2,Cancha 3,10:00 AM
-Q2,Equipo H,15 - 17,Club H,2,Cancha 1,12:00 PM
+Instancia,Equipo1,Resultado,Equipo2,IDTorneo,Cancha,Horario
+Q1,Equipo A,14 - 15,Club A,1,Cancha 1,10:00
+Q1,Equipo B,15 - 14,Club B,1,Cancha 2,10:30
+Q1,Equipo C,16 - 13,Club C,1,Cancha 3,11:00
+Q1,Equipo D,17 - 12,Club D,1,Cancha 4,11:30
+Q2,Equipo E,18 - 11,Club E,1,Cancha 1,12:00
+Q2,Equipo F,19 - 10,Club F,1,Cancha 2,12:30
+Q2,Equipo G,20 - 9,Club G,1,Cancha 3,01:00
+Q2,Equipo H,21 - 8,Club H,1,Cancha 4,01:30
+Octavos,Equipo J,23 - 6,Club J,1,Cancha 2,02:30
+Octavos,Equipo K,24 - 5,Club K,1,Cancha 3,03:00
+Octavos,Equipo L,25 - 4,Club L,1,Cancha 4,03:30
+Octavos,Equipo M,26 - 3,Club M,1,Cancha 1,04:00
+Octavos,Equipo N,27 - 2,Club N,1,Cancha 2,04:30
+Octavos,Equipo I,22 - 7,Club I,1,Cancha 1,02:00
+Octavos,Equipo O,28 - 1,Club O,1,Cancha 3,05:00
+Octavos,Equipo P,29 - 0,Club P,1,Cancha 4,05:30
+Cuartos,Equipo Q,30 - 29,Club Q,1,Cancha 1,06:00
+Cuartos,Equipo R,31 - 28,Club R,1,Cancha 2,06:30
+Cuartos,Equipo S,32 - 27,Club S,1,Cancha 3,07:00
+Cuartos,Equipo T,33 - 26,Club T,1,Cancha 4,07:30
+Semifinal,Equipo U,34 - 25,Club U,1,Cancha 1,08:00
+Semifinal,Equipo V,35 - 24,Club V,1,Cancha 2,08:30
+Final,Equipo W,36 - 23,Club W,1,Cancha 1,09:00
+Q1,Equipo G,17 - 16,Club G,2,Cancha 3,10:00
+Q2,Equipo H,15 - 17,Club H,2,Cancha 1,12:00
 Cuartos,Equipo I,16 - 15,Club I,2,Cancha 2,02:00 PM
 Octavos,Equipo J,14 - 13,Club J,2,Cancha 3,04:00 PM
 Semifinal,Equipo K,12 - 14,Club K,2,Cancha 1,06:00 PM

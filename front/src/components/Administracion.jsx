@@ -300,8 +300,8 @@ const Administracion = () => {
         onChange={handleFileUpload}
       />
 
-      <div className="flex justify-between">
-        <div className="w-[50%] m-1">
+      <div className="flex flex-col sm:flex-row items-center sm:justify-between">
+        <div className="w-full sm:w-[50%] m-1">
           {renderTable(
             torneos,
             setTorneos,
@@ -310,7 +310,7 @@ const Administracion = () => {
             setSearchTermTorneos
           )}
         </div>
-        <div className="w-[50%] m-1">
+        <div className="w-full sm:w-[50%] sm:mt-0 mt-5 m-1">
           {renderTable(
             partidos,
             setPartidos,
@@ -322,7 +322,7 @@ const Administracion = () => {
       </div>
 
       <div className="flex justify-center mt-8 w-full">
-        <div className="w-full" style={{ maxWidth: "50%" }}>
+        <div className="w-full sm:max-w-[50%]">
           {renderTable(
             jugadores,
             setJugadores,

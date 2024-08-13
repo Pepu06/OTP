@@ -66,12 +66,10 @@ const PerfilJugador = () => {
       );
   }, [jugadorId]);
 
-  if (!jugador) return <div>Loading...</div>;
-
   return (
     <div className="relative p-4">
       {/* Contenedor del perfil */}
-      <div className="absolute h-[409px] top-16 left-0 w-1/5 ml-16 mr-16 bg-white p-4 rounded-lg shadow-md z-20">
+      <div className="absolute h-[409px] sm:top-16 top-[105px] left-0 right-0 mx-auto w-3/5 sm:w-1/5 sm:left-0 sm:ml-16 sm:mr-16 bg-white p-4 rounded-lg shadow-md z-20">
         <div className="text-center">
           <div className="bg-green-200 rounded-full w-40 h-40 mx-auto mb-4 mt-1"></div>
           <div className="w-50 h-24 bg-[#D9D9D9] flex flex-col items-center justify-center text-center text-[#373B3A] mb-1">
@@ -87,8 +85,8 @@ const PerfilJugador = () => {
 
       {/* Contenedor azul */}
       <div className="bg-pdarkblue text-white flex justify-between items-end py-8 px-4 z-10">
-        <p className="ml-96 font-inter font-bold text-2xl">
-        {jugador.Ranking}° {jugador.Nombre}
+        <p className="ml-4 sm:ml-96 font-inter font-bold text-xl sm:text-2xl">
+          {jugador.Ranking}° {jugador.Nombre}
         </p>
         <button
           onClick={scrollToTable}
@@ -99,51 +97,49 @@ const PerfilJugador = () => {
       </div>
 
       {/* Main Content */}
-      <div className="">
-        <div className="flex ml-96">
-          {/* Estadísticas y Recorrido */}
-          <div className="flex-grow p-4">
-            <div className="flex space-x-8">
-              {/* Estadísticas */}
-              <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
-                <h2 className="text-lg font-bold mb-4">ESTADÍSTICAS</h2>
-                <ul>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Competiciones jugadas</span> <span>{jugador.CJ}</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Última pareja</span> <span>{jugador.UP}</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Último resultado</span> <span>{jugador.UR}</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Cuartos de final</span> <span>{jugador.Cuartos}</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Semifinales</span> <span>{jugador.Semis}</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Finales</span> <span>{jugador.Finales}</span>
-                  </li>
-                </ul>
-              </div>
+      <div className="flex mt-[380px] sm:mt-0 flex-col sm:flex-row sm:ml-96">
+        {/* Estadísticas y Recorrido */}
+        <div className="flex-grow p-4">
+          <div className="flex flex-col sm:flex-row space-x-0 sm:space-x-8">
+            {/* Estadísticas */}
+            <div className="flex-1 bg-white p-4 rounded-lg shadow-md mb-4 sm:mb-0">
+              <h2 className="text-lg font-bold mb-4">ESTADÍSTICAS</h2>
+              <ul>
+                <li className="flex justify-between border-b py-2">
+                  <span>Competiciones jugadas</span> <span>{jugador.CJ}</span>
+                </li>
+                <li className="flex justify-between border-b py-2">
+                  <span>Última pareja</span> <span>{jugador.UP}</span>
+                </li>
+                <li className="flex justify-between border-b py-2">
+                  <span>Último resultado</span> <span>{jugador.UR}</span>
+                </li>
+                <li className="flex justify-between border-b py-2">
+                  <span>Cuartos de final</span> <span>{jugador.Cuartos}</span>
+                </li>
+                <li className="flex justify-between border-b py-2">
+                  <span>Semifinales</span> <span>{jugador.Semis}</span>
+                </li>
+                <li className="flex justify-between border-b py-2">
+                  <span>Finales</span> <span>{jugador.Finales}</span>
+                </li>
+              </ul>
+            </div>
 
-              {/* Recorrido */}
-              <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
-                <h2 className="text-lg font-bold mb-4">RECORRIDO</h2>
-                <ul>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Partidos jugados</span> <span>{jugador.PJ}</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Partidos Ganados</span> <span>{jugador.PG}</span>
-                  </li>
-                  <li className="flex justify-between border-b py-2">
-                    <span>Efectividad</span> <span>{jugador.Efectividad}</span>
-                  </li>
-                </ul>
-              </div>
+            {/* Recorrido */}
+            <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
+              <h2 className="text-lg font-bold mb-4">RECORRIDO</h2>
+              <ul>
+                <li className="flex justify-between border-b py-2">
+                  <span>Partidos jugados</span> <span>{jugador.PJ}</span>
+                </li>
+                <li className="flex justify-between border-b py-2">
+                  <span>Partidos Ganados</span> <span>{jugador.PG}</span>
+                </li>
+                <li className="flex justify-between border-b py-2">
+                  <span>Efectividad</span> <span>{jugador.Efectividad}</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

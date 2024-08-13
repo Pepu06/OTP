@@ -51,9 +51,6 @@ const Perfil = () => {
 
   return (
     <section id="torneos" className="bg-white ml-2 mt-1">
-      {/* <h2 className="text-2xl font-normal text-center text-pblue mb-2 font-daysone">
-        ¡Busca tu perfil!
-      </h2> */}
       <div className="flex justify-center mb-2">
         <Select
           options={jugadores}
@@ -63,10 +60,10 @@ const Perfil = () => {
           isSearchable
         />
       </div>
-      <div className="flex justify-start mt-2">
+      <div className="flex justify-center sm:justify-start mt-2">
         <a
           href={`/perfil/${selectedJugador ? selectedJugador.value : ""}`}
-          className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium text-sm font-poppins"
+          className="px-3 py-1 sm:px-5 sm:py-2 bg-pgreen text-white rounded-lg font-medium text-sm font-poppins"
           disabled={!selectedJugador}
         >
           BUSCAR PERFIL

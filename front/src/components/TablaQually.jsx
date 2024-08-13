@@ -26,10 +26,10 @@ const TablaQually = () => {
 
   return (
     <div
-      className="relative overflow-x-auto shadow-md sm:rounded-lg mx-auto"
+      className="relative overflow-x-auto max-h-96 shadow-md sm:rounded-lg mx-auto"
       style={{ maxWidth: "975px" }}
     >
-      <table className="w-full text-base text-left rtl:text-right text-gray-500">
+      <table className=" mx-2 sm:mx-0 text-sm w-full sm:text-base text-left rtl:text-right text-gray-500">
         <thead className="text-white font-daysone bg-gray-50 text-center">
           <tr>
             <th scope="col" className="border-1 border-gray-100 px-6 py-3 bg-pgreen font-light">
