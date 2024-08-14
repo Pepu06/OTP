@@ -43,7 +43,10 @@ const Header = () => {
         <Link to="/novedades" className="text-gray-600 hover:text-blue-600">
           NOVEDADES
         </Link>
-        <a href="https://wa.me/1140962011" className="text-gray-600 hover:text-blue-600">
+        <a
+          href="https://wa.me/1140962011"
+          className="text-gray-600 hover:text-blue-600"
+        >
           CONTACTO
         </a>
       </nav>
