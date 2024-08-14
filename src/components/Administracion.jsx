@@ -17,12 +17,16 @@ const Administracion = () => {
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        const response = await fetch(
-          "https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/process",
-          {
-            mode: "no-cors", // Configura la solicitud en modo no-cors
-          }
-        );
+        const response = await fetch("https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/process", {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const result = await response.json();
         const { data: sheetsData } = result;
 
@@ -51,17 +55,20 @@ const Administracion = () => {
 
     fetch("https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/upload", {
       method: "POST",
-      mode: "no-cors",
       body: formData,
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(() =>
-        fetch(
-          "https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/process",
-          {
-            mode: "no-cors", // Configura la solicitud en modo no-cors
-          }
-        )
+        fetch("https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/process", {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
       )
       .then((response) => {
         if (!response.ok) {
@@ -110,21 +117,22 @@ const Administracion = () => {
       const updatedRowsData = updatedRows(rows);
       setRows(updatedRowsData);
 
-      fetch(
-        "https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/update",
-        {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            table: editingTable,
-            rows: updatedRowsData,
-          }),
-        }
-      )
-        .then((response) => response.json())
+      fetch("https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          table: editingTable,
+          rows: updatedRowsData,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((data) => {
           if (data.error) {
             console.error("Error updating data:", data.error);
@@ -166,7 +174,6 @@ const Administracion = () => {
 
     fetch("https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/delete", {
       method: "POST",
-      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
       },
@@ -175,7 +182,12 @@ const Administracion = () => {
         index: index,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         if (data.error) {
           console.error("Error deleting data:", data.error);
