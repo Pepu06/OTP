@@ -9,8 +9,14 @@ const Perfil = () => {
     // Cargar los jugadores desde la API del backend
     const cargarJugadores = async () => {
       try {
-        const response = await fetch("http://localhost:5000/process"); // Cambia la URL según sea necesario
+        const response = await fetch("http://localhost:5000/process", {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          }
+        }); // Cambia la URL según sea necesario
         if (!response.ok) {
+          console.log(response)
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();
