@@ -19,7 +19,7 @@ const TournamentList = () => {
     // Función para cargar los datos de torneos desde el backend
     const fetchTournaments = async () => {
       try {
-        const response = await fetch("https://otpbackend1-pepu06s-projects.vercel.app/torneos");
+        const response = await fetch("http://127.0.0.1:5000/torneos");
         if (!response.ok)
           throw new Error("Error al cargar los datos de torneos");
 
@@ -177,9 +177,9 @@ const TournamentList = () => {
         </button>
       </div>
       <div className="flex justify-center mt-4">
-        <button className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
+        <a href="https://wa.me/1140962011" className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
           INSCRIBIRME
-        </button>
+        </a>
       </div>
       <img src={Pelotas} alt="pelotas" className="mt-5 w-full" />
     </section>

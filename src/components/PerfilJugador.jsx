@@ -20,7 +20,7 @@ const PerfilJugador = () => {
     console.log("Cargando datos para el ID del jugador:", jugadorId);
 
     // Cargar datos del jugador
-    fetch(`https://otpbackend1-pepu06s-projects.vercel.app/jugador/${jugadorId}`)
+    fetch(`http://127.0.0.1:5000/jugador/${jugadorId}`)
       .then((response) => {
         if (!response.ok) throw new Error("Error al cargar datos del jugador");
         return response.json();
@@ -34,7 +34,7 @@ const PerfilJugador = () => {
       );
 
     // Cargar histórico de torneos
-    fetch(`https://otpbackend1-pepu06s-projects.vercel.app/historico/${jugadorId}`)
+    fetch(`http://127.0.0.1:5000/historico/${jugadorId}`)
       .then((response) => {
         if (!response.ok)
           throw new Error("Error al cargar histórico de torneos");
