@@ -11,7 +11,7 @@ const TablaQually = () => {
     const fetchPartidos = async () => {
       try {
         const response = await fetch(
-          `https://otpbackend1-awl4pi07w-pepu06s-projects.vercel.app/partidos/${idTorneo}`
+          `https://otpbackend1-cwjlrb7ru-pepu06s-projects.vercel.app/partidos/${idTorneo}`
         );
         if (!response.ok)
           throw new Error("Error al cargar los datos de partidos");

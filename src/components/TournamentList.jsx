@@ -19,7 +19,7 @@ const TournamentList = () => {
     // Función para cargar los datos de torneos desde el backend
     const fetchTournaments = async () => {
       try {
-        const response = await fetch("https://otpbackend1-awl4pi07w-pepu06s-projects.vercel.app/torneos");
+        const response = await fetch("https://otpbackend1-cwjlrb7ru-pepu06s-projects.vercel.app/torneos");
         if (!response.ok)
           throw new Error("Error al cargar los datos de torneos");
 
