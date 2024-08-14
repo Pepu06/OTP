@@ -6,7 +6,7 @@ const TablaDeRankings = () => {
 
   useEffect(() => {
     // Cargar los datos de jugadores desde el backend
-    fetch("http://127.0.0.1:5000/jugadores") // Cambia esta URL al endpoint correcto de tu API
+    fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/api/jugadores") // Cambia esta URL al endpoint correcto de tu API
       .then((response) => {
         if (!response.ok)
           throw new Error("Error al cargar los datos de jugadores");
