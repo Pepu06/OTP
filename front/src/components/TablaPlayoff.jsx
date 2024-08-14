@@ -1,47 +1,53 @@
 import { useState, useEffect } from "react";
-import Papa from "papaparse";
 import { useParams } from "react-router-dom";
 import copa from "../assets/copa.png"; // Asegúrate de ajustar la ruta según tu estructura
 import otp from "../assets/otp.png"; // Asegúrate de ajustar la ruta según tu estructura
-
-const fetchData = (setData) => {
-  Papa.parse("/partidos.csv", {
-    download: true,
-    header: true,
-    complete: (results) => {
-      setData(results.data);
-    },
-  });
-};
 
 const TablaPlayoff = () => {
   const { idTorneo } = useParams(); // Obtén el parámetro IDTorneo de la URL
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetchData(setData);
-  }, []);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/partidos/${idTorneo}`
+        );
+        if (!response.ok)
+          throw new Error("Error al cargar los datos de partidos");
 
-  useEffect(() => {
-    console.log("ID Torneo:", idTorneo);
-    console.log("Datos Cargados:", data);
-  }, [idTorneo, data]);
+        const result = await response.json();
+        console.log("Datos crudos del backend:", result);
 
-  // Filtra los datos basados en el IDTorneo
-  const filteredData = data.filter((row) => row.IDTorneo === idTorneo);
-  const octavosData = filteredData
+        if (!Array.isArray(result.data)) {
+          throw new Error("La propiedad 'data' no es un array");
+        }
+
+        const filteredData = result.data.filter(
+          (partido) => String(partido.IDTorneo) === idTorneo
+        );
+
+        console.log("Datos filtrados:", filteredData);
+
+        setData(filteredData);
+      } catch (error) {
+        console.error("Error cargando datos de partidos:", error);
+      }
+    };
+
+    fetchData();
+  }, [idTorneo]);
+
+  const octavosData = data
     .filter((row) => row.Instancia === "Octavos")
     .slice(0, 8);
-  const cuartosData = filteredData
+  const cuartosData = data
     .filter((row) => row.Instancia === "Cuartos")
     .slice(0, 4);
-  const semisData = filteredData
+  const semisData = data
     .filter((row) => row.Instancia === "Semifinal")
     .slice(0, 2);
-  const finalData = filteredData
-    .filter((row) => row.Instancia === "Final")
-    .slice(0, 1);
-
+  const finalData = data.filter((row) => row.Instancia === "Final").slice(0, 1);
   // Asigna los equipos a variables individuales
   const [
     equipo1_1,

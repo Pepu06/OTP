@@ -5,9 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { motion } from "framer-motion";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
-import Papa from "papaparse"; // Importa papaparse
-import Perfil from "./Perfil"
-import Pelotas from "../assets/pelotas.png"
+import Perfil from "./Perfil";
+import Pelotas from "../assets/pelotas.png";
 
 const TournamentList = () => {
   const [selectedGender, setSelectedGender] = useState("Todos");
@@ -16,21 +15,33 @@ const TournamentList = () => {
   const [tournaments, setTournaments] = useState([]); // Estado para torneos
   const navigate = useNavigate();
 
-  // Función para cargar los datos del CSV
   useEffect(() => {
-    Papa.parse("/torneos.csv", {
-      // Cambia la ruta al archivo CSV
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: (result) => {
-        // Asegúrate de que `result.data` sea un array de objetos con las claves correctas
-        setTournaments(result.data);
-      },
-      error: (error) => {
-        console.error("Error al cargar el archivo CSV:", error);
-      },
-    });
+    // Función para cargar los datos de torneos desde el backend
+    const fetchTournaments = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/torneos");
+        if (!response.ok)
+          throw new Error("Error al cargar los datos de torneos");
+
+        const data = await response.json();
+        console.log("Datos crudos del backend:", data); // Verifica la estructura de los datos
+
+        // Asumiendo que `data` es una lista de torneos
+        const processedTournaments = data.map((tournament) => ({
+          ID: tournament.ID, // Asegúrate de que estos nombres coincidan con tu API
+          Nombre: tournament.Nombre,
+          Club: tournament.Club,
+          Categoria: tournament.Categoria,
+        }));
+
+        setTournaments(processedTournaments);
+        console.log("Torneos procesados:", processedTournaments); // Verifica los datos procesados
+      } catch (error) {
+        console.error("Error cargando datos de torneos:", error);
+      }
+    };
+
+    fetchTournaments();
   }, []);
 
   const filteredTournaments = tournaments.filter(
@@ -44,7 +55,7 @@ const TournamentList = () => {
     dots: true,
     infinite: selectedGender === "Todos",
     speed: 500,
-    slidesToShow: windowSmall ? 3 : Math.min(filteredTournaments.length, 4),
+    slidesToShow: windowSmall ? 3 : 4,
     slidesToScroll: 2,
     autoplay: true,
     swipeToSlide: true,
@@ -67,7 +78,9 @@ const TournamentList = () => {
       <div className="flex flex-col items-center">
         <button
           className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-pgrey text-xl font-bold focus:outline-none"
-          onClick={() => handleTournamentClick(tournament.Nombre, tournament.ID)}
+          onClick={() =>
+            handleTournamentClick(tournament.Nombre, tournament.ID)
+          }
           aria-label={`Ver torneo ${tournament.Nombre}`}
         >
           <span className="text-2xl">🏆</span>
@@ -96,7 +109,7 @@ const TournamentList = () => {
             Torneos
           </h2>
         </div>
-        
+
         <div className="w-1/5"></div>
       </div>
       <div className="flex justify-center">
@@ -105,10 +118,11 @@ const TournamentList = () => {
             {["Todos", "Masculino", "Mixto", "Femenino"].map((gender) => (
               <button
                 key={gender}
-                className={`sm:px-4 sm:py-2 ${selectedGender === gender
-                  ? "text-pblue border-blue-600"
-                  : "text-pgrey border-transparent"
-                  } hover:text-pblue focus:outline-none border-b-2`}
+                className={`sm:px-4 sm:py-2 ${
+                  selectedGender === gender
+                    ? "text-pblue border-blue-600"
+                    : "text-pgrey border-transparent"
+                } hover:text-pblue focus:outline-none border-b-2`}
                 onClick={() => setSelectedGender(gender)}
               >
                 {gender}
@@ -163,9 +177,9 @@ const TournamentList = () => {
         </button>
       </div>
       <div className="flex justify-center mt-4">
-        <a href="https://wa.me/1140962011" className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
+        <button className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
           INSCRIBIRME
-        </a>
+        </button>
       </div>
       <img src={Pelotas} alt="pelotas" className="mt-5 w-full" />
     </section>

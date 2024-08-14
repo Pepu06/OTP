@@ -11,9 +11,9 @@ const ContactSection = () => {
         Consultanos la fecha del próximo torneo
       </p>
       <div className="relative flex flex-col justify-between items-center px-4 py-2 w-full">
-        <a href="https://wa.me/1140962011" className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins mb-2">
+        <button className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins mb-2">
           CONTACTO
-        </a>
+        </button>
         <a
           href="/adm"
           className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins"

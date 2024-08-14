@@ -1,45 +1,34 @@
 import { useState, useEffect } from "react";
 import Select from "react-select";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const Perfil = () => {
   const [jugadores, setJugadores] = useState([]);
   const [selectedJugador, setSelectedJugador] = useState(null);
 
   useEffect(() => {
-    // Cargar los jugadores desde el CSV
+    // Cargar los jugadores desde la API del backend
     const cargarJugadores = async () => {
-      const response = await fetch("/jugadores.csv");
-      const text = await response.text();
-      const lines = text.split("\n");
+      try {
+        const response = await fetch("http://localhost:5000/process"); // Cambia la URL según sea necesario
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
 
-      const result = lines
-        .slice(1)
-        .map((line) => {
-          const columns = line.split(",");
+        const jugadoresData = result.data ? result.data.jugadores : [];
 
-          // Verificar que la línea tenga al menos 2 columnas (ID y Nombre)
-          if (columns.length >= 2) {
-            const ID = columns[0].trim();
-            const Nombre = columns[1].trim();
+        // Convertir los datos en el formato adecuado para Select
+        const formattedJugadores = jugadoresData.map((jugador) => ({
+          value: jugador.ID,
+          label: `${jugador.Nombre} (ID: ${jugador.ID})`,
+          ID: jugador.ID,
+          Nombre: jugador.Nombre,
+        }));
 
-            // Mostrar ID y Nombre en la consola
-            console.log(`ID: ${ID}, Nombre: ${Nombre}`);
-
-            return {
-              value: ID,
-              label: `${Nombre} (ID: ${ID})`,
-              ID: ID,
-              Nombre: Nombre,
-            };
-          }
-
-          return null; // Retornar null si la línea no tiene suficientes columnas
-        })
-        .filter(Boolean); // Filtrar los valores nulos
-
-      setJugadores(result);
+        setJugadores(formattedJugadores);
+      } catch (error) {
+        console.error("Error al cargar los jugadores:", error);
+      }
     };
 
     cargarJugadores();

@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import * as XLSX from "xlsx";
-import Papa from "papaparse";
 
 const Administracion = () => {
   const [torneos, setTorneos] = useState([]);
@@ -15,171 +13,195 @@ const Administracion = () => {
   const [editedRow, setEditedRow] = useState({});
   const [editingTable, setEditingTable] = useState("");
 
-  // Cargar datos iniciales desde los archivos CSV al montar el componente
+  // Cargar datos iniciales desde el backend
   useEffect(() => {
-    const loadCSVData = async () => {
+    const loadInitialData = async () => {
       try {
-        // Cargar torneos.csv
-        const torneosData = await fetchCSVData("/torneos.csv");
-        console.log("Torneos Data:", torneosData);
-        setTorneos(torneosData);
+        const response = await fetch("http://localhost:5000/process");
+        const result = await response.json();
+        const { data: sheetsData } = result;
 
-        // Cargar partidos.csv
-        const partidosData = await fetchCSVData("/partidos.csv");
-        console.log("Partidos Data:", partidosData);
-        setPartidos(partidosData);
-
-        // Cargar jugadores.csv
-        const jugadoresData = await fetchCSVData("/jugadores.csv");
-        console.log("Jugadores Data:", jugadoresData);
-        setJugadores(jugadoresData);
+        if (sheetsData) {
+          setTorneos(sheetsData.torneos || []);
+          setPartidos(sheetsData.partidos || []);
+          setJugadores(sheetsData.jugadores || []);
+        } else {
+          console.error("Error: sheetsData is undefined");
+        }
       } catch (error) {
         console.error("Error al cargar los datos iniciales:", error);
       }
     };
 
-    loadCSVData();
+    loadInitialData();
   }, []);
 
-  const fetchCSVData = (fileName) => {
-    return new Promise((resolve, reject) => {
-      fetch(fileName)
-        .then((response) => response.text())
-        .then((text) => {
-          Papa.parse(text, {
-            header: true,
-            skipEmptyLines: true,
-            dynamicTyping: true,
-            transformHeader: (header) => header.trim(),
-            transform: (value) => (value ? value.trim() : value),
-            complete: (result) => resolve(result.data),
-            error: (error) => reject(error),
-          });
-        })
-        .catch((error) => reject(error));
-    });
-  };
-
+  // Manejar la carga de archivos
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const data = new Uint8Array(event.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
+    const formData = new FormData();
+    formData.append("file", file);
 
-      workbook.SheetNames.forEach((sheetName) => {
-        const worksheet = workbook.Sheets[sheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-
-        if (sheetName.toLowerCase() === "torneos") {
-          setTorneos(jsonData);
-        } else if (sheetName.toLowerCase() === "partidos") {
-          setPartidos(jsonData);
-        } else if (sheetName.toLowerCase() === "jugadores") {
-          setJugadores(jsonData);
+    fetch("http://localhost:5000/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then(() => fetch("http://localhost:5000/process"))
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-      });
-    };
-
-    reader.readAsArrayBuffer(file);
+        return response.json();
+      })
+      .then((data) => {
+        const { data: sheetsData } = data;
+        if (sheetsData) {
+          setTorneos(sheetsData.torneos || []);
+          setPartidos(sheetsData.partidos || []);
+          setJugadores(sheetsData.jugadores || []);
+        } else {
+          console.error("Error: sheetsData is undefined");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
   };
 
+  // Manejar cambios en las ediciones
   const handleChange = (e, field) => {
-    setEditedRow({ ...editedRow, [field]: e.target.value });
+    setEditedRow((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
+  // Manejar edición
   const handleEdit = (index, table) => {
     setEditIndex(index);
     setEditingTable(table);
-    setEditedRow(
-      table === "torneos"
-        ? torneos[index]
-        : table === "partidos"
-        ? partidos[index]
-        : jugadores[index]
-    );
+    const rowData = {
+      torneos: torneos[index],
+      partidos: partidos[index],
+      jugadores: jugadores[index],
+    }[table];
+    setEditedRow(rowData || {});
   };
 
+  // Guardar cambios
   const handleSave = () => {
-    const updateTable = (table, setTable) => {
-      const updatedRows = table.map((row, index) =>
+    const updatedRows = (rows) =>
+      rows.map((row, index) =>
         index === editIndex ? { ...row, ...editedRow } : row
       );
-      setTable(updatedRows);
+
+    const updatedTable = (rows, setRows) => {
+      const updatedRowsData = updatedRows(rows);
+      setRows(updatedRowsData);
+
+      fetch("http://localhost:5000/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          table: editingTable,
+          rows: updatedRowsData,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error) {
+            console.error("Error updating data:", data.error);
+          } else {
+            console.log("Data updated successfully");
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+
+      setEditIndex(null);
+      setEditedRow({});
+      setEditingTable("");
     };
 
-    switch (editingTable) {
-      case "torneos":
-        updateTable(torneos, setTorneos);
-        break;
-      case "partidos":
-        updateTable(partidos, setPartidos);
-        break;
-      case "jugadores":
-        updateTable(jugadores, setJugadores);
-        break;
-      default:
-        break;
-    }
+    const tableActions = {
+      torneos: () => updatedTable(torneos, setTorneos),
+      partidos: () => updatedTable(partidos, setPartidos),
+      jugadores: () => updatedTable(jugadores, setJugadores),
+    };
 
-    setEditIndex(null);
-    setEditedRow({});
-    setEditingTable("");
+    tableActions[editingTable]?.();
   };
 
-  const handleDelete = (index, table, setTable) => {
-    const updatedRows = table.filter((_, i) => i !== index);
+  const handleDelete = (index, tableName) => {
+    const tableData = {
+      torneos: torneos,
+      partidos: partidos,
+      jugadores: jugadores,
+    }[tableName];
+
+    const updatedRows = tableData.filter((_, i) => i !== index);
+    const setTable = {
+      torneos: setTorneos,
+      partidos: setPartidos,
+      jugadores: setJugadores,
+    }[tableName];
+
     setTable(updatedRows);
+
+    fetch("http://localhost:5000/delete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        table: tableName,
+        index: index,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          console.error("Error deleting data:", data.error);
+        } else {
+          console.log("Data deleted successfully");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
   };
 
+  // Manejar cambios en la búsqueda
   const handleSearchChange = (e, tableName) => {
     const value = e.target.value;
-    switch (tableName) {
-      case "torneos":
-        setSearchTermTorneos(value);
-        break;
-      case "partidos":
-        setSearchTermPartidos(value);
-        break;
-      case "jugadores":
-        setSearchTermJugadores(value);
-        break;
-      default:
-        break;
-    }
+    const setSearchTerm = {
+      torneos: setSearchTermTorneos,
+      partidos: setSearchTermPartidos,
+      jugadores: setSearchTermJugadores,
+    }[tableName];
+    setSearchTerm(value);
   };
 
+  // Filtrar filas según el término de búsqueda
   const filteredRows = (rows, searchTerm, tableName) => {
     if (!searchTerm) return rows;
 
-    switch (tableName) {
-      case "torneos":
-        return rows.filter(
-          (row) =>
-            row.Nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (row.ID || "").toString().includes(searchTerm)
-        );
-      case "partidos":
-        return rows.filter((row) =>
-          (row.IDTorneo || "").toString().includes(searchTerm)
-        );
-      case "jugadores":
-        return rows.filter(
-          (row) =>
-            (row.ID || "").toString().includes(searchTerm) ||
-            (row.Nombre || "").toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      default:
-        return rows;
-    }
+    const filters = {
+      torneos: (row) =>
+        row.Nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (row.ID || "").toString().includes(searchTerm),
+      partidos: (row) => (row.IDTorneo || "").toString().includes(searchTerm),
+      jugadores: (row) =>
+        (row.ID || "").toString().includes(searchTerm) ||
+        (row.Nombre || "").toLowerCase().includes(searchTerm.toLowerCase()),
+    };
+
+    return rows.filter(filters[tableName]);
   };
 
+  // Capitalizar la primera letra
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
 
+  // Renderizar tabla
   const renderTable = (rows, setRows, tableName, searchTerm) => {
     const columns = {
       torneos: ["ID", "Nombre", "Categoria", "Fecha", "Club"],
@@ -228,18 +250,14 @@ const Administracion = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredRows(rows, searchTerm, tableName).map((row, index) => (
+                {filteredRows(rows, searchTerm, tableName).map((row) => (
                   <tr
-                    key={index}
-                    className={`bg-white border-b text-pgrey ${
-                      tableName === "partidos"
-                        ? "hover:bg-gray-100"
-                        : "hover:bg-gray-100"
-                    }`}
+                    key={row.ID}
+                    className={`bg-white border-b text-pgrey hover:bg-gray-100`}
                   >
                     {columns.map((column, i) => (
                       <td key={i} className="px-5 py-4">
-                        {editIndex === index && editingTable === tableName ? (
+                        {editIndex === row.ID && editingTable === tableName ? (
                           <input
                             type="text"
                             value={editedRow[column] || ""}
@@ -252,7 +270,7 @@ const Administracion = () => {
                       </td>
                     ))}
                     <td className="px-2 py-4 text-right">
-                      {editIndex === index && editingTable === tableName ? (
+                      {editIndex === row.ID && editingTable === tableName ? (
                         <button
                           onClick={handleSave}
                           className="font-medium text-blue-600 hover:underline"
@@ -261,7 +279,7 @@ const Administracion = () => {
                         </button>
                       ) : (
                         <button
-                          onClick={() => handleEdit(index, tableName)}
+                          onClick={() => handleEdit(row.ID, tableName)}
                           className="font-medium text-blue-600 hover:underline"
                         >
                           Editar
@@ -270,7 +288,7 @@ const Administracion = () => {
                     </td>
                     <td className="px-3 py-4 text-right">
                       <button
-                        onClick={() => handleDelete(index, tableName, setRows)}
+                        onClick={() => handleDelete(row.ID, tableName)}
                         className="font-medium text-red-600 hover:underline"
                       >
                         Borrar
@@ -299,40 +317,24 @@ const Administracion = () => {
         style={{ display: "none" }}
         onChange={handleFileUpload}
       />
-
       <div className="flex flex-col sm:flex-row items-center sm:justify-between">
         <div className="w-full sm:w-[50%] m-1">
-          {renderTable(
-            torneos,
-            setTorneos,
-            "torneos",
-            searchTermTorneos,
-            setSearchTermTorneos
-          )}
+          {renderTable(torneos, setTorneos, "torneos", searchTermTorneos)}
         </div>
         <div className="w-full sm:w-[50%] sm:mt-0 mt-5 m-1">
-          {renderTable(
-            partidos,
-            setPartidos,
-            "partidos",
-            searchTermPartidos,
-            setSearchTermPartidos
-          )}
+          {renderTable(partidos, setPartidos, "partidos", searchTermPartidos)}
         </div>
       </div>
-
       <div className="flex justify-center mt-8 w-full">
         <div className="w-full sm:max-w-[50%]">
           {renderTable(
             jugadores,
             setJugadores,
             "jugadores",
-            searchTermJugadores,
-            setSearchTermJugadores
+            searchTermJugadores
           )}
         </div>
       </div>
-
       <div className="flex justify-center">
         <button
           className="m-2 w-auto px-5 py-2 bg-pgreen hover:bg-green-600 text-white rounded-lg font-medium font-poppins"

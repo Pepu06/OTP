@@ -1,37 +1,32 @@
 import { useState, useEffect } from "react";
-import Papa from "papaparse"; // Asegúrate de instalar la librería con `npm install papaparse`
 
 const TablaDeRankings = () => {
   const [rankings, setRankings] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    // Cargar los datos de jugadores
-    fetch("/jugadores.csv")
+    // Cargar los datos de jugadores desde el backend
+    fetch("http://localhost:5000/jugadores") // Cambia esta URL al endpoint correcto de tu API
       .then((response) => {
-        if (!response.ok) throw new Error("Error al cargar jugadores.csv");
-        return response.text();
+        if (!response.ok)
+          throw new Error("Error al cargar los datos de jugadores");
+        return response.json();
       })
-      .then((text) => {
-        Papa.parse(text, {
-          header: true,
-          complete: (result) => {
-            console.log("Datos crudos del CSV:", result.data); // Verifica la estructura de los datos
-            const playerRankings = result.data
-              .map((row) => ({
-                ranking: parseInt(row.Ranking, 10), // Convierte a número
-                nombre: row.Nombre, // Asegúrate de que el nombre del campo coincida con tu CSV
-              }))
-              .filter((row) => !isNaN(row.ranking) && row.nombre); // Filtra valores inválidos
+      .then((data) => {
+        // Aquí asumimos que los datos vienen en formato JSON directamente
+        console.log("Datos crudos del backend:", data); // Verifica la estructura de los datos
+        const playerRankings = data
+          .map((row) => ({
+            ranking: parseInt(row.Ranking, 10), // Convierte a número
+            nombre: row.Nombre, // Asegúrate de que el nombre del campo coincida con tu API
+          }))
+          .filter((row) => !isNaN(row.ranking) && row.nombre); // Filtra valores inválidos
 
-            // Ordenar los rankings de menor a mayor
-            playerRankings.sort((a, b) => a.ranking - b.ranking);
+        // Ordenar los rankings de mayor a menor
+        playerRankings.sort((a, b) => b.ranking - a.ranking);
 
-            setRankings(playerRankings);
-            console.log("Rankings procesados:", playerRankings); // Verifica los datos procesados
-          },
-          error: (error) => console.error("Error al parsear CSV:", error),
-        });
+        setRankings(playerRankings);
+        console.log("Rankings procesados:", playerRankings); // Verifica los datos procesados
       })
       .catch((error) =>
         console.error("Error cargando datos de jugadores:", error)

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Papa from "papaparse";
 import { useParams } from "react-router-dom";
 import TablaDeRankings from "./TablaDeRankings";
 
@@ -20,51 +19,36 @@ const PerfilJugador = () => {
 
     console.log("Cargando datos para el ID del jugador:", jugadorId);
 
-    fetch("/jugadores.csv")
+    // Cargar datos del jugador
+    fetch(`http://localhost:5000/jugador/${jugadorId}`)
       .then((response) => {
-        if (!response.ok) throw new Error("Error al cargar jugadores.csv");
-        return response.text();
+        if (!response.ok) throw new Error("Error al cargar datos del jugador");
+        return response.json();
       })
-      .then((text) => {
-        Papa.parse(text, {
-          header: true,
-          complete: (result) => {
-            console.log("Datos de jugadores:", result.data);
-            const jugadorData = result.data.find((row) => row.ID === jugadorId);
-            console.log("Datos del jugador encontrado:", jugadorData);
-            setJugador(jugadorData);
-          },
-        });
+      .then((data) => {
+        console.log("Datos del jugador:", data.data);
+        setJugador(data.data);
       })
       .catch((error) =>
         console.error("Error cargando datos del jugador:", error)
       );
 
-    fetch("/historicoTorneos.csv")
+    // Cargar histórico de torneos
+    fetch(`http://localhost:5000/historico/${jugadorId}`)
       .then((response) => {
         if (!response.ok)
-          throw new Error("Error al cargar historicoTorneos.csv");
-        return response.text();
+          throw new Error("Error al cargar histórico de torneos");
+        return response.json();
       })
-      .then((text) => {
-        Papa.parse(text, {
-          header: true,
-          complete: (result) => {
-            console.log("Datos históricos de torneos:", result.data);
-            const historicoData = result.data.filter(
-              (row) => row.IDJugador === jugadorId
-            );
-            console.log("Datos del histórico de torneos:", historicoData);
-            setHistoricoTorneos(historicoData);
-          },
-        });
+      .then((data) => {
+        console.log("Datos históricos de torneos:", data.data);
+        setHistoricoTorneos(data.data);
       })
       .catch((error) =>
         console.error("Error cargando histórico de torneos:", error)
       );
   }, [jugadorId]);
 
-  // Verificar que jugador no sea null antes de renderizar
   if (!jugador) {
     return <div>Cargando datos del jugador...</div>;
   }
@@ -87,13 +71,13 @@ const PerfilJugador = () => {
       </div>
 
       {/* Contenedor azul */}
-      <div className="bg-pdarkblue text-white flex justify-between items-end py-8 px-4 z-10">
-        <p className="ml-4 sm:ml-96 font-inter font-bold text-xl sm:text-2xl">
+      <div className="bg-pdarkblue text-white flex flex-col justify-center items-center sm:flex-row sm:justify-between sm:items-end py-4 sm:py-8 px-4 z-10">
+        <p className="mb-3 sm:mb-0 sm:ml-96 font-inter font-bold text-xl sm:text-2xl">
           {jugador.Ranking}° {jugador.Nombre}
         </p>
         <button
           onClick={scrollToTable}
-          className="bg-white text-black mr-5 px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg"
+          className="bg-white text-black sm:mr-5 px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg"
         >
           Tabla de Rankings
         </button>
