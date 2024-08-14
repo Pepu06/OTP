@@ -17,7 +17,7 @@ const Administracion = () => {
   useEffect(() => {
     const loadInitialData = async () => {
       try {
-        const response = await fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/api/process");
+        const response = await fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/process");
         const result = await response.json();
         const { data: sheetsData } = result;
 
@@ -44,12 +44,12 @@ const Administracion = () => {
     const formData = new FormData();
     formData.append("file", file);
 
-    fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/api/upload", {
+    fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/upload", {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
-      .then(() => fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/api/process"))
+      .then(() => fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/process"))
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -97,7 +97,7 @@ const Administracion = () => {
       const updatedRowsData = updatedRows(rows);
       setRows(updatedRowsData);
 
-      fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/api/update", {
+      fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/update", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -147,7 +147,7 @@ const Administracion = () => {
 
     setTable(updatedRows);
 
-    fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/api/delete", {
+    fetch("https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/delete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

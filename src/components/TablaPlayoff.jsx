@@ -11,7 +11,7 @@ const TablaPlayoff = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/api/partidos/${idTorneo}`
+          `https://otpbackend1-31q78xpq6-pepu06s-projects.vercel.app/partidos/${idTorneo}`
         );
         if (!response.ok)
           throw new Error("Error al cargar los datos de partidos");
