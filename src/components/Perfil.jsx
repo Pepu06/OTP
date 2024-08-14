@@ -9,7 +9,7 @@ const Perfil = () => {
     // Cargar los jugadores desde la API del backend
     const cargarJugadores = async () => {
       try {
-        const response = await fetch("https://otpbackend1-cwjlrb7ru-pepu06s-projects.vercel.app/process", {
+        const response = await fetch("https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/process", {
           headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*"
