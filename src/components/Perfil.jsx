@@ -9,14 +9,18 @@ const Perfil = () => {
     // Cargar los jugadores desde la API del backend
     const cargarJugadores = async () => {
       try {
-        const response = await fetch("https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/process", {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
+        const response = await fetch(
+          "https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/process",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            mode: "no-cors",
           }
-        }); // Cambia la URL según sea necesario
+        ); // Cambia la URL según sea necesario
         if (!response.ok) {
-          console.log(response)
+          console.log(response);
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();

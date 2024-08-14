@@ -6,31 +6,36 @@ const TablaDeRankings = () => {
 
   useEffect(() => {
     // Cargar los datos de jugadores desde el backend
-    fetch("https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/jugadores") // Cambia esta URL al endpoint correcto de tu API
-      .then((response) => {
-        if (!response.ok)
-          throw new Error("Error al cargar los datos de jugadores");
-        return response.json();
-      })
-      .then((data) => {
-        // Aquí asumimos que los datos vienen en formato JSON directamente
-        console.log("Datos crudos del backend:", data); // Verifica la estructura de los datos
-        const playerRankings = data
-          .map((row) => ({
-            ranking: parseInt(row.Ranking, 10), // Convierte a número
-            nombre: row.Nombre, // Asegúrate de que el nombre del campo coincida con tu API
-          }))
-          .filter((row) => !isNaN(row.ranking) && row.nombre); // Filtra valores inválidos
+    fetch(
+      "https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/jugadores"
+    ),
+      {
+        mode: "no-cors", // Configura la solicitud en modo no-cors
+      } // Cambia esta URL al endpoint correcto de tu API
+        .then((response) => {
+          if (!response.ok)
+            throw new Error("Error al cargar los datos de jugadores");
+          return response.json();
+        })
+        .then((data) => {
+          // Aquí asumimos que los datos vienen en formato JSON directamente
+          console.log("Datos crudos del backend:", data); // Verifica la estructura de los datos
+          const playerRankings = data
+            .map((row) => ({
+              ranking: parseInt(row.Ranking, 10), // Convierte a número
+              nombre: row.Nombre, // Asegúrate de que el nombre del campo coincida con tu API
+            }))
+            .filter((row) => !isNaN(row.ranking) && row.nombre); // Filtra valores inválidos
 
-        // Ordenar los rankings de mayor a menor
-        playerRankings.sort((a, b) => b.ranking - a.ranking);
+          // Ordenar los rankings de mayor a menor
+          playerRankings.sort((a, b) => b.ranking - a.ranking);
 
-        setRankings(playerRankings);
-        console.log("Rankings procesados:", playerRankings); // Verifica los datos procesados
-      })
-      .catch((error) =>
-        console.error("Error cargando datos de jugadores:", error)
-      );
+          setRankings(playerRankings);
+          console.log("Rankings procesados:", playerRankings); // Verifica los datos procesados
+        })
+        .catch((error) =>
+          console.error("Error cargando datos de jugadores:", error)
+        );
   }, []);
 
   // Filtrar los rankings según el término de búsqueda

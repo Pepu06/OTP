@@ -20,33 +20,44 @@ const PerfilJugador = () => {
     console.log("Cargando datos para el ID del jugador:", jugadorId);
 
     // Cargar datos del jugador
-    fetch(`https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/jugador/${jugadorId}`)
-      .then((response) => {
-        if (!response.ok) throw new Error("Error al cargar datos del jugador");
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Datos del jugador:", data.data);
-        setJugador(data.data);
-      })
-      .catch((error) =>
-        console.error("Error cargando datos del jugador:", error)
-      );
+    fetch(
+      `https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/jugador/${jugadorId}`
+    ),
+      {
+        mode: "no-cors", // Configura la solicitud en modo no-cors
+      }
+        .then((response) => {
+          if (!response.ok)
+            throw new Error("Error al cargar datos del jugador");
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Datos del jugador:", data.data);
+          setJugador(data.data);
+        })
+        .catch((error) =>
+          console.error("Error cargando datos del jugador:", error)
+        );
 
     // Cargar histórico de torneos
-    fetch(`https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/historico/${jugadorId}`)
-      .then((response) => {
-        if (!response.ok)
-          throw new Error("Error al cargar histórico de torneos");
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Datos históricos de torneos:", data.data);
-        setHistoricoTorneos(data.data);
-      })
-      .catch((error) =>
-        console.error("Error cargando histórico de torneos:", error)
-      );
+    fetch(
+      `https://otpbackend1-7p1r8lq5b-pepu06s-projects.vercel.app/historico/${jugadorId}`
+    ),
+      {
+        mode: "no-cors", // Configura la solicitud en modo no-cors
+      }
+        .then((response) => {
+          if (!response.ok)
+            throw new Error("Error al cargar histórico de torneos");
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Datos históricos de torneos:", data.data);
+          setHistoricoTorneos(data.data);
+        })
+        .catch((error) =>
+          console.error("Error cargando histórico de torneos:", error)
+        );
   }, [jugadorId]);
 
   if (!jugador) {
