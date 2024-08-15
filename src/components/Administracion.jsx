@@ -9,9 +9,7 @@ const Administracion = () => {
   const [searchTermPartidos, setSearchTermPartidos] = useState("");
   const [searchTermJugadores, setSearchTermJugadores] = useState("");
 
-  const [editIndex, setEditIndex] = useState(null);
-  const [editedRow, setEditedRow] = useState({});
-  const [editingTable, setEditingTable] = useState("");
+  const [editingRow, setEditingRow] = useState(null);
 
   // Cargar datos iniciales desde el backend
   useEffect(() => {
@@ -69,105 +67,6 @@ const Administracion = () => {
       .catch((error) => console.error("Error:", error));
   };
 
-  // Manejar cambios en las ediciones
-  const handleChange = (e, field) => {
-    setEditedRow((prev) => ({ ...prev, [field]: e.target.value }));
-  };
-
-  // Manejar edición
-  const handleEdit = (index, table) => {
-    setEditIndex(index);
-    setEditingTable(table);
-    const rowData = {
-      torneos: torneos[index],
-      partidos: partidos[index],
-      jugadores: jugadores[index],
-    }[table];
-    setEditedRow(rowData || {});
-  };
-
-  // Guardar cambios
-  const handleSave = () => {
-    const updatedRows = (rows) =>
-      rows.map((row, index) =>
-        index === editIndex ? { ...row, ...editedRow } : row
-      );
-
-    const updatedTable = (rows, setRows) => {
-      const updatedRowsData = updatedRows(rows);
-      setRows(updatedRowsData);
-
-      fetch("http://127.0.0.1:5000/update", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          table: editingTable,
-          rows: updatedRowsData,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.error) {
-            console.error("Error updating data:", data.error);
-          } else {
-            console.log("Data updated successfully");
-          }
-        })
-        .catch((error) => console.error("Error:", error));
-
-      setEditIndex(null);
-      setEditedRow({});
-      setEditingTable("");
-    };
-
-    const tableActions = {
-      torneos: () => updatedTable(torneos, setTorneos),
-      partidos: () => updatedTable(partidos, setPartidos),
-      jugadores: () => updatedTable(jugadores, setJugadores),
-    };
-
-    tableActions[editingTable]?.();
-  };
-
-  const handleDelete = (index, tableName) => {
-    const tableData = {
-      torneos: torneos,
-      partidos: partidos,
-      jugadores: jugadores,
-    }[tableName];
-
-    const updatedRows = tableData.filter((_, i) => i !== index);
-    const setTable = {
-      torneos: setTorneos,
-      partidos: setPartidos,
-      jugadores: setJugadores,
-    }[tableName];
-
-    setTable(updatedRows);
-
-    fetch("http://127.0.0.1:5000/delete", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        table: tableName,
-        index: index,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          console.error("Error deleting data:", data.error);
-        } else {
-          console.log("Data deleted successfully");
-        }
-      })
-      .catch((error) => console.error("Error:", error));
-  };
-
   // Manejar cambios en la búsqueda
   const handleSearchChange = (e, tableName) => {
     const value = e.target.value;
@@ -201,6 +100,71 @@ const Administracion = () => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
 
+  // Manejar la edición de filas
+  const handleEdit = (tableName, rowId) => {
+    setEditingRow({ tableName, rowId });
+  };
+
+  const handleSave = (tableName) => {
+    const rows = { torneos, partidos, jugadores }[tableName];
+    const updatedRow = rows.find((row) => row.ID === editingRow.rowId);
+
+    fetch("http://127.0.0.1:5000/update_row", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ table: tableName, row: updatedRow }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        setEditingRow(null);
+      })
+      .catch((error) => console.error("Error:", error));
+  };
+
+  const handleDelete = (tableName, rowId) => {
+    fetch(`http://127.0.0.1:5000/delete_row`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        table: tableName,
+        id: rowId,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        if (tableName === "torneos") {
+          // Si se elimina un torneo, también debes eliminar los partidos
+          fetch(`http://127.0.0.1:5000/partidos/${rowId}`)
+            .then((response) => response.json())
+            .then((data) => {
+              setPartidos((prevPartidos) =>
+                prevPartidos.filter((row) => row.IDTorneo !== rowId)
+              );
+            })
+            .catch((error) => console.error("Error fetching partidos:", error));
+        }
+
+        // Actualizar el estado para la tabla correspondiente
+        const setRows = {
+          torneos: setTorneos,
+          partidos: setPartidos,
+          jugadores: setJugadores,
+        }[tableName];
+
+        setRows((prevRows) => prevRows.filter((row) => row.ID !== rowId));
+      })
+      .catch((error) => console.error("Error:", error));
+  };
+
   // Renderizar tabla
   const renderTable = (rows, setRows, tableName, searchTerm) => {
     const columns = {
@@ -208,6 +172,12 @@ const Administracion = () => {
       partidos: ["IDTorneo", "Instancia", "Equipo1", "Resultado", "Equipo2"],
       jugadores: ["ID", "Nombre", "Ranking"],
     }[tableName];
+
+    const handleKeyDown = (e, tableName) => {
+      if (e.key === "Enter") {
+        handleSave(tableName);
+      }
+    };
 
     return (
       <div className="relative overflow-x-auto w-full">
@@ -245,8 +215,7 @@ const Administracion = () => {
                       {capitalizeFirstLetter(col)}
                     </th>
                   ))}
-                  <th className="px-2 py-2 text-right bg-gray-200">Editar</th>
-                  <th className="px-3 py-2 text-right bg-gray-200">Borrar</th>
+                  <th className="px-20 py-2 text-center bg-gray-200"></th>
                 </tr>
               </thead>
               <tbody>
@@ -257,42 +226,55 @@ const Administracion = () => {
                   >
                     {columns.map((column, i) => (
                       <td key={i} className="px-5 py-4">
-                        {editIndex === row.ID && editingTable === tableName ? (
+                        {editingRow &&
+                        editingRow.tableName === tableName &&
+                        editingRow.rowId === row.ID ? (
                           <input
                             type="text"
-                            value={editedRow[column] || ""}
-                            onChange={(e) => handleChange(e, column)}
-                            className="border border-pgrey rounded-lg px-2 py-1 max-w-24"
+                            value={row[column] || ""}
+                            onChange={(e) => {
+                              const updatedRows = rows.map((r) =>
+                                r.ID === row.ID
+                                  ? { ...r, [column]: e.target.value }
+                                  : r
+                              );
+                              setRows(updatedRows);
+                            }}
+                            onKeyDown={(e) => handleKeyDown(e, tableName)}
                           />
                         ) : (
                           row[column] || ""
                         )}
                       </td>
                     ))}
-                    <td className="px-2 py-4 text-right">
-                      {editIndex === row.ID && editingTable === tableName ? (
-                        <button
-                          onClick={handleSave}
-                          className="font-medium text-blue-600 hover:underline"
-                        >
-                          Guardar
-                        </button>
+                    <td className="px-5 text-center py-4">
+                      {editingRow &&
+                      editingRow.tableName === tableName &&
+                      editingRow.rowId === row.ID ? (
+                        <>
+                          <button
+                            className="text-green-600 hover:text-green-800"
+                            onClick={() => handleSave(tableName)}
+                          >
+                            Guardar
+                          </button>
+                        </>
                       ) : (
-                        <button
-                          onClick={() => handleEdit(row.ID, tableName)}
-                          className="font-medium text-blue-600 hover:underline"
-                        >
-                          Editar
-                        </button>
+                        <>
+                          <button
+                            className="text-blue-600 hover:text-blue-800"
+                            onClick={() => handleEdit(tableName, row.ID)}
+                          >
+                            Editar
+                          </button>
+                          <button
+                            className="text-red-600 hover:text-red-800 ml-4"
+                            onClick={() => handleDelete(tableName, row.ID)}
+                          >
+                            Eliminar
+                          </button>
+                        </>
                       )}
-                    </td>
-                    <td className="px-3 py-4 text-right">
-                      <button
-                        onClick={() => handleDelete(row.ID, tableName)}
-                        className="font-medium text-red-600 hover:underline"
-                      >
-                        Borrar
-                      </button>
                     </td>
                   </tr>
                 ))}
