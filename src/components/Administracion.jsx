@@ -1,9 +1,22 @@
 import { useState, useEffect } from "react";
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore";
+import * as XLSX from "xlsx";
+import { db } from "../firebase/config";
 
 const Administracion = () => {
   const [torneos, setTorneos] = useState([]);
   const [partidos, setPartidos] = useState([]);
   const [jugadores, setJugadores] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
 
   const [searchTermTorneos, setSearchTermTorneos] = useState("");
   const [searchTermPartidos, setSearchTermPartidos] = useState("");
@@ -11,60 +24,90 @@ const Administracion = () => {
 
   const [editingRow, setEditingRow] = useState(null);
 
-  // Cargar datos iniciales desde el backend
+  // Cargar datos iniciales desde Firestore
   useEffect(() => {
     const loadInitialData = async () => {
-      try {
-        const response = await fetch("http://127.0.0.1:5000/process");
-        const result = await response.json();
-        const { data: sheetsData } = result;
+      setLoading(true);
+      setLoadingMessage("Cargando datos...");
 
-        if (sheetsData) {
-          setTorneos(sheetsData.torneos || []);
-          setPartidos(sheetsData.partidos || []);
-          setJugadores(sheetsData.jugadores || []);
-        } else {
-          console.error("Error: sheetsData is undefined");
-        }
+      try {
+        const torneosRef = collection(db, "torneos");
+        const partidosRef = collection(db, "partidos");
+        const jugadoresRef = collection(db, "jugadores");
+
+        const [torneosSnapshot, partidosSnapshot, jugadoresSnapshot] =
+          await Promise.all([
+            getDocs(torneosRef),
+            getDocs(partidosRef),
+            getDocs(jugadoresRef),
+          ]);
+
+        const torneosData = torneosSnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          ID: doc.id,
+        }));
+        const partidosData = partidosSnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          ID: doc.id,
+        }));
+        const jugadoresData = jugadoresSnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          ID: doc.id,
+        }));
+
+        setTorneos(torneosData);
+        setPartidos(partidosData);
+        setJugadores(jugadoresData);
       } catch (error) {
         console.error("Error al cargar los datos iniciales:", error);
+      } finally {
+        setLoading(false);
+        setLoadingMessage("Datos cargados con éxito.");
+        setTimeout(() => setLoadingMessage(""), 3000); // Ocultar mensaje después de 3 segundos
       }
     };
 
     loadInitialData();
   }, []);
 
-  // Manejar la carga de archivos
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const fetchData = async () => {
+    setLoading(true);
+    setLoadingMessage("Cargando datos...");
 
-    const formData = new FormData();
-    formData.append("file", file);
+    try {
+      const torneosRef = collection(db, "torneos");
+      const partidosRef = collection(db, "partidos");
+      const jugadoresRef = collection(db, "jugadores");
 
-    fetch("http://127.0.0.1:5000/upload", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then(() => fetch("http://127.0.0.1:5000/process"))
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const { data: sheetsData } = data;
-        if (sheetsData) {
-          setTorneos(sheetsData.torneos || []);
-          setPartidos(sheetsData.partidos || []);
-          setJugadores(sheetsData.jugadores || []);
-        } else {
-          console.error("Error: sheetsData is undefined");
-        }
-      })
-      .catch((error) => console.error("Error:", error));
+      const [torneosSnapshot, partidosSnapshot, jugadoresSnapshot] =
+        await Promise.all([
+          getDocs(torneosRef),
+          getDocs(partidosRef),
+          getDocs(jugadoresRef),
+        ]);
+
+      const torneosData = torneosSnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        ID: doc.id,
+      }));
+      const partidosData = partidosSnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        ID: doc.id,
+      }));
+      const jugadoresData = jugadoresSnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        ID: doc.id,
+      }));
+
+      setTorneos(torneosData);
+      setPartidos(partidosData);
+      setJugadores(jugadoresData);
+    } catch (error) {
+      console.error("Error al cargar los datos:", error);
+    } finally {
+      setLoading(false);
+      setLoadingMessage("");
+    }
   };
 
   // Manejar cambios en la búsqueda
@@ -84,12 +127,12 @@ const Administracion = () => {
 
     const filters = {
       torneos: (row) =>
-        row.Nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (row.ID || "").toString().includes(searchTerm),
-      partidos: (row) => (row.IDTorneo || "").toString().includes(searchTerm),
+        row.ID.toString().includes(searchTerm) ||
+        row.Nombre.toLowerCase().includes(searchTerm.toLowerCase()),
+      partidos: (row) => row.IDTorneo.toString().includes(searchTerm),
       jugadores: (row) =>
-        (row.ID || "").toString().includes(searchTerm) ||
-        (row.Nombre || "").toLowerCase().includes(searchTerm.toLowerCase()),
+        row.ID.toString().includes(searchTerm) ||
+        row.Nombre.toLowerCase().includes(searchTerm.toLowerCase()),
     };
 
     return rows.filter(filters[tableName]);
@@ -105,53 +148,50 @@ const Administracion = () => {
     setEditingRow({ tableName, rowId });
   };
 
-  const handleSave = (tableName) => {
+  const handleSave = async (tableName) => {
     const rows = { torneos, partidos, jugadores }[tableName];
     const updatedRow = rows.find((row) => row.ID === editingRow.rowId);
 
-    fetch("http://127.0.0.1:5000/update_row", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ table: tableName, row: updatedRow }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        setEditingRow(null);
-      })
-      .catch((error) => console.error("Error:", error));
+    try {
+      await updateDoc(doc(db, tableName, editingRow.rowId), updatedRow);
+      setEditingRow(null);
+    } catch (error) {
+      console.error("Error al guardar:", error);
+    }
   };
 
-  const handleDelete = (tableName, rowId) => {
-    fetch(`http://127.0.0.1:5000/delete_row`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        table: tableName,
-        id: rowId,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+  const handleDelete = async (tableName, rowId) => {
+    setLoading(true);
+    setLoadingMessage("Eliminando datos...");
 
-        if (tableName === "torneos") {
-          // Si se elimina un torneo, también debes eliminar los partidos
-          fetch(`http://127.0.0.1:5000/partidos/${rowId}`)
-            .then((response) => response.json())
-            .then((data) => {
-              setPartidos((prevPartidos) =>
-                prevPartidos.filter((row) => row.IDTorneo !== rowId)
-              );
-            })
-            .catch((error) => console.error("Error fetching partidos:", error));
-        }
+    try {
+      if (tableName === "torneos") {
+        // Eliminar torneo
+        await deleteDoc(doc(db, tableName, rowId));
+
+        // Eliminar partidos asociados al torneo
+        const partidosRef = collection(db, "partidos");
+        const partidosSnapshot = await getDocs(partidosRef);
+        const partidosData = partidosSnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          ID: doc.id,
+        }));
+
+        // Filtrar partidos que corresponden al torneo eliminado
+        const partidosToDelete = partidosData
+          .filter((partido) => partido.IDTorneo == rowId)
+          .map((partido) => deleteDoc(doc(partidosRef, partido.ID)));
+
+        // Esperar a que todas las eliminaciones se completen
+        await Promise.all(partidosToDelete);
+
+        // Actualizar el estado para la tabla de partidos
+        setPartidos(
+          partidosData.filter((partido) => partido.IDTorneo !== rowId)
+        );
+      } else {
+        // Eliminar otras entidades (partidos, jugadores)
+        await deleteDoc(doc(db, tableName, rowId));
 
         // Actualizar el estado para la tabla correspondiente
         const setRows = {
@@ -161,8 +201,71 @@ const Administracion = () => {
         }[tableName];
 
         setRows((prevRows) => prevRows.filter((row) => row.ID !== rowId));
-      })
-      .catch((error) => console.error("Error:", error));
+      }
+
+      await fetchData(); // Recargar datos después de eliminar
+
+      setLoading(false);
+      setLoadingMessage("Datos eliminados con éxito.");
+      setTimeout(() => setLoadingMessage(""), 3000); // Ocultar mensaje después de 3 segundos
+    } catch (error) {
+      console.error("Error al eliminar:", error);
+    }
+  };
+
+  // Manejar la carga del archivo Excel
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setLoading(true);
+    setLoadingMessage("Procesando archivo...");
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const data = new Uint8Array(event.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+
+      console.log("Nombres de las hojas en el archivo:", workbook.SheetNames); // Log para depuración
+
+      for (const sheetName of workbook.SheetNames) {
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+        console.log(`Procesando hoja: ${sheetName}`); // Log para depuración
+
+        if (
+          sheetName === "torneos" ||
+          sheetName === "partidos" ||
+          sheetName === "jugadores"
+        ) {
+          const collectionRef = collection(db, sheetName);
+
+          // Borrar colección existente
+          const snapshot = await getDocs(collectionRef);
+          const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
+          await Promise.all(deletePromises);
+
+          // Agregar nuevos datos
+          const addPromises = jsonData.map((record) => {
+            const docId = String(record.ID);
+            return setDoc(doc(collectionRef, docId), record);
+          });
+          await Promise.all(addPromises);
+
+          console.log(`Datos de la hoja ${sheetName} cargados con éxito.`); // Log para depuración
+        } else {
+          console.warn(`Hoja ${sheetName} no reconocida.`); // Log para depuración
+        }
+      }
+
+      await fetchData(); // Recargar datos después de procesar el archivo
+
+      setLoading(false);
+      setLoadingMessage("Archivo procesado y datos actualizados en Firebase");
+      setTimeout(() => setLoadingMessage(""), 3000); // Ocultar mensaje después de 3 segundos
+    };
+    reader.readAsArrayBuffer(file);
   };
 
   // Renderizar tabla
@@ -233,6 +336,7 @@ const Administracion = () => {
                             type="text"
                             value={row[column] || ""}
                             onChange={(e) => {
+                              // Actualizar el estado de la fila
                               const updatedRows = rows.map((r) =>
                                 r.ID === row.ID
                                   ? { ...r, [column]: e.target.value }
@@ -288,6 +392,15 @@ const Administracion = () => {
 
   return (
     <div className="flex flex-col p-4">
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+          <div className="flex flex-col items-center">
+            <div className="loader"></div>{" "}
+            {/* Estilo para el círculo de carga */}
+            <p className="text-white mt-4">{loadingMessage}</p>
+          </div>
+        </div>
+      )}
       <div className="text-5xl text-center text-pblue mt-10 mb-8 flex justify-center">
         <span className="font-poppins font-extrabold">A</span>
         <span className="font-daysone font-normal">dministracion</span>

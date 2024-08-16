@@ -1,0 +1,1413 @@
+{
+    "torneos": [
+        {
+            "ID": 2,
+            "Categoria": "Femenino",
+            "Fecha": "2024-08-05",
+            "Club": "Club B",
+            "Nombre": "Torneo 2"
+        },
+        {
+            "ID": 3,
+            "Categoria": "Mixto",
+            "Fecha": "2024-08-10",
+            "Club": "Club C",
+            "Nombre": "Torneo 3"
+        },
+        {
+            "ID": 4,
+            "Categoria": "Masculino",
+            "Fecha": "2024-08-15",
+            "Club": "Club D",
+            "Nombre": "Torneo 4"
+        },
+        {
+            "ID": 5,
+            "Categoria": "Femenino",
+            "Fecha": "2024-08-20",
+            "Club": "Club E",
+            "Nombre": "Torneo 5"
+        },
+        {
+            "ID": 6,
+            "Categoria": "Mixto",
+            "Fecha": "2024-08-25",
+            "Club": "Club F",
+            "Nombre": "Torneo 6"
+        },
+        {
+            "ID": 7,
+            "Categoria": "Masculino",
+            "Fecha": "2024-09-01",
+            "Club": "Club G",
+            "Nombre": "Torneo 7"
+        },
+        {
+            "ID": 8,
+            "Categoria": "Femenino",
+            "Fecha": "2024-09-05",
+            "Club": "Club H",
+            "Nombre": "Torneo 8"
+        },
+        {
+            "ID": 9,
+            "Categoria": "Mixto",
+            "Fecha": "2024-09-10",
+            "Club": "Club I",
+            "Nombre": "El Nueve"
+        },
+        {
+            "ID": 10,
+            "Categoria": "Masculino",
+            "Fecha": "2024-09-15",
+            "Club": "Club J",
+            "Nombre": "Torneo 10"
+        },
+        {
+            "ID": 11,
+            "Categoria": "Femenino",
+            "Fecha": "2024-09-20",
+            "Club": "Club K",
+            "Nombre": "Torneo 11"
+        },
+        {
+            "ID": 12,
+            "Categoria": "Mixto",
+            "Fecha": "2024-09-25",
+            "Club": "Club L",
+            "Nombre": "Torneo 12"
+        },
+        {
+            "ID": 13,
+            "Categoria": "Masculino",
+            "Fecha": "2024-10-01",
+            "Club": "Club M",
+            "Nombre": "Torneo 13"
+        },
+        {
+            "ID": 14,
+            "Categoria": "Femenino",
+            "Fecha": "2024-10-05",
+            "Club": "Club N",
+            "Nombre": "Torneo 14"
+        },
+        {
+            "ID": 15,
+            "Categoria": "Mixto",
+            "Fecha": "2024-10-10",
+            "Club": "Club O",
+            "Nombre": "Torneo 15"
+        }
+    ],
+    "partidos": [
+        {
+            "ID": 24,
+            "Instancia": "Q1",
+            "Equipo1": "Equipo G",
+            "Resultado": "17 - 16",
+            "Equipo2": "Club G",
+            "IDTorneo": 2,
+            "Cancha": "Cancha 3",
+            "Horario": "10:00"
+        },
+        {
+            "ID": 25,
+            "Instancia": "Q2",
+            "Equipo1": "Equipo H",
+            "Resultado": "15 - 17",
+            "Equipo2": "Club H",
+            "IDTorneo": 2,
+            "Cancha": "Cancha 1",
+            "Horario": "12:00"
+        },
+        {
+            "ID": 26,
+            "Instancia": "Cuartos",
+            "Equipo1": "Equipo I",
+            "Resultado": "16 - 15",
+            "Equipo2": "Club I",
+            "IDTorneo": 2,
+            "Cancha": "Cancha 2",
+            "Horario": "02:00 PM"
+        },
+        {
+            "ID": 27,
+            "Instancia": "Octavos",
+            "Equipo1": "Equipo J",
+            "Resultado": "14 - 13",
+            "Equipo2": "Club J",
+            "IDTorneo": 2,
+            "Cancha": "Cancha 3",
+            "Horario": "04:00 PM"
+        },
+        {
+            "ID": 28,
+            "Instancia": "Semifinal",
+            "Equipo1": "Equipo K",
+            "Resultado": "12 - 14",
+            "Equipo2": "Club K",
+            "IDTorneo": 2,
+            "Cancha": "Cancha 1",
+            "Horario": "06:00 PM"
+        },
+        {
+            "ID": 29,
+            "Instancia": "Final",
+            "Equipo1": "Equipo L",
+            "Resultado": "13 - 15",
+            "Equipo2": "Club L",
+            "IDTorneo": 2,
+            "Cancha": "Cancha 2",
+            "Horario": "08:00 PM"
+        },
+        {
+            "ID": 30,
+            "Instancia": "Q1",
+            "Equipo1": "Equipo M",
+            "Resultado": "18 - 16",
+            "Equipo2": "Club M",
+            "IDTorneo": 3,
+            "Cancha": "Cancha 3",
+            "Horario": "10:00 AM"
+        },
+        {
+            "ID": 31,
+            "Instancia": "Q2",
+            "Equipo1": "Equipo N",
+            "Resultado": "17 - 18",
+            "Equipo2": "Club N",
+            "IDTorneo": 3,
+            "Cancha": "Cancha 1",
+            "Horario": "12:00 PM"
+        },
+        {
+            "ID": 32,
+            "Instancia": "Cuartos",
+            "Equipo1": "Equipo O",
+            "Resultado": "19 - 18",
+            "Equipo2": "Club O",
+            "IDTorneo": 3,
+            "Cancha": "Cancha 2",
+            "Horario": "02:00 PM"
+        },
+        {
+            "ID": 33,
+            "Instancia": "Octavos",
+            "Equipo1": "Equipo P",
+            "Resultado": "16 - 15",
+            "Equipo2": "Club P",
+            "IDTorneo": 3,
+            "Cancha": "Cancha 3",
+            "Horario": "04:00 PM"
+        },
+        {
+            "ID": 34,
+            "Instancia": "Semifinal",
+            "Equipo1": "Equipo Q",
+            "Resultado": "17 - 16",
+            "Equipo2": "Club Q",
+            "IDTorneo": 3,
+            "Cancha": "Cancha 1",
+            "Horario": "06:00 PM"
+        },
+        {
+            "ID": 35,
+            "Instancia": "Final",
+            "Equipo1": "Equipo R",
+            "Resultado": "19 - 20",
+            "Equipo2": "Club R",
+            "IDTorneo": 3,
+            "Cancha": "Cancha 2",
+            "Horario": "08:00 PM"
+        },
+        {
+            "ID": 36,
+            "Instancia": "Q1",
+            "Equipo1": "Equipo S",
+            "Resultado": "13 - 12",
+            "Equipo2": "Club S",
+            "IDTorneo": 4,
+            "Cancha": "Cancha 3",
+            "Horario": "10:00 AM"
+        },
+        {
+            "ID": 37,
+            "Instancia": "Q2",
+            "Equipo1": "Equipo T",
+            "Resultado": "15 - 14",
+            "Equipo2": "Club T",
+            "IDTorneo": 4,
+            "Cancha": "Cancha 1",
+            "Horario": "12:00 PM"
+        },
+        {
+            "ID": 38,
+            "Instancia": "Cuartos",
+            "Equipo1": "Equipo U",
+            "Resultado": "16 - 17",
+            "Equipo2": "Club U",
+            "IDTorneo": 4,
+            "Cancha": "Cancha 2",
+            "Horario": "02:00 PM"
+        },
+        {
+            "ID": 39,
+            "Instancia": "Octavos",
+            "Equipo1": "Equipo V",
+            "Resultado": "18 - 17",
+            "Equipo2": "Club V",
+            "IDTorneo": 4,
+            "Cancha": "Cancha 3",
+            "Horario": "04:00 PM"
+        },
+        {
+            "ID": 40,
+            "Instancia": "Semifinal",
+            "Equipo1": "Equipo W",
+            "Resultado": "20 - 19",
+            "Equipo2": "Club W",
+            "IDTorneo": 4,
+            "Cancha": "Cancha 1",
+            "Horario": "06:00 PM"
+        },
+        {
+            "ID": 41,
+            "Instancia": "Final",
+            "Equipo1": "Equipo X",
+            "Resultado": "21 - 20",
+            "Equipo2": "Club X",
+            "IDTorneo": 4,
+            "Cancha": "Cancha 2",
+            "Horario": "08:00 PM"
+        },
+        {
+            "ID": 42,
+            "Instancia": "Q1",
+            "Equipo1": "Equipo Y",
+            "Resultado": "14 - 13",
+            "Equipo2": "Club Y",
+            "IDTorneo": 5,
+            "Cancha": "Cancha 3",
+            "Horario": "10:00 AM"
+        },
+        {
+            "ID": 43,
+            "Instancia": "Q2",
+            "Equipo1": "Equipo Z",
+            "Resultado": "15 - 16",
+            "Equipo2": "Club Z",
+            "IDTorneo": 5,
+            "Cancha": "Cancha 1",
+            "Horario": "12:00 PM"
+        },
+        {
+            "ID": 44,
+            "Instancia": "Cuartos",
+            "Equipo1": "Equipo AA",
+            "Resultado": "17 - 18",
+            "Equipo2": "Club AA",
+            "IDTorneo": 5,
+            "Cancha": "Cancha 2",
+            "Horario": "02:00 PM"
+        },
+        {
+            "ID": 45,
+            "Instancia": "Octavos",
+            "Equipo1": "Equipo BB",
+            "Resultado": "16 - 15",
+            "Equipo2": "Club BB",
+            "IDTorneo": 5,
+            "Cancha": "Cancha 3",
+            "Horario": "04:00 PM"
+        },
+        {
+            "ID": 46,
+            "Instancia": "Semifinal",
+            "Equipo1": "Equipo CC",
+            "Resultado": "19 - 18",
+            "Equipo2": "Club CC",
+            "IDTorneo": 5,
+            "Cancha": "Cancha 1",
+            "Horario": "06:00 PM"
+        },
+        {
+            "ID": 47,
+            "Instancia": "Final",
+            "Equipo1": "Equipo DD",
+            "Resultado": "20 - 19",
+            "Equipo2": "Club DD",
+            "IDTorneo": 5,
+            "Cancha": "Cancha 2",
+            "Horario": "08:00 PM"
+        },
+        {
+            "ID": 48,
+            "Instancia": "Q1",
+            "Equipo1": "Equipo EE",
+            "Resultado": "12 - 11",
+            "Equipo2": "Club EE",
+            "IDTorneo": 6,
+            "Cancha": "Cancha 3",
+            "Horario": "10:00 AM"
+        },
+        {
+            "ID": 49,
+            "Instancia": "Q2",
+            "Equipo1": "Equipo FF",
+            "Resultado": "14 - 13",
+            "Equipo2": "Club FF",
+            "IDTorneo": 6,
+            "Cancha": "Cancha 1",
+            "Horario": "12:00 PM"
+        },
+        {
+            "ID": 50,
+            "Instancia": "Cuartos",
+            "Equipo1": "Equipo GG",
+            "Resultado": "15 - 14",
+            "Equipo2": "Club GG",
+            "IDTorneo": 6,
+            "Cancha": "Cancha 2",
+            "Horario": "02:00 PM"
+        },
+        {
+            "ID": 51,
+            "Instancia": "Octavos",
+            "Equipo1": "Equipo HH",
+            "Resultado": "16 - 17",
+            "Equipo2": "Club HH",
+            "IDTorneo": 6,
+            "Cancha": "Cancha 3",
+            "Horario": "04:00 PM"
+        },
+        {
+            "ID": 52,
+            "Instancia": "Semifinal",
+            "Equipo1": "Equipo II",
+            "Resultado": "18 - 19",
+            "Equipo2": "Club II",
+            "IDTorneo": 6,
+            "Cancha": "Cancha 1",
+            "Horario": "06:00 PM"
+        },
+        {
+            "ID": 53,
+            "Instancia": "Final",
+            "Equipo1": "Equipo JJ",
+            "Resultado": "19 - 20",
+            "Equipo2": "Club JJ",
+            "IDTorneo": 6,
+            "Cancha": "Cancha 2",
+            "Horario": "08:00 PM"
+        },
+        {
+            "ID": 54,
+            "Instancia": "Q1",
+            "Equipo1": "Equipo KK",
+            "Resultado": "13 - 14",
+            "Equipo2": "Club KK",
+            "IDTorneo": 7,
+            "Cancha": "Cancha 3",
+            "Horario": "10:00 AM"
+        },
+        {
+            "ID": 55,
+            "Instancia": "Q2",
+            "Equipo1": "Equipo LL",
+            "Resultado": "15 - 16",
+            "Equipo2": "Club LL",
+            "IDTorneo": 7,
+            "Cancha": "Cancha 1",
+            "Horario": "12:00 PM"
+        },
+        {
+            "ID": 56,
+            "Instancia": "Cuartos",
+            "Equipo1": "Equipo MM",
+            "Resultado": "17 - 18",
+            "Equipo2": "Club MM",
+            "IDTorneo": 7,
+            "Cancha": "Cancha 2",
+            "Horario": "02:00 PM"
+        },
+        {
+            "ID": 57,
+            "Instancia": "Octavos",
+            "Equipo1": "Equipo NN",
+            "Resultado": "19 - 20",
+            "Equipo2": "Club NN",
+            "IDTorneo": 7,
+            "Cancha": "Cancha 3",
+            "Horario": "04:00 PM"
+        },
+        {
+            "ID": 58,
+            "Instancia": "Semifinal",
+            "Equipo1": "Equipo OO",
+            "Resultado": "20 - 21",
+            "Equipo2": "Club OO",
+            "IDTorneo": 7,
+            "Cancha": "Cancha 1",
+            "Horario": "06:00 PM"
+        },
+        {
+            "ID": 59,
+            "Instancia": "Final",
+            "Equipo1": "Equipo PP",
+            "Resultado": "21 - 22",
+            "Equipo2": "Club PP",
+            "IDTorneo": 7,
+            "Cancha": "Cancha 2",
+            "Horario": "08:00 PM"
+        },
+        {
+            "ID": 60,
+            "Instancia": "Q1",
+            "Equipo1": "Equipo QQ",
+            "Resultado": "14 - 13",
+            "Equipo2": "Club QQ",
+            "IDTorneo": 8,
+            "Cancha": "Cancha 3",
+            "Horario": "10:00 AM"
+        },
+        {
+            "ID": 61,
+            "Instancia": "Q2",
+            "Equipo1": "Equipo RR",
+            "Resultado": "15 - 14",
+            "Equipo2": "Club RR",
+            "IDTorneo": 8,
+            "Cancha": "Cancha 1",
+            "Horario": "12:00 PM"
+        },
+        {
+            "ID": 62,
+            "Instancia": "Cuartos",
+            "Equipo1": "Equipo SS",
+            "Resultado": "16 - 15",
+            "Equipo2": "Club SS",
+            "IDTorneo": 8,
+            "Cancha": "Cancha 2",
+            "Horario": "02:00 PM"
+        },
+        {
+            "ID": 63,
+            "Instancia": "Octavos",
+            "Equipo1": "Equipo TT",
+            "Resultado": "17 - 16",
+            "Equipo2": "Club TT",
+            "IDTorneo": 8,
+            "Cancha": "Cancha 3",
+            "Horario": "04:00 PM"
+        },
+        {
+            "ID": 64,
+            "Instancia": "Semifinal",
+            "Equipo1": "Equipo UU",
+            "Resultado": "18 - 19",
+            "Equipo2": "Club UU",
+            "IDTorneo": 8,
+            "Cancha": "Cancha 1",
+            "Horario": "06:00 PM"
+        },
+        {
+            "ID": 65,
+            "Instancia": "Final",
+            "Equipo1": "Equipo VV",
+            "Resultado": "20 - 21",
+            "Equipo2": "Club VV",
+            "IDTorneo": 8,
+            "Cancha": "Cancha 2",
+            "Horario": "08:00 PM"
+        },
+        {
+            "ID": 66,
+            "Instancia": "Q1",
+            "Equipo1": "Equipo WW",
+            "Resultado": "12 - 13",
+            "Equipo2": "Club WW",
+            "IDTorneo": 9,
+            "Cancha": "Cancha 3",
+            "Horario": "10:00 AM"
+        },
+        {
+            "ID": 67,
+            "Instancia": "Q2",
+            "Equipo1": "Equipo XX",
+            "Resultado": "14 - 15",
+            "Equipo2": "Club XX",
+            "IDTorneo": 9,
+            "Cancha": "Cancha 1",
+            "Horario": "12:00 PM"
+        },
+        {
+            "ID": 68,
+            "Instancia": "Cuartos",
+            "Equipo1": "Equipo YY",
+            "Resultado": "16 - 17",
+            "Equipo2": "Club YY",
+            "IDTorneo": 9,
+            "Cancha": "Cancha 2",
+            "Horario": "02:00 PM"
+        },
+        {
+            "ID": 69,
+            "Instancia": "Octavos",
+            "Equipo1": "Equipo ZZ",
+            "Resultado": "18 - 19",
+            "Equipo2": "Club ZZ",
+            "IDTorneo": 9,
+            "Cancha": "Cancha 3",
+            "Horario": "04:00 PM"
+        },
+        {
+            "ID": 70,
+            "Instancia": "Semifinal",
+            "Equipo1": "Equipo AAA",
+            "Resultado": "20 - 21",
+            "Equipo2": "Club AAA",
+            "IDTorneo": 9,
+            "Cancha": "Cancha 1",
+            "Horario": "06:00 PM"
+        },
+        {
+            "ID": 71,
+            "Instancia": "Final",
+            "Equipo1": "Equipo BBB",
+            "Resultado": "22 - 21",
+            "Equipo2": "Club BBB",
+            "IDTorneo": 9,
+            "Cancha": "Cancha 2",
+            "Horario": "08:00 PM"
+        },
+        {
+            "ID": 72,
+            "Instancia": "Q1",
+            "Equipo1": "Equipo CCC",
+            "Resultado": "11 - 12",
+            "Equipo2": "Club CCC",
+            "IDTorneo": 10,
+            "Cancha": "Cancha 3",
+            "Horario": "10:00 AM"
+        },
+        {
+            "ID": 73,
+            "Instancia": "Q2",
+            "Equipo1": "Equipo DDD",
+            "Resultado": "13 - 14",
+            "Equipo2": "Club DDD",
+            "IDTorneo": 10,
+            "Cancha": "Cancha 1",
+            "Horario": "12:00 PM"
+        },
+        {
+            "ID": 74,
+            "Instancia": "Cuartos",
+            "Equipo1": "Equipo EEE",
+            "Resultado": "15 - 16",
+            "Equipo2": "Club EEE",
+            "IDTorneo": 10,
+            "Cancha": "Cancha 2",
+            "Horario": "02:00 PM"
+        },
+        {
+            "ID": 75,
+            "Instancia": "Octavos",
+            "Equipo1": "Equipo FFF",
+            "Resultado": "17 - 18",
+            "Equipo2": "Club FFF",
+            "IDTorneo": 10,
+            "Cancha": "Cancha 3",
+            "Horario": "04:00 PM"
+        },
+        {
+            "ID": 76,
+            "Instancia": "Semifinal",
+            "Equipo1": "Equipo GGG",
+            "Resultado": "19 - 20",
+            "Equipo2": "Club GGG",
+            "IDTorneo": 10,
+            "Cancha": "Cancha 1",
+            "Horario": "06:00 PM"
+        },
+        {
+            "ID": 77,
+            "Instancia": "Final",
+            "Equipo1": "Equipo HHH",
+            "Resultado": "21 - 20",
+            "Equipo2": "Club HHH",
+            "IDTorneo": 10,
+            "Cancha": "Cancha 2",
+            "Horario": "08:00 PM"
+        }
+    ],
+    "jugadores": [
+        {
+            "ID": 1,
+            "Nombre": "Jugador Pedro",
+            "Ranking": 1500,
+            "Categoria": "Masculino",
+            "CJ": 4,
+            "UP": "Rodrigo",
+            "UR": "Cuartos de final",
+            "Cuartos": 2,
+            "Semis": 1,
+            "Finales": 0,
+            "PJ": 14,
+            "PG": 8,
+            "Efectividad": "57%"
+        },
+        {
+            "ID": 2,
+            "Nombre": "Jugador 2",
+            "Ranking": 1600,
+            "Categoria": "Femenino",
+            "CJ": 8,
+            "UP": "Juan",
+            "UR": "Ganador",
+            "Cuartos": 5,
+            "Semis": 0,
+            "Finales": 1,
+            "PJ": 11,
+            "PG": 10,
+            "Efectividad": "64%"
+        },
+        {
+            "ID": 3,
+            "Nombre": "Jugador 3",
+            "Ranking": 1700,
+            "Categoria": "Masculino",
+            "CJ": 8,
+            "UP": "Pedro",
+            "UR": "Cuartos de final",
+            "Cuartos": 0,
+            "Semis": 3,
+            "Finales": 2,
+            "PJ": 13,
+            "PG": 12,
+            "Efectividad": "90%"
+        },
+        {
+            "ID": 4,
+            "Nombre": "Jugador 4",
+            "Ranking": 1550,
+            "Categoria": "Masculino",
+            "CJ": 3,
+            "UP": "Carlos",
+            "UR": "Finalista",
+            "Cuartos": 5,
+            "Semis": 3,
+            "Finales": 2,
+            "PJ": 12,
+            "PG": 14,
+            "Efectividad": "77%"
+        },
+        {
+            "ID": 5,
+            "Nombre": "Jugador 5",
+            "Ranking": 1650,
+            "Categoria": "Masculino",
+            "CJ": 4,
+            "UP": "Nell Thomas",
+            "UR": "Ganador",
+            "Cuartos": 3,
+            "Semis": 0,
+            "Finales": 2,
+            "PJ": 13,
+            "PG": 12,
+            "Efectividad": "57%"
+        },
+        {
+            "ID": 6,
+            "Nombre": "Jugador 6",
+            "Ranking": 1750,
+            "Categoria": "Femenino",
+            "CJ": 6,
+            "UP": "Juan",
+            "UR": "Ganador",
+            "Cuartos": 4,
+            "Semis": 1,
+            "Finales": 1,
+            "PJ": 13,
+            "PG": 5,
+            "Efectividad": "89%"
+        },
+        {
+            "ID": 7,
+            "Nombre": "Jugador 7",
+            "Ranking": 1520,
+            "Categoria": "Femenino",
+            "CJ": 3,
+            "UP": "Rodrigo",
+            "UR": "Ganador",
+            "Cuartos": 4,
+            "Semis": 3,
+            "Finales": 0,
+            "PJ": 16,
+            "PG": 15,
+            "Efectividad": "58%"
+        },
+        {
+            "ID": 8,
+            "Nombre": "Jugador 8",
+            "Ranking": 1620,
+            "Categoria": "Masculino",
+            "CJ": 3,
+            "UP": "Juan",
+            "UR": "Cuartos de final",
+            "Cuartos": 2,
+            "Semis": 1,
+            "Finales": 2,
+            "PJ": 11,
+            "PG": 12,
+            "Efectividad": "81%"
+        },
+        {
+            "ID": 9,
+            "Nombre": "Jugador 9",
+            "Ranking": 1720,
+            "Categoria": "Masculino",
+            "CJ": 9,
+            "UP": "Carlos",
+            "UR": "Terceros",
+            "Cuartos": 4,
+            "Semis": 1,
+            "Finales": 2,
+            "PJ": 19,
+            "PG": 15,
+            "Efectividad": "42%"
+        },
+        {
+            "ID": 10,
+            "Nombre": "Pedro",
+            "Ranking": 1580,
+            "Categoria": "Masculino",
+            "CJ": 10,
+            "UP": "Pedro",
+            "UR": "Finalista",
+            "Cuartos": 3,
+            "Semis": 0,
+            "Finales": 0,
+            "PJ": 11,
+            "PG": 14,
+            "Efectividad": "73%"
+        },
+        {
+            "ID": 11,
+            "Nombre": "Jugador 11",
+            "Ranking": 1680,
+            "Categoria": "Masculino",
+            "CJ": 6,
+            "UP": "Rodrigo",
+            "UR": "Ganador",
+            "Cuartos": 1,
+            "Semis": 3,
+            "Finales": 2,
+            "PJ": 17,
+            "PG": 10,
+            "Efectividad": "49%"
+        },
+        {
+            "ID": 12,
+            "Nombre": "Jugador 12",
+            "Ranking": 1780,
+            "Categoria": "Femenino",
+            "CJ": 9,
+            "UP": "Nell Thomas",
+            "UR": "Semifinal",
+            "Cuartos": 1,
+            "Semis": 3,
+            "Finales": 2,
+            "PJ": 19,
+            "PG": 15,
+            "Efectividad": "41%"
+        },
+        {
+            "ID": 13,
+            "Nombre": "Jugador 13",
+            "Ranking": 1540,
+            "Categoria": "Femenino",
+            "CJ": 6,
+            "UP": "Juan",
+            "UR": "Finalista",
+            "Cuartos": 3,
+            "Semis": 2,
+            "Finales": 2,
+            "PJ": 12,
+            "PG": 13,
+            "Efectividad": "42%"
+        },
+        {
+            "ID": 14,
+            "Nombre": "Jugador 14",
+            "Ranking": 1640,
+            "Categoria": "Masculino",
+            "CJ": 7,
+            "UP": "Pedro",
+            "UR": "Finalista",
+            "Cuartos": 5,
+            "Semis": 1,
+            "Finales": 0,
+            "PJ": 13,
+            "PG": 9,
+            "Efectividad": "83%"
+        },
+        {
+            "ID": 15,
+            "Nombre": "Jugador 15",
+            "Ranking": 1740,
+            "Categoria": "Masculino",
+            "CJ": 9,
+            "UP": "Alejandro",
+            "UR": "Terceros",
+            "Cuartos": 1,
+            "Semis": 2,
+            "Finales": 1,
+            "PJ": 20,
+            "PG": 9,
+            "Efectividad": "60%"
+        }
+    ],
+    "historicoTorneos": [
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Rodrigo",
+            "Categoria": "6° Masculina",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 1
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Rodrigo",
+            "Categoria": "5° Masculina",
+            "Resultado": "Finalista",
+            "IDJugador": 1
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Nell Thomas",
+            "Categoria": "6° Masculina",
+            "Resultado": "Semifinal",
+            "IDJugador": 1
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Nell",
+            "Categoria": "5° Masculina",
+            "Resultado": "Terceros",
+            "IDJugador": 1
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Alejandro",
+            "Categoria": "6° Femenino",
+            "Resultado": "Ganador",
+            "IDJugador": 2
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Pedro",
+            "Categoria": "7° Femenino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 2
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Nell Thomas",
+            "Categoria": "5° Masculino",
+            "Resultado": "Finalista",
+            "IDJugador": 2
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Pedro",
+            "Categoria": "5° Femenino",
+            "Resultado": "Semifinal",
+            "IDJugador": 2
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Alejandro",
+            "Categoria": "7° Femenino",
+            "Resultado": "Ganador",
+            "IDJugador": 3
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Pedro",
+            "Categoria": "5° Femenino",
+            "Resultado": "Finalista",
+            "IDJugador": 3
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Nell Thomas",
+            "Categoria": "5° Masculino",
+            "Resultado": "Ganador",
+            "IDJugador": 3
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Rodrigo",
+            "Categoria": "7° Femenino",
+            "Resultado": "Semifinal",
+            "IDJugador": 3
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Juan",
+            "Categoria": "5° Femenino",
+            "Resultado": "Finalista",
+            "IDJugador": 4
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Carlos",
+            "Categoria": "5° Masculino",
+            "Resultado": "Terceros",
+            "IDJugador": 4
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Juan",
+            "Categoria": "5° Femenino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 4
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Nell Thomas",
+            "Categoria": "6° Masculino",
+            "Resultado": "Terceros",
+            "IDJugador": 4
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Carlos",
+            "Categoria": "7° Femenino",
+            "Resultado": "Ganador",
+            "IDJugador": 5
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Pedro",
+            "Categoria": "6° Femenino",
+            "Resultado": "Finalista",
+            "IDJugador": 5
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Pedro",
+            "Categoria": "7° Masculino",
+            "Resultado": "Finalista",
+            "IDJugador": 5
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Alejandro",
+            "Categoria": "5° Masculino",
+            "Resultado": "Finalista",
+            "IDJugador": 5
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Juan",
+            "Categoria": "7° Femenino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 6
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Juan",
+            "Categoria": "5° Femenino",
+            "Resultado": "Finalista",
+            "IDJugador": 6
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Alejandro",
+            "Categoria": "5° Femenino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 6
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Pedro",
+            "Categoria": "5° Masculino",
+            "Resultado": "Terceros",
+            "IDJugador": 6
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Carlos",
+            "Categoria": "7° Masculino",
+            "Resultado": "Finalista",
+            "IDJugador": 7
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Rodrigo",
+            "Categoria": "7° Masculino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 7
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Juan",
+            "Categoria": "6° Femenino",
+            "Resultado": "Finalista",
+            "IDJugador": 7
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Juan",
+            "Categoria": "5° Masculino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 7
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Juan",
+            "Categoria": "5° Femenino",
+            "Resultado": "Ganador",
+            "IDJugador": 8
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Pedro",
+            "Categoria": "7° Masculino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 8
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Pedro",
+            "Categoria": "5° Masculino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 8
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Pedro",
+            "Categoria": "6° Femenino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 8
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Pedro",
+            "Categoria": "7° Femenino",
+            "Resultado": "Semifinal",
+            "IDJugador": 9
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Rodrigo",
+            "Categoria": "5° Femenino",
+            "Resultado": "Terceros",
+            "IDJugador": 9
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Nell Thomas",
+            "Categoria": "6° Masculino",
+            "Resultado": "Terceros",
+            "IDJugador": 9
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Pedro",
+            "Categoria": "5° Femenino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 9
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Pedro",
+            "Categoria": "6° Masculino",
+            "Resultado": "Finalista",
+            "IDJugador": 10
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Carlos",
+            "Categoria": "5° Masculino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 10
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Carlos",
+            "Categoria": "7° Femenino",
+            "Resultado": "Ganador",
+            "IDJugador": 10
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Carlos",
+            "Categoria": "5° Femenino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 10
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Pedro",
+            "Categoria": "7° Femenino",
+            "Resultado": "Terceros",
+            "IDJugador": 11
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Nell Thomas",
+            "Categoria": "5° Femenino",
+            "Resultado": "Semifinal",
+            "IDJugador": 11
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Carlos",
+            "Categoria": "5° Masculino",
+            "Resultado": "Finalista",
+            "IDJugador": 11
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Carlos",
+            "Categoria": "6° Masculino",
+            "Resultado": "Semifinal",
+            "IDJugador": 11
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Juan",
+            "Categoria": "7° Masculino",
+            "Resultado": "Finalista",
+            "IDJugador": 12
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Rodrigo",
+            "Categoria": "5° Femenino",
+            "Resultado": "Terceros",
+            "IDJugador": 12
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Alejandro",
+            "Categoria": "7° Femenino",
+            "Resultado": "Finalista",
+            "IDJugador": 12
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Juan",
+            "Categoria": "6° Masculino",
+            "Resultado": "Ganador",
+            "IDJugador": 12
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Carlos",
+            "Categoria": "7° Masculino",
+            "Resultado": "Semifinal",
+            "IDJugador": 13
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Nell Thomas",
+            "Categoria": "5° Masculino",
+            "Resultado": "Terceros",
+            "IDJugador": 13
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Pedro",
+            "Categoria": "7° Femenino",
+            "Resultado": "Ganador",
+            "IDJugador": 13
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Juan",
+            "Categoria": "6° Masculino",
+            "Resultado": "Ganador",
+            "IDJugador": 13
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Pedro",
+            "Categoria": "5° Masculino",
+            "Resultado": "Terceros",
+            "IDJugador": 14
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Alejandro",
+            "Categoria": "6° Femenino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 14
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Rodrigo",
+            "Categoria": "6° Femenino",
+            "Resultado": "Terceros",
+            "IDJugador": 14
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Alejandro",
+            "Categoria": "7° Femenino",
+            "Resultado": "Ganador",
+            "IDJugador": 14
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO PADEL LOS VILLARES",
+            "Fecha": "16/11/2023",
+            "Pareja": "Alejandro",
+            "Categoria": "5° Femenino",
+            "Resultado": "Cuartos de final",
+            "IDJugador": 15
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "ANDES PADEL CLUB",
+            "Fecha": "30/08/2023",
+            "Pareja": "Alejandro",
+            "Categoria": "7° Masculino",
+            "Resultado": "Semifinal",
+            "IDJugador": 15
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "TORNEO ANIVERSARIO",
+            "Fecha": "23/03/2023",
+            "Pareja": "Rodrigo",
+            "Categoria": "5° Femenino",
+            "Resultado": "Terceros",
+            "IDJugador": 15
+        },
+        {
+            "Tipo": "Torneo",
+            "Competicion": "Torneo Club Padel San Esteban",
+            "Fecha": "08/02/2023",
+            "Pareja": "Carlos",
+            "Categoria": "5° Masculino",
+            "Resultado": "Ganador",
+            "IDJugador": 15
+        }
+    ]
+}

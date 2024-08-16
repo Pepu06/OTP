@@ -1,37 +1,31 @@
 import { useState, useEffect } from "react";
 import Select from "react-select";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config"; // Asegúrate de que la ruta es correcta
 
 const Perfil = () => {
   const [jugadores, setJugadores] = useState([]);
   const [selectedJugador, setSelectedJugador] = useState(null);
 
   useEffect(() => {
-    // Cargar los jugadores desde la API del backend
     const cargarJugadores = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/process", {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }); // Cambia la URL según sea necesario
-        if (!response.ok) {
-          console.log(response);
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const result = await response.json();
-
-        const jugadoresData = result.data ? result.data.jugadores : [];
+        // Obtener todos los documentos de la colección 'jugadores'
+        const jugadoresRef = collection(db, "jugadores");
+        const querySnapshot = await getDocs(jugadoresRef);
 
         // Convertir los datos en el formato adecuado para Select
-        const formattedJugadores = jugadoresData.map((jugador) => ({
-          value: jugador.ID,
-          label: `${jugador.Nombre} (ID: ${jugador.ID})`,
-          ID: jugador.ID,
-          Nombre: jugador.Nombre,
-        }));
+        const jugadoresData = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            value: data.ID,
+            label: `${data.Nombre} (ID: ${data.ID})`,
+            ID: data.ID,
+            Nombre: data.Nombre,
+          };
+        });
 
-        setJugadores(formattedJugadores);
+        setJugadores(jugadoresData);
       } catch (error) {
         console.error("Error al cargar los jugadores:", error);
       }

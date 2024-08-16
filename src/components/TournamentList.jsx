@@ -7,37 +7,33 @@ import { motion } from "framer-motion";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
 import Perfil from "./Perfil";
 import Pelotas from "../assets/pelotas.png";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 const TournamentList = () => {
   const [selectedGender, setSelectedGender] = useState("Todos");
   const [showAll, setShowAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [tournaments, setTournaments] = useState([]); // Estado para torneos
+  const [isLoading, setIsLoading] = useState(true); // Estado para manejar el círculo de carga
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Función para cargar los datos de torneos desde el backend
+    // Función para cargar los datos de torneos desde Firebase
     const fetchTournaments = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/torneos");
-        if (!response.ok)
-          throw new Error("Error al cargar los datos de torneos");
-
-        const data = await response.json();
-        console.log("Datos crudos del backend:", data); // Verifica la estructura de los datos
-
-        // Asumiendo que `data` es una lista de torneos
-        const processedTournaments = data.map((tournament) => ({
-          ID: tournament.ID, // Asegúrate de que estos nombres coincidan con tu API
-          Nombre: tournament.Nombre,
-          Club: tournament.Club,
-          Categoria: tournament.Categoria,
+        const querySnapshot = await getDocs(collection(db, "torneos"));
+        const data = querySnapshot.docs.map((doc) => ({
+          ID: doc.id,
+          ...doc.data(),
         }));
 
-        setTournaments(processedTournaments);
-        console.log("Torneos procesados:", processedTournaments); // Verifica los datos procesados
+        setTournaments(data);
+        console.log("Torneos cargados desde Firebase:", data);
       } catch (error) {
         console.error("Error cargando datos de torneos:", error);
+      } finally {
+        setIsLoading(false); // Deja de mostrar el círculo de carga una vez que los datos han cargado
       }
     };
 
@@ -50,7 +46,7 @@ const TournamentList = () => {
       tournament.Nombre.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const windowSmall = window.innerWidth < 640; // Define the 'windowSmall' variable based on the window width
+  const windowSmall = window.innerWidth < 640; // Define la variable 'windowSmall' basada en el ancho de la ventana
   const settings = {
     dots: true,
     infinite: selectedGender === "Todos",
@@ -96,20 +92,25 @@ const TournamentList = () => {
     </div>
   );
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-pblue"></div>
+      </div>
+    );
+  }
+
   return (
     <section id="torneos" className="bg-white">
       <div className="flex flex-col sm:flex-row items-center justify-between mt-5 mb-8">
-        {/* Contenedor para Perfil alineado a la izquierda */}
         <div className="w-1/2 mb-5 sm:w-1/5 sm:mb-0">
           <Perfil />
         </div>
-        {/* Contenedor para Torneos centrado */}
         <div className="flex-1">
           <h2 className="text-5xl font-daysone font-normal text-center text-pblue">
             Torneos
           </h2>
         </div>
-
         <div className="w-1/5"></div>
       </div>
       <div className="flex justify-center">

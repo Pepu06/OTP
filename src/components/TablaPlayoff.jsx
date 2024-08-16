@@ -1,43 +1,61 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import copa from "../assets/copa.png"; // Asegúrate de ajustar la ruta según tu estructura
-import otp from "../assets/otp.png"; // Asegúrate de ajustar la ruta según tu estructura
+import copa from "../assets/copa.png"; // Ajusta la ruta según tu estructura
+import otp from "../assets/otp.png"; // Ajusta la ruta según tu estructura
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 const TablaPlayoff = () => {
   const { idTorneo } = useParams(); // Obtén el parámetro IDTorneo de la URL
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // Estado para manejar la carga
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // Empieza a cargar
       try {
-        const response = await fetch(
-          `http://127.0.0.1:5000/partidos/${idTorneo}`
+        const querySnapshot = await getDocs(collection(db, "partidos"));
+        const data = querySnapshot.docs.map((doc) => doc.data());
+
+        const filtered = data.filter(
+          (partido) =>
+            partido.IDTorneo == idTorneo &&
+            (partido.Instancia === "Octavos" ||
+              partido.Instancia === "Cuartos" ||
+              partido.Instancia === "Semifinal" ||
+              partido.Instancia === "Final")
         );
-        if (!response.ok)
-          throw new Error("Error al cargar los datos de partidos");
 
-        const result = await response.json();
-        console.log("Datos crudos del backend:", result);
+        console.log("Datos filtrados de Firestore:", filtered);
 
-        if (!Array.isArray(result.data)) {
-          throw new Error("La propiedad 'data' no es un array");
+        if (!Array.isArray(filtered)) {
+          throw new Error("La consulta no retornó un array");
         }
 
-        const filteredData = result.data.filter(
-          (partido) => String(partido.IDTorneo) === idTorneo
-        );
-
-        console.log("Datos filtrados:", filteredData);
-
-        setData(filteredData);
+        setData(filtered);
       } catch (error) {
-        console.error("Error cargando datos de partidos:", error);
+        console.error(
+          "Error cargando datos de partidos desde Firestore:",
+          error
+        );
+      } finally {
+        setLoading(false); // Termina de cargar
       }
     };
 
     fetchData();
   }, [idTorneo]);
 
+  // Si estamos cargando, muestra un indicador de carga
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-pblue"></div>
+      </div>
+    );
+  }
+
+  // Asigna los equipos a variables individuales
   const octavosData = data
     .filter((row) => row.Instancia === "Octavos")
     .slice(0, 8);
@@ -48,7 +66,7 @@ const TablaPlayoff = () => {
     .filter((row) => row.Instancia === "Semifinal")
     .slice(0, 2);
   const finalData = data.filter((row) => row.Instancia === "Final").slice(0, 1);
-  // Asigna los equipos a variables individuales
+
   const [
     equipo1_1,
     equipo1_2,
@@ -70,7 +88,6 @@ const TablaPlayoff = () => {
     equipo2_8,
   ] = octavosData.map((partido) => partido.Equipo2);
 
-  // Asigna los equipos a variables individuales
   const [cuartos1_1, cuartos1_2, cuartos1_3, cuartos1_4] = cuartosData.map(
     (partido) => partido.Equipo1
   );
@@ -78,11 +95,9 @@ const TablaPlayoff = () => {
     (partido) => partido.Equipo2
   );
 
-  // Asigna los equipos a variables individuales
   const [semis1_1, semis1_2] = semisData.map((partido) => partido.Equipo1);
   const [semis2_1, semis2_2] = semisData.map((partido) => partido.Equipo2);
 
-  // Asigna los equipos a variables individuales
   const [final_1] = finalData.map((partido) => partido.Equipo1);
   const [final_2] = finalData.map((partido) => partido.Equipo2);
 

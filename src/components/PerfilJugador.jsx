@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config"; // Asegúrate de que la ruta es correcta
 import TablaDeRankings from "./TablaDeRankings";
 
 const PerfilJugador = () => {
-  const { jugadorId } = useParams();
+  const { jugadorId } = useParams(); // Obtén el jugadorId desde la URL
   const [jugador, setJugador] = useState(null);
   const [historicoTorneos, setHistoricoTorneos] = useState([]);
+  const [loading, setLoading] = useState(true); // Estado para manejar la carga
 
   const scrollToTable = () => {
     const element = document.getElementById("Tabla");
@@ -15,44 +18,69 @@ const PerfilJugador = () => {
   };
 
   useEffect(() => {
-    if (!jugadorId) return;
+    const fetchData = async () => {
+      setLoading(true); // Empieza a cargar
 
-    console.log("Cargando datos para el ID del jugador:", jugadorId);
+      try {
+        // Verifica si jugadorId es válido
+        if (!jugadorId) {
+          throw new Error("Jugador ID no proporcionado.");
+        }
 
-    // Cargar datos del jugador
-    fetch(`http://127.0.0.1:5000/jugador/${jugadorId}`)
-      .then((response) => {
-        if (!response.ok) throw new Error("Error al cargar datos del jugador");
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Datos del jugador:", data.data);
-        setJugador(data.data);
-      })
-      .catch((error) =>
-        console.error("Error cargando datos del jugador:", error)
-      );
+        // Obtener todos los documentos de la colección 'jugadores'
+        const jugadoresRef = collection(db, "jugadores");
+        const querySnapshot = await getDocs(jugadoresRef);
 
-    // Cargar histórico de torneos
-    fetch(`http://127.0.0.1:5000/historico/${jugadorId}`)
-      .then((response) => {
-        if (!response.ok)
-          throw new Error("Error al cargar histórico de torneos");
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Datos históricos de torneos:", data.data);
-        setHistoricoTorneos(data.data);
-      })
-      .catch((error) =>
-        console.error("Error cargando histórico de torneos:", error)
-      );
+        // Filtrar los documentos por el atributo ID
+        const jugadoresData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        const jugadorEncontrado = jugadoresData.find(
+          (jugador) => jugador.ID == jugadorId
+        );
+
+        if (jugadorEncontrado) {
+          setJugador(jugadorEncontrado);
+          console.log("Datos del jugador:", jugadorEncontrado);
+        } else {
+          console.error("No se encontró el documento del jugador");
+        }
+
+        // Obtener todos los documentos de la colección 'torneos'
+        const torneosRef = collection(db, "historicoTorneos");
+        const querySnapshotTorneos = await getDocs(torneosRef);
+
+        // Filtrar los documentos por el atributo jugadorId
+        const torneosData = querySnapshotTorneos.docs.map((doc) => doc.data());
+        console.log("Datos crudos de torneos:", torneosData);
+        const historicoFiltrado = torneosData.filter(
+          (torneo) => torneo.IDJugador == jugadorId
+        );
+
+        setHistoricoTorneos(historicoFiltrado);
+        console.log("Datos históricos de torneos:", historicoFiltrado);
+      } catch (error) {
+        console.error("Error cargando datos desde Firestore:", error);
+      } finally {
+        setLoading(false); // Termina de cargar
+      }
+    };
+
+    fetchData();
   }, [jugadorId]);
 
-  if (!jugador) {
-    return <div>Cargando datos del jugador...</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-pblue"></div>
+      </div>
+    );
   }
 
+  if (!jugador) {
+    return <div>No se encontraron datos del jugador.</div>;
+  }
   return (
     <div className="relative p-4">
       {/* Contenedor del perfil */}

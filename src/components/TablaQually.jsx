@@ -1,53 +1,51 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 const TablaQually = () => {
   const [partidos, setPartidos] = useState([]);
   const [filteredPartidos, setFilteredPartidos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Estado para manejar el círculo de carga
   const { idTorneo } = useParams(); // Captura 'idTorneo' de la URL
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Función para cargar los datos de partidos desde el backend
     const fetchPartidos = async () => {
+      setLoading(true);
       try {
-        const response = await fetch(
-          `http://127.0.0.1:5000/partidos/${idTorneo}`
-        );
-        if (!response.ok)
-          throw new Error("Error al cargar los datos de partidos");
+        const querySnapshot = await getDocs(collection(db, "partidos"));
+        const data = querySnapshot.docs.map((doc) => doc.data());
 
-        const result = await response.json();
-        console.log("Datos crudos del backend:", result); // Verifica la estructura de los datos
-
-        // Accede a la propiedad 'data' que contiene el array de partidos
-        const data = result.data;
-
-        if (!Array.isArray(data)) {
-          throw new Error("La propiedad 'data' no es un array");
-        }
-
-        console.log("Datos de partidos:", data); // Verifica los datos de partidos
-
-        // Asegúrate de que idTorneo sea del tipo correcto
-        const torneoId = String(idTorneo); // Convertir idTorneo a cadena para la comparación
-
-        // Filtra los partidos por el idTorneo
         const filtered = data.filter(
           (partido) =>
-            String(partido.IDTorneo) === torneoId &&
+            partido.IDTorneo == idTorneo &&
             (partido.Instancia === "Q1" || partido.Instancia === "Q2")
         );
 
         setPartidos(data);
         setFilteredPartidos(filtered);
-        console.log("Partidos procesados:", filtered); // Verifica los datos procesados
+        console.log("Partidos filtrados:", filtered);
       } catch (error) {
-        console.error("Error cargando datos de partidos:", error);
+        console.error(
+          "Error cargando datos de partidos desde Firebase:",
+          error
+        );
+      } finally {
+        setIsLoading(false); // Deja de mostrar el círculo de carga una vez que los datos han cargado
       }
     };
 
     fetchPartidos();
-  }, [idTorneo]); // Vuelve a ejecutar cuando idTorneo cambie
+  }, [idTorneo]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-pblue"></div>
+      </div>
+    );
+  }
 
   return (
     <div

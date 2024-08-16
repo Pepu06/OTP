@@ -1,24 +1,24 @@
 import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config"; // Asegúrate de que la ruta es correcta
 
 const TablaDeRankings = () => {
   const [rankings, setRankings] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true); // Estado para manejar la carga
 
   useEffect(() => {
-    // Cargar los datos de jugadores desde el backend
-    fetch("http://127.0.0.1:5000/jugadores") // Cambia esta URL al endpoint correcto de tu API
-      .then((response) => {
-        if (!response.ok)
-          throw new Error("Error al cargar los datos de jugadores");
-        return response.json();
-      })
-      .then((data) => {
-        // Aquí asumimos que los datos vienen en formato JSON directamente
-        console.log("Datos crudos del backend:", data); // Verifica la estructura de los datos
+    const fetchData = async () => {
+      setLoading(true); // Empieza a cargar
+      try {
+        const querySnapshot = await getDocs(collection(db, "jugadores"));
+        const data = querySnapshot.docs.map((doc) => doc.data());
+
+        console.log("Datos crudos de Firestore:", data); // Verifica la estructura de los datos
         const playerRankings = data
           .map((row) => ({
             ranking: parseInt(row.Ranking, 10), // Convierte a número
-            nombre: row.Nombre, // Asegúrate de que el nombre del campo coincida con tu API
+            nombre: row.Nombre, // Asegúrate de que el nombre del campo coincida con tu base de datos
           }))
           .filter((row) => !isNaN(row.ranking) && row.nombre); // Filtra valores inválidos
 
@@ -27,16 +27,32 @@ const TablaDeRankings = () => {
 
         setRankings(playerRankings);
         console.log("Rankings procesados:", playerRankings); // Verifica los datos procesados
-      })
-      .catch((error) =>
-        console.error("Error cargando datos de jugadores:", error)
-      );
+      } catch (error) {
+        console.error(
+          "Error cargando datos de jugadores desde Firestore:",
+          error
+        );
+      } finally {
+        setLoading(false); // Termina de cargar
+      }
+    };
+
+    fetchData();
   }, []);
 
   // Filtrar los rankings según el término de búsqueda
   const filteredRankings = rankings.filter((row) =>
     row.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Indicador de carga
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-pblue"></div>
+      </div>
+    );
+  }
 
   const renderRankingsTable = () => (
     <div className="relative overflow-x-auto w-full items-center">
