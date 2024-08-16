@@ -34,18 +34,44 @@ const Header = () => {
         className="h-12 sm:ml-10 mt-1" // Ajusta el tamaño según sea necesario
       />
       <nav className="hidden sm:flex space-x-5 font-inter font-bold">
-        <Link to="/" className="text-gray-600 hover:text-blue-600">
+        <Link
+          to="/"
+          className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
+        >
           INICIO
         </Link>
-        <Link to="/torneos" className="text-gray-600 hover:text-blue-600">
+
+        <Link
+          to="/torneos"
+          className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
+        >
           TORNEOS
         </Link>
-        <Link to="/novedades" className="text-gray-600 hover:text-blue-600">
+        <Link
+          to="/novedades"
+          className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
+        >
           NOVEDADES
         </Link>
         <a
           href="https://wa.me/1140962011"
-          className="text-gray-600 hover:text-blue-600"
+          className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
         >
           CONTACTO
         </a>
@@ -78,28 +104,44 @@ const Header = () => {
           <nav className="flex flex-col p-4 space-y-2 font-inter font-bold">
             <Link
               to="/"
-              className="text-gray-600 hover:text-blue-600"
+              className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
               onClick={toggleMenu}
             >
               INICIO
             </Link>
             <Link
               to="/torneos"
-              className="text-gray-600 hover:text-blue-600"
+              className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
               onClick={toggleMenu}
             >
               TORNEOS
             </Link>
             <Link
               to="/novedades"
-              className="text-gray-600 hover:text-blue-600"
+              className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
               onClick={toggleMenu}
             >
               NOVEDADES
             </Link>
             <a
               href="https://wa.me/1140962011"
-              className="text-gray-600 hover:text-blue-600"
+              className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
               onClick={toggleMenu}
             >
               CONTACTO
