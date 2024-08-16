@@ -179,7 +179,7 @@ const TournamentList = () => {
       </div>
       <div className="flex justify-center mt-4">
         <a
-          href="https://wa.me/1140962011/?text=Hola! me gustaria inscribirme en un torneo 🎾"
+          href="https://wa.me/1140962011/?text=Hola! Me gustaría inscribirme en un torneo! 🎾"
           className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins"
         >
           INSCRIBIRME
