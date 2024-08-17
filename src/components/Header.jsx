@@ -66,7 +66,7 @@ const Header = () => {
           NOVEDADES
         </Link>
         <a
-          href="https://wa.me/1140962011"
+          href="https://wa.me/91140962011"
           className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
              before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
              before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
@@ -136,7 +136,7 @@ const Header = () => {
               NOVEDADES
             </Link>
             <a
-              href="https://wa.me/1140962011"
+              href="https://wa.me/91140962011"
               className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
              before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
              before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
