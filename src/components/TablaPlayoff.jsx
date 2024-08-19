@@ -20,7 +20,8 @@ const TablaPlayoff = () => {
         const filtered = data.filter(
           (partido) =>
             partido.IDTorneo == idTorneo &&
-            (partido.Instancia === "Octavos" ||
+            (partido.Instancia === "Dieciseisavos" ||
+              partido.Instancia === "Octavos" ||
               partido.Instancia === "Cuartos" ||
               partido.Instancia === "Semifinal" ||
               partido.Instancia === "Final")
@@ -56,6 +57,9 @@ const TablaPlayoff = () => {
   }
 
   // Asigna los equipos a variables individuales
+  const dieciseisavosData = data
+    .filter((row) => row.Instancia === "Dieciseisavos")
+    .slice(0, 16);
   const octavosData = data
     .filter((row) => row.Instancia === "Octavos")
     .slice(0, 8);
@@ -66,6 +70,46 @@ const TablaPlayoff = () => {
     .filter((row) => row.Instancia === "Semifinal")
     .slice(0, 2);
   const finalData = data.filter((row) => row.Instancia === "Final").slice(0, 1);
+
+  const existeDieciseisavos = dieciseisavosData.length > 0;
+
+  const [
+    dieciseisavos1_1,
+    dieciseisavos1_2,
+    dieciseisavos1_3,
+    dieciseisavos1_4,
+    dieciseisavos1_5,
+    dieciseisavos1_6,
+    dieciseisavos1_7,
+    dieciseisavos1_8,
+    dieciseisavos1_9,
+    dieciseisavos1_10,
+    dieciseisavos1_11,
+    dieciseisavos1_12,
+    dieciseisavos1_13,
+    dieciseisavos1_14,
+    dieciseisavos1_15,
+    dieciseisavos1_16,
+  ] = dieciseisavosData.map((partido) => partido.Equipo1);
+
+  const [
+    dieciseisavos2_1,
+    dieciseisavos2_2,
+    dieciseisavos2_3,
+    dieciseisavos2_4,
+    dieciseisavos2_5,
+    dieciseisavos2_6,
+    dieciseisavos2_7,
+    dieciseisavos2_8,
+    dieciseisavos2_9,
+    dieciseisavos2_10,
+    dieciseisavos2_11,
+    dieciseisavos2_12,
+    dieciseisavos2_13,
+    dieciseisavos2_14,
+    dieciseisavos2_15,
+    dieciseisavos2_16,
+  ] = dieciseisavosData.map((partido) => partido.Equipo2);
 
   const [
     equipo1_1,
@@ -105,61 +149,115 @@ const TablaPlayoff = () => {
     <div className="flex justify-center items-center m-4 relative bg-cover bg-center">
       <div className="overflow-x-auto sm:overflow-x-visible w-full">
         <div className="flex justify-start sm:justify-center items-center m-4 relative bg-cover bg-center">
-          <div className="grid grid-cols-4 min-w-[600px]">
-            <div className="space-y-10">
-              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                {equipo1_1 ? equipo1_1 : "Nombre del Equipo"}
+          <div
+            className={`grid ${existeDieciseisavos ? "grid-cols-5" : octavosData.length > 0 ? "grid-cols-4" : "grid-cols-3"
+              } min-w-[600px]`}
+          >
+            {dieciseisavosData.length > 0 && (
+              <div className="space-y-6">
+                <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                  {dieciseisavos1_1 || "Nombre del Equipo"}
+                </div>
+                <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                  {dieciseisavos2_1 || "Nombre del Equipo"}
+                </div>
+                <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                  {dieciseisavos1_2 || "Nombre del Equipo"}
+                </div>
+                <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                  {dieciseisavos2_2 || "Nombre del Equipo"}
+                </div>
+                {/* Resto de los 16avos */}
               </div>
-              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                {equipo2_1 ? equipo2_1 : "Nombre del Equipo"}
+            )}
+            {octavosData.length > 0 && (
+              <div className="space-y-10">
+                <div>
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                    {equipo1_1 ? equipo1_1 : "Nombre del Equipo"}
+                  </div>
+                </div>
+                <div>
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                    {equipo2_1 ? equipo2_1 : "Nombre del Equipo"}
+                  </div>
+                </div>
+                <div>
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                    {equipo1_2 ? equipo1_2 : "Nombre del Equipo"}
+                  </div>
+                </div>
+                <div>
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                    {equipo2_2 ? equipo2_2 : "Nombre del Equipo"}
+                  </div>
+                </div>
+                <div>
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                    {equipo1_3 ? equipo1_3 : "Nombre del Equipo"}
+                  </div>
+                </div>
+                <div>
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                    {equipo2_3 ? equipo2_3 : "Nombre del Equipo"}
+                  </div>
+                </div>
+                <div>
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                    {equipo1_4 ? equipo1_4 : "Nombre del Equipo"}
+                  </div>
+                </div>
+                <div>
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                    {equipo2_4 ? equipo2_4 : "Nombre del Equipo"}
+                  </div>
+                </div>
               </div>
-              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                {equipo1_2 ? equipo1_2 : "Nombre del Equipo"}
-              </div>
-              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                {equipo2_2 ? equipo2_2 : "Nombre del Equipo"}
-              </div>
-              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                {equipo1_3 ? equipo1_3 : "Nombre del Equipo"}
-              </div>
-              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                {equipo2_3 ? equipo2_3 : "Nombre del Equipo"}
-              </div>
-              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                {equipo1_4 ? equipo1_4 : "Nombre del Equipo"}
-              </div>
-              <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                {equipo2_4 ? equipo2_4 : "Nombre del Equipo"}
-              </div>
-            </div>
+            )}
             <div className="space-y-[85px]">
               <div className="mt-6">
-                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                {octavosData.length > 0 && (
+                  <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                )}
                 <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
                   {cuartos1_1 ? cuartos1_1 : "Nombre del Equipo"}
                 </div>
-                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+                {octavosData.length > 0 && (
+                  <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+                )}
               </div>
               <div>
-                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                {octavosData.length > 0 && (
+                  <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                )}
                 <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
                   {cuartos2_1 ? cuartos2_1 : "Nombre del Equipo"}
                 </div>
-                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+                {octavosData.length > 0 && (
+                  <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+                )}
               </div>
               <div>
-                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                {octavosData.length > 0 && (
+                  <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                )}
                 <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
                   {cuartos1_2 ? cuartos1_2 : "Nombre del Equipo"}
                 </div>
-                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+                {octavosData.length > 0 && (
+                  <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+                )}
               </div>
               <div>
-                <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                {octavosData.length > 0 && (
+                  <div className="w-16 h-4 border-t-2 border-r-2 border-pblue"></div>
+                )}
                 <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
                   {cuartos2_2 ? cuartos2_2 : "Nombre del Equipo"}
                 </div>
-                <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+                {octavosData.length > 0 && (
+                  <div className="w-16 h-4 border-b-2 border-r-2 border-pblue"></div>
+                )}
               </div>
             </div>
             <div className="space-y-[155px]">
@@ -193,7 +291,8 @@ const TablaPlayoff = () => {
             <img src={copa} alt="copa" className=" mb-5" />
             <img src={otp} alt="otp" className=" mt-5" />
           </div>
-          <div className="grid grid-cols-4 min-w-[600px]">
+          <div className={`grid ${existeDieciseisavos ? "grid-cols-5" : octavosData.length > 0 ? "grid-cols-4" : "grid-cols-3"
+              } min-w-[600px]`}>
             <div className="mt-[135px]">
               <div className="w-16 h-[145px] border-t-2 border-r-2 border-plightblue transform -scale-x-100 translate-x-[90px]"></div>
               <div className="bg-pgreen text-white p-2 rounded-lg text-center text-sm">
