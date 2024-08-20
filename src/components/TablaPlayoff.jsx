@@ -456,11 +456,11 @@ const TablaPlayoff = () => {
           >
             {finalData.length > 0 && (
               <div className="mt-[180px]">
-                <div className={`${finalData.length > 0 && semisData == 0 ? "w-16 h-[145px] border-t-2 border-r-2 border-white" : `w-16 h-[145px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[80px]`}`}></div>
+                <div className={`${finalData.length > 0 && semisData == 0 ? "w-16 h-[145px] border-t-2 border-r-2 border-white" : dieciseisavosData.length == 0 ? `w-16 h-[145px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[100px]` : `w-16 h-[145px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[57px]`}`}></div>
                 <div className="bg-pgreen text-white p-2 rounded-lg text-center text-sm">
                   {final_2 ? final_2 : "Equipo"}
                 </div>
-                <div className={`${finalData.length > 0 && semisData == 0 ? "w-16 h-[160px] border-b-2 border-r-2 border-white" : "w-16 h-[160px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[80px]"}`}></div>
+                <div className={`${finalData.length > 0 && semisData == 0 ? "w-16 h-[160px] border-b-2 border-r-2 border-white" : "w-16 h-[160px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[57px]"}`}></div>
               </div>
             )}
             {semisData.length > 0 && (
@@ -470,7 +470,7 @@ const TablaPlayoff = () => {
                     <div className={`${semisData.length > 0 && cuartosData == 0 ? "mt-14 w-16 h-16 border-t-2 border-r-2 border-white" : "mt-14 w-16 h-16 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[57px]"}`}></div>
                   )}
                   <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm">
-                    {semis1_1 ? semis1_1 : "Equipo"}
+                    {semis1_2 ? semis1_2 : "Equipo"}
                   </div>
                   {finalData.length > 0 && (
                     <div className={`${semisData.length > 0 && cuartosData == 0 ? "w-16 h-16 border-t-2 border-r-2 border-white" : "w-16 h-16 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[57px]"}`}></div>
@@ -481,7 +481,7 @@ const TablaPlayoff = () => {
                     <div className={`${semisData.length > 0 && cuartosData == 0 ? "mt-14 w-16 h-16 border-t-2 border-r-2 border-white" : "mt-14 w-16 h-16 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[57px]"}`}></div>
                   )}
                   <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm z-20">
-                    {semis2_1 ? semis2_1 : "Equipo"}
+                    {semis2_2 ? semis2_2 : "Equipo"}
                   </div>
                   {finalData.length > 0 && (
                     <div className={`${semisData.length > 0 && cuartosData == 0 ? "w-16 h-16 border-t-2 border-r-2 border-white" : "w-16 h-16 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[57px]"}`}></div>
@@ -496,7 +496,7 @@ const TablaPlayoff = () => {
                     <div className={`${cuartosData.length > 0 && octavosData == 0 ? "w-16 h-6 border-t-2 border-r-2 border-white" : "w-16 h-6 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"}`}></div>
                   )}
                   <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
-                    {cuartos1_1 ? cuartos1_1 : "Equipo"}
+                    {cuartos1_3 ? cuartos1_3 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div className={`${cuartosData.length > 0 && octavosData == 0 ? "w-16 h-6 border-t-2 border-r-2 border-white" : "w-16 h-6 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"}`}></div>
@@ -507,7 +507,7 @@ const TablaPlayoff = () => {
                     <div className={`${cuartosData.length > 0 && octavosData == 0 ? "w-16 h-6 border-t-2 border-r-2 border-white" : "w-16 h-6 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"}`}></div>
                   )}
                   <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
-                    {cuartos2_1 ? cuartos2_1 : "Equipo"}
+                    {cuartos2_3 ? cuartos2_3 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div className={`${cuartosData.length > 0 && octavosData == 0 ? "w-16 h-6 border-t-2 border-r-2 border-white" : "w-16 h-6 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"}`}></div>
@@ -518,7 +518,7 @@ const TablaPlayoff = () => {
                     <div className={`${cuartosData.length > 0 && octavosData == 0 ? "w-16 h-6 border-t-2 border-r-2 border-white" : "w-16 h-6 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"}`}></div>
                   )}
                   <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
-                    {cuartos1_2 ? cuartos1_2 : "Equipo"}
+                    {cuartos1_4 ? cuartos1_4 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div className={`${cuartosData.length > 0 && octavosData == 0 ? "w-16 h-6 border-t-2 border-r-2 border-white" : "w-16 h-6 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"}`}></div>
@@ -529,7 +529,7 @@ const TablaPlayoff = () => {
                     <div className={`${cuartosData.length > 0 && octavosData == 0 ? "w-16 h-6 border-t-2 border-r-2 border-white" : "w-16 h-6 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"}`}></div>
                   )}
                   <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm">
-                    {cuartos2_2 ? cuartos2_2 : "Equipo"}
+                    {cuartos2_4 ? cuartos2_4 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div className={`${cuartosData.length > 0 && octavosData == 0 ? "w-16 h-6 border-t-2 border-r-2 border-white" : "w-16 h-6 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"}`}></div>
@@ -544,7 +544,7 @@ const TablaPlayoff = () => {
                     <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
                   )}
                   <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                    {equipo1_1 ? equipo1_1 : "Equipo"}
+                    {equipo1_5 ? equipo1_5 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
@@ -556,20 +556,7 @@ const TablaPlayoff = () => {
 
                   )}
                   <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                    {equipo2_1 ? equipo2_1 : "Equipo"}
-                  </div>
-                  {cuartosData.length > 0 && (
-                    <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
-                  )}
-                </div>
-
-                <div>
-                  {cuartosData.length > 0 && (
-                    <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
-
-                  )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                    {equipo1_2 ? equipo1_2 : "Equipo"}
+                    {equipo2_5 ? equipo2_5 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
@@ -582,7 +569,7 @@ const TablaPlayoff = () => {
 
                   )}
                   <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                    {equipo2_2 ? equipo2_2 : "Equipo"}
+                    {equipo1_6 ? equipo1_6 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
@@ -595,7 +582,7 @@ const TablaPlayoff = () => {
 
                   )}
                   <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                    {equipo1_3 ? equipo1_3 : "Equipo"}
+                    {equipo2_6 ? equipo2_6 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
@@ -608,7 +595,7 @@ const TablaPlayoff = () => {
 
                   )}
                   <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                    {equipo2_3 ? equipo2_3 : "Equipo"}
+                    {equipo1_7 ? equipo1_7 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
@@ -621,7 +608,7 @@ const TablaPlayoff = () => {
 
                   )}
                   <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                    {equipo1_4 ? equipo1_4 : "Equipo"}
+                    {equipo2_7 ? equipo2_7 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
@@ -634,7 +621,20 @@ const TablaPlayoff = () => {
 
                   )}
                   <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
-                    {equipo2_4 ? equipo2_4 : "Equipo"}
+                    {equipo1_8 ? equipo1_8 : "Equipo"}
+                  </div>
+                  {cuartosData.length > 0 && (
+                    <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
+                  )}
+                </div>
+
+                <div>
+                  {cuartosData.length > 0 && (
+                    <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
+
+                  )}
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm">
+                    {equipo2_8 ? equipo2_8 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div className={`${octavosData.length > 0 && dieciseisavosData == 0 ? "border-r-2 border-t-2 w-16 h-2 border-white " : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"}`}></div>
@@ -646,82 +646,82 @@ const TablaPlayoff = () => {
               <div className="space-y-2">
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos1_1 || "Equipo"}
+                    {dieciseisavos1_9 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos2_1 || "Equipo"}
+                    {dieciseisavos2_9 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos1_2 || "Equipo"}
+                    {dieciseisavos1_10 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos2_2 || "Equipo"}
+                    {dieciseisavos2_10 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos1_3 || "Equipo"}
+                    {dieciseisavos1_11 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos2_3 || "Equipo"}
+                    {dieciseisavos2_11 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos1_4 || "Equipo"}
+                    {dieciseisavos1_12 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos2_4 || "Equipo"}
+                    {dieciseisavos2_12 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos1_5 || "Equipo"}
+                    {dieciseisavos1_13 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos2_5 || "Equipo"}
+                    {dieciseisavos2_13 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos1_6 || "Equipo"}
+                    {dieciseisavos1_14|| "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos2_6 || "Equipo"}
+                    {dieciseisavos2_14 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos1_7 || "Equipo"}
+                    {dieciseisavos1_15 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos2_7 || "Equipo"}
+                    {dieciseisavos2_15 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos1_8 || "Equipo"}
+                    {dieciseisavos1_16 || "Equipo"}
                   </div>
                 </div>
                 <div>
                   <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm">
-                    {dieciseisavos2_8 || "Equipo"}
+                    {dieciseisavos2_16 || "Equipo"}
                   </div>
                 </div>
               </div>
