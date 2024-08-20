@@ -40,11 +40,16 @@ const TournamentList = () => {
     fetchTournaments();
   }, []);
 
-  const filteredTournaments = tournaments.filter(
-    (tournament) =>
-      (selectedGender === "Todos" || tournament.Categoria === selectedGender) &&
+  const filteredTournaments = tournaments.filter((tournament) => {
+    const categoryMatches =
+      selectedGender === "Todos" ||
+      tournament.Categoria.toLowerCase().includes(selectedGender.toLowerCase());
+
+    return (
+      categoryMatches &&
       tournament.Nombre.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    );
+  });
 
   const windowSmall = window.innerWidth < 640; // Define la variable 'windowSmall' basada en el ancho de la ventana
   const settings = {
@@ -102,10 +107,8 @@ const TournamentList = () => {
 
   return (
     <section id="torneos" className="bg-white">
-      <div className="flex flex-col sm:flex-row items-center justify-between mt-5 mb-8">
-        <div className="w-1/2 mb-5 sm:w-1/5 sm:mb-0">
-          <Perfil />
-        </div>
+      <div className="flex flex-col sm:flex-row items-center justify-between mt-10 mb-8">
+        <div className="w-1/2 mb-5 sm:w-1/5 sm:mb-0"></div>
         <div className="flex-1">
           <h2 className="text-5xl font-daysone font-normal text-center text-pblue">
             Torneos

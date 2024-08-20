@@ -4,7 +4,9 @@ import { db } from "../firebase/config"; // Asegúrate de que la ruta es correct
 
 const TablaDeRankings = () => {
   const [rankings, setRankings] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Todas");
   const [loading, setLoading] = useState(true); // Estado para manejar la carga
 
   useEffect(() => {
@@ -19,13 +21,21 @@ const TablaDeRankings = () => {
           .map((row) => ({
             ranking: parseInt(row.Ranking, 10), // Convierte a número
             nombre: row.Nombre, // Asegúrate de que el nombre del campo coincida con tu base de datos
+            categoria: row.Categoria, // Agrega el campo de categoría
           }))
           .filter((row) => !isNaN(row.ranking) && row.nombre); // Filtra valores inválidos
+
+        // Extraer categorías únicas
+        const uniqueCategories = Array.from(
+          new Set(playerRankings.map((row) => row.categoria))
+        );
 
         // Ordenar los rankings de mayor a menor
         playerRankings.sort((a, b) => b.ranking - a.ranking);
 
         setRankings(playerRankings);
+        setCategories(uniqueCategories);
+        console.log("Categorías únicas:", uniqueCategories);
         console.log("Rankings procesados:", playerRankings); // Verifica los datos procesados
       } catch (error) {
         console.error(
@@ -40,10 +50,17 @@ const TablaDeRankings = () => {
     fetchData();
   }, []);
 
-  // Filtrar los rankings según el término de búsqueda
-  const filteredRankings = rankings.filter((row) =>
-    row.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filtrar los rankings según el término de búsqueda y la categoría seleccionada
+  const filteredRankings = rankings.filter((row) => {
+    const matchesCategory =
+      selectedCategory === "Todas" ||
+      row.categoria.toLowerCase() === selectedCategory.toLowerCase();
+
+    return (
+      matchesCategory &&
+      row.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
 
   // Indicador de carga
   if (loading) {
@@ -62,7 +79,7 @@ const TablaDeRankings = () => {
 
       <div className="flex justify-center mt-8">
         <div className="rounded-lg overflow-hidden w-[800px]">
-          <div className="flex justify-start mb-3">
+          <div className="flex justify-between mb-3">
             <input
               className="border border-pgrey w-52 placeholder:text-center placeholder:text-sm placeholder:text-pgrey rounded-lg px-3 text-center"
               type="text"
@@ -72,6 +89,18 @@ const TablaDeRankings = () => {
               onFocus={(e) => (e.target.placeholder = "")}
               onBlur={(e) => (e.target.placeholder = "Buscar")}
             />
+            <select
+              className="border border-pgrey w-52 rounded-lg px-3 text-center text-pgrey"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="Todas">Todas las Categorías</option>
+              {categories.map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           </div>
           <div
             className="overflow-y-auto rounded-lg border"
@@ -81,7 +110,8 @@ const TablaDeRankings = () => {
               <thead>
                 <tr className="bg-gray-200">
                   <th className="px-4 py-2 text-left">Ranking</th>
-                  <th className="px-4 py-2 text-left">Nombre</th>
+                  <th className="px-4 py-2 text-center">Nombre</th>
+                  <th className="px-4 py-2 text-right">Categoria</th>
                 </tr>
               </thead>
               <tbody>
@@ -92,12 +122,13 @@ const TablaDeRankings = () => {
                       className="bg-white border-b text-pgrey hover:bg-gray-100"
                     >
                       <td className="px-4 py-2">{row.ranking}</td>
-                      <td className="px-4 py-2 text-left">{row.nombre}</td>
+                      <td className="px-4 py-2 text-center">{row.nombre}</td>
+                      <td className="px-4 py-2 text-right">{row.categoria}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="2" className="px-4 py-2 text-center">
+                    <td colSpan="3" className="px-4 py-2 text-center">
                       No hay resultados
                     </td>
                   </tr>
@@ -114,7 +145,7 @@ const TablaDeRankings = () => {
     <div>
       {/* Nueva tabla de Rankings */}
       <div className="flex justify-center mt-8 w-full">
-        <div className="w-full" style={{ maxWidth: "70%" }}>
+        <div className="w-full mb-5" style={{ maxWidth: "70%" }}>
           {renderRankingsTable()}
         </div>
       </div>

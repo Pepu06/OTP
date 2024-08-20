@@ -56,6 +56,17 @@ const Header = () => {
           TORNEOS
         </Link>
         <Link
+          to="/ranking"
+          className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
+          onClick={toggleMenu}
+        >
+          RANKINGS
+        </Link>
+        <Link
           to="/novedades"
           className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
              before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
@@ -123,6 +134,17 @@ const Header = () => {
               onClick={toggleMenu}
             >
               TORNEOS
+            </Link>
+            <Link
+              to="/ranking"
+              className="relative text-gray-600 hover:text-blue-600 cursor-pointer transition-all ease-in-out
+             before:transition-[width] before:ease-in-out before:duration-300 before:absolute before:bg-blue-600 before:origin-center 
+             before:h-[1px] before:w-0 hover:before:w-[50%] before:bottom-0 before:left-[50%]
+             after:transition-[width] after:ease-in-out after:duration-300 after:absolute after:bg-blue-600 after:origin-center 
+             after:h-[1px] after:w-0 hover:after:w-[50%] after:bottom-0 after:right-[50%]"
+              onClick={toggleMenu}
+            >
+              RANKINGS
             </Link>
             <Link
               to="/novedades"

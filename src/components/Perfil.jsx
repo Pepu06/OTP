@@ -39,17 +39,17 @@ const Perfil = () => {
   };
 
   return (
-    <section id="torneos" className="bg-white ml-2 mt-1">
+    <section id="torneos" className="bg-white ml-2 mt-1 mb-5">
       <div className="flex justify-center mb-2">
         <Select
           options={jugadores}
           onChange={handleChange}
-          placeholder="Busca por Nombre/ID"
-          className="w-full text-center"
+          placeholder="Busca tu perfil por Nombre/ID"
+          className="text-center"
           isSearchable
         />
       </div>
-      <div className="flex justify-center sm:justify-start mt-2">
+      <div className="flex justify-center sm:justify-center mt-2">
         <a
           href={`/perfil/${selectedJugador ? selectedJugador.value : ""}`}
           className="px-3 py-1 sm:px-5 sm:py-2 bg-pgreen text-white rounded-lg font-medium text-sm font-poppins"
