@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config"; // Asegúrate de que la ruta es correcta
+import { FaFilter } from 'react-icons/fa';
 
 const TablaDeRankings = () => {
   const [rankings, setRankings] = useState([]);
@@ -8,7 +9,13 @@ const TablaDeRankings = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todas");
   const [loading, setLoading] = useState(true); // Estado para manejar la carga
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleSelectChange = (e) => {
+    setSelectedCategory(e.target.value);
+    setIsMenuOpen(false); // Cierra el menú desplegable después de seleccionar una opción
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true); // Empieza a cargar
@@ -80,19 +87,19 @@ const TablaDeRankings = () => {
       <div className="flex justify-center mt-8">
         <div className="rounded-lg overflow-hidden w-[800px]">
           <div className="flex justify-between mb-3">
-            <input
-              className="border border-pgrey w-52 placeholder:text-center placeholder:text-sm placeholder:text-pgrey rounded-lg px-3 text-center"
-              type="text"
-              placeholder="Buscar"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onFocus={(e) => (e.target.placeholder = "")}
-              onBlur={(e) => (e.target.placeholder = "Buscar")}
-            />
+            <div className="relative flex items-center">
+      {/* Menú desplegable para pantallas pequeñas */}
+      <div className="sm:hidden">
+        <FaFilter
+          className="text-gray-400 cursor-pointer"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        />
+        {isMenuOpen && (
+          <div className="absolute top-8 left-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
             <select
-              className="border border-pgrey w-52 rounded-lg px-3 text-center text-pgrey"
+              className="block border-none w-48 rounded-lg py-2 px-3 text-center text-gray-700"
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={handleSelectChange}
             >
               <option value="Todas">Todas las Categorías</option>
               {categories.map((category, index) => (
@@ -101,6 +108,24 @@ const TablaDeRankings = () => {
                 </option>
               ))}
             </select>
+          </div>
+        )}
+      </div>
+
+      {/* Select visible en pantallas grandes */}
+      <select
+        className="hidden sm:block pl-10 border border-gray-300 w-52 rounded-lg py-2 px-3 text-center text-gray-700"
+        value={selectedCategory}
+        onChange={handleSelectChange}
+      >
+        <option value="Todas">Todas las Categorías</option>
+        {categories.map((category, index) => (
+          <option key={index} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
+    </div>
           </div>
           <div
             className="overflow-y-auto rounded-lg border"
