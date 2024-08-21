@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config"; // Asegúrate de que la ruta es correcta
-import { FaFilter } from 'react-icons/fa';
+import { FaFilter } from "react-icons/fa";
 
 const TablaDeRankings = () => {
   const [rankings, setRankings] = useState([]);
@@ -9,13 +9,8 @@ const TablaDeRankings = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todas");
   const [loading, setLoading] = useState(true); // Estado para manejar la carga
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSelectVisible, setIsSelectVisible] = useState(false); // Nuevo estado
 
-  const handleSelectChange = (e) => {
-    setSelectedCategory(e.target.value);
-    setIsMenuOpen(false); // Cierra el menú desplegable después de seleccionar una opción
-  };
-  
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true); // Empieza a cargar
@@ -84,84 +79,95 @@ const TablaDeRankings = () => {
         Rankings
       </h1>
 
-      <div className="flex justify-center mt-8">
-        <div className="rounded-lg overflow-hidden w-[800px]">
-          <div className="flex justify-between mb-3">
-            <div className="relative flex items-center">
-      {/* Menú desplegable para pantallas pequeñas */}
-      <div className="sm:hidden">
-        <FaFilter
-          className="text-gray-400 cursor-pointer"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        />
-        {isMenuOpen && (
-          <div className="absolute top-8 left-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
-            <select
-              className="block border-none w-48 rounded-lg py-2 px-3 text-center text-gray-700"
-              value={selectedCategory}
-              onChange={handleSelectChange}
-            >
-              <option value="Todas">Todas las Categorías</option>
-              {categories.map((category, index) => (
-                <option key={index} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+      <div className="flex flex-col sm:flex-row justify-between mt-8">
+        <div className="flex items-center mb-3 sm:mb-0">
+          <input
+            className="border border-pgrey w-52 placeholder:text-center placeholder:text-sm placeholder:text-pgrey rounded-lg px-3 text-center"
+            type="text"
+            placeholder="Buscar"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onFocus={(e) => (e.target.placeholder = "")}
+            onBlur={(e) => (e.target.placeholder = "Buscar")}
+          />
+        </div>
+
+        {/* Menú select para pantallas grandes */}
+        <div className="hidden sm:flex items-center mb-3">
+          <select
+            className="border border-pgrey w-52 rounded-lg px-3 text-center text-pgrey"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="Todas">Todas las Categorías</option>
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Ícono para pantallas pequeñas */}
+        <div className="relative sm:hidden">
+          <FaFilter
+            className="text-2xl cursor-pointer absolute right-0 -top-9 transform mr-3"
+            onClick={() => setIsSelectVisible(!isSelectVisible)}
+          />
+          {/* Menú select para pantallas pequeñas */}
+          {isSelectVisible && (
+            <div className="absolute right-0 top-full mt-2 w-52 border border-pgrey rounded-lg bg-white z-10">
+              <select
+                className="w-full rounded-lg px-3 text-center text-pgrey"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                onBlur={() => setIsSelectVisible(false)} // Cierra el menú cuando pierde el foco
+              >
+                <option value="Todas">Todas las Categorías</option>
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Select visible en pantallas grandes */}
-      <select
-        className="hidden sm:block pl-10 border border-gray-300 w-52 rounded-lg py-2 px-3 text-center text-gray-700"
-        value={selectedCategory}
-        onChange={handleSelectChange}
+      <div
+        className="overflow-y-auto rounded-lg border"
+        style={{ maxHeight: "300px" }}
       >
-        <option value="Todas">Todas las Categorías</option>
-        {categories.map((category, index) => (
-          <option key={index} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
-    </div>
-          </div>
-          <div
-            className="overflow-y-auto rounded-lg border"
-            style={{ maxHeight: "300px" }}
-          >
-            <table className="w-full text-base text-gray-500">
-              <thead>
-                <tr className="bg-gray-200">
-                  <th className="px-4 py-2 text-left">Ranking</th>
-                  <th className="px-4 py-2 text-center">Nombre</th>
-                  <th className="px-4 py-2 text-right">Categoria</th>
+        <table className="w-full text-base text-gray-500">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="px-4 py-2 text-left">Ranking</th>
+              <th className="px-4 py-2 text-center">Nombre</th>
+              <th className="px-4 py-2 text-right">Categoria</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredRankings.length > 0 ? (
+              filteredRankings.map((row, index) => (
+                <tr
+                  key={index}
+                  className="bg-white border-b text-pgrey hover:bg-gray-100"
+                >
+                  <td className="px-4 py-2">{row.ranking}</td>
+                  <td className="px-4 py-2 text-center">{row.nombre}</td>
+                  <td className="px-4 py-2 text-right">{row.categoria}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {filteredRankings.length > 0 ? (
-                  filteredRankings.map((row, index) => (
-                    <tr
-                      key={index}
-                      className="bg-white border-b text-pgrey hover:bg-gray-100"
-                    >
-                      <td className="px-4 py-2">{row.ranking}</td>
-                      <td className="px-4 py-2 text-center">{row.nombre}</td>
-                      <td className="px-4 py-2 text-right">{row.categoria}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="3" className="px-4 py-2 text-center">
-                      No hay resultados
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3" className="px-4 py-2 text-center">
+                  No hay resultados
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
