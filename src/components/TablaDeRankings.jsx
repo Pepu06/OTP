@@ -82,7 +82,7 @@ const TablaDeRankings = () => {
       <div className="flex flex-col sm:flex-row justify-between mt-8">
         <div className="flex items-center mb-3 sm:mb-0">
           <input
-            className="border border-pgrey w-52 placeholder:text-center placeholder:text-sm placeholder:text-pgrey rounded-lg px-3 text-center"
+            className="border border-pgrey w-40 placeholder:text-center placeholder:text-sm placeholder:text-pgrey rounded-lg px-3 text-center"
             type="text"
             placeholder="Buscar"
             value={searchTerm}
