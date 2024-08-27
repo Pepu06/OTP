@@ -395,9 +395,10 @@ const Administracion = () => {
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <div className="flex flex-col items-center">
-            <div className="loader"></div>{" "}
-            {/* Estilo para el círculo de carga */}
-            <p className="text-white mt-4">{loadingMessage}</p>
+            <div className="flex justify-center items-center h-64">
+              <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-pblue"></div>
+            </div>
+            <p className="text-white">{loadingMessage}</p>
           </div>
         </div>
       )}

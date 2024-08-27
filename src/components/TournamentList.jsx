@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { motion } from "framer-motion";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
-import Perfil from "./Perfil";
 import Pelotas from "../assets/pelotas.png";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
@@ -14,12 +13,11 @@ const TournamentList = () => {
   const [selectedGender, setSelectedGender] = useState("Todos");
   const [showAll, setShowAll] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [tournaments, setTournaments] = useState([]); // Estado para torneos
-  const [isLoading, setIsLoading] = useState(true); // Estado para manejar el círculo de carga
+  const [tournaments, setTournaments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Función para cargar los datos de torneos desde Firebase
     const fetchTournaments = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "torneos"));
@@ -28,12 +26,22 @@ const TournamentList = () => {
           ...doc.data(),
         }));
 
-        setTournaments(data);
-        console.log("Torneos cargados desde Firebase:", data);
+        // Eliminar duplicados por ID
+        const uniqueTournaments = data.reduce((acc, current) => {
+          const x = acc.find((item) => item.ID === current.ID);
+          if (!x) {
+            return acc.concat([current]);
+          } else {
+            return acc;
+          }
+        }, []);
+
+        setTournaments(uniqueTournaments);
+        console.log("Torneos cargados desde Firebase:", uniqueTournaments);
       } catch (error) {
         console.error("Error cargando datos de torneos:", error);
       } finally {
-        setIsLoading(false); // Deja de mostrar el círculo de carga una vez que los datos han cargado
+        setIsLoading(false);
       }
     };
 
@@ -47,20 +55,23 @@ const TournamentList = () => {
 
     return (
       categoryMatches &&
-      tournament.Nombre.toLowerCase().includes(searchQuery.toLowerCase())
+      (tournament.Nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        tournament.Fecha.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        tournament.Club.toLowerCase().includes(searchQuery.toLowerCase()))
     );
   });
 
-  const windowSmall = window.innerWidth < 640; // Define la variable 'windowSmall' basada en el ancho de la ventana
+  const windowSmall = window.innerWidth < 640;
   const settings = {
-    dots: true,
-    infinite: selectedGender === "Todos",
+    dots: false,
+    infinite: selectedGender === "Todos" && searchQuery === "",
     speed: 500,
     slidesToShow: windowSmall ? 3 : 4,
-    slidesToScroll: 2,
+    slidesToScroll: 1,
     autoplay: true,
     swipeToSlide: true,
     draggable: true,
+    touchThreshold: 1000,
   };
 
   const handleTournamentClick = (name, ID) => {
@@ -157,7 +168,7 @@ const TournamentList = () => {
         transition={{ duration: 0.7 }}
       >
         <div className="w-full max-w-4xl">
-          {showAll ? (
+          {searchQuery || showAll ? (
             <div className="grid grid-cols-2 gap-4">
               {filteredTournaments.map((tournament) =>
                 renderTournamentItem(tournament)
@@ -172,14 +183,25 @@ const TournamentList = () => {
           )}
         </div>
       </motion.div>
-      <div className="flex justify-center mb-8">
-        <button
-          onClick={toggleShowAll}
-          className="mb-4 px-3 py-3 bg-gray-300 text-black rounded-full focus:outline-none"
-        >
-          {showAll ? <FaArrowAltCircleUp /> : <FaArrowAltCircleDown />}
-        </button>
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex justify-center">
+          <button onClick={toggleShowAll}>
+            <div className="mb-1 py-3 bg-gray-300 text-black rounded-full focus:outline-none flex flex-col items-center">
+              <div className="flex justify-center items-center flex-col">
+                {showAll ? (
+                  <FaArrowAltCircleUp size={24} />
+                ) : (
+                  <FaArrowAltCircleDown size={24} />
+                )}
+              </div>
+            </div>
+            <span className="text-gray-400">
+              {showAll ? "Ver menos" : "Ver más"}
+            </span>
+          </button>
+        </div>
       </div>
+
       <div className="flex justify-center mt-4">
         <a
           href="https://wa.me/91140962011/?text=Hola! Me gustaría inscribirme en un torneo! 🎾"

@@ -68,7 +68,7 @@ const MainContent = () => {
               element={
                 <>
                   <TablaDeRankings />
-                  <Perfil />
+                  {/* <Perfil /> */}
                   <ContactSection />
                 </>
               }
