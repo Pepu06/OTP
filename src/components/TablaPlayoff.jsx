@@ -148,7 +148,7 @@ const TablaPlayoff = () => {
   return (
     <div className="flex justify-center items-center m-4 relative bg-cover bg-center">
       <div className="overflow-x-auto sm:overflow-x-visible w-full">
-        <div className="flex justify-start sm:justify-center items-center m-4 relative bg-cover bg-center">
+        <div className="flex justify-start md:justify-center items-center m-4 relative bg-cover bg-center">
           <div
             className={`grid ${
               existeDieciseisavos

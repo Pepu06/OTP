@@ -20,6 +20,9 @@ export default {
         'inter': ['Inter', 'sans-serif'],
         'poppins': ['Poppins', 'sans-serif'],
       },
+      screens: {
+        'md': '1350px', // Modifica este valor a lo que necesites
+      },
     },
   },
   plugins: [],
