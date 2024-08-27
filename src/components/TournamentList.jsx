@@ -49,15 +49,21 @@ const TournamentList = () => {
   }, []);
 
   const filteredTournaments = tournaments.filter((tournament) => {
+    // Sanitización del searchQuery
+    const sanitizedSearchQuery = searchQuery.replace(/[^\w\s]/gi, "");
+
+    // Expresión regular para búsqueda
+    const searchRegex = new RegExp(sanitizedSearchQuery, "i"); // 'i' para ignorar mayúsculas/minúsculas
+
     const categoryMatches =
       selectedGender === "Todos" ||
       tournament.Categoria.toLowerCase().includes(selectedGender.toLowerCase());
 
     return (
       categoryMatches &&
-      (tournament.Nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        tournament.Fecha.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        tournament.Club.toLowerCase().includes(searchQuery.toLowerCase()))
+      (searchRegex.test(tournament.Nombre) ||
+        searchRegex.test(tournament.Fecha) ||
+        searchRegex.test(tournament.Club))
     );
   });
 
@@ -153,9 +159,9 @@ const TournamentList = () => {
           className="border rounded-full p-2 mx-5 sm:mx-0 w-full sm:w-1/2 text-center placeholder-pgrey placeholder:text-sm sm:placeholder:text-base"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onClick={(placeholder) => (placeholder.target.placeholder = "")}
-          onBlur={(placeholder) =>
-            (placeholder.target.placeholder = "Buscar por Fecha/Lugar/Nombre")
+          onClick={(e) => (e.target.placeholder = "")}
+          onBlur={(e) =>
+            (e.target.placeholder = "Buscar por Fecha/Lugar/Nombre")
           }
         />
       </div>
