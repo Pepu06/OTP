@@ -6,26 +6,26 @@ import { getStorage } from "firebase/storage";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // PEDROGONZALEZSORO@GMAIL.COM
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAk69sBBj_W2zd0Pkwg2nDbZSVFrIGc-VY",
-//   authDomain: "otp-cc97b.firebaseapp.com",
-//   projectId: "otp-cc97b",
-//   storageBucket: "otp-cc97b.appspot.com",
-//   messagingSenderId: "1068331355078",
-//   appId: "1:1068331355078:web:5b97046a4f8fda040500c7",
-//   measurementId: "G-9VRFHYX673",
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyAk69sBBj_W2zd0Pkwg2nDbZSVFrIGc-VY",
+  authDomain: "otp-cc97b.firebaseapp.com",
+  projectId: "otp-cc97b",
+  storageBucket: "otp-cc97b.appspot.com",
+  messagingSenderId: "1068331355078",
+  appId: "1:1068331355078:web:5b97046a4f8fda040500c7",
+  measurementId: "G-9VRFHYX673",
+};
 
 // ALQUILERESDGS@GMAIL.COM
-const firebaseConfig = {
-  apiKey: "AIzaSyDtRehC-Pjs-40d3wSn1UysUwDs-VIAts8",
-  authDomain: "otp-pruebas-99497.firebaseapp.com",
-  projectId: "otp-pruebas-99497",
-  storageBucket: "otp-pruebas-99497.appspot.com",
-  messagingSenderId: "636831196825",
-  appId: "1:636831196825:web:de9e308fe74f38b5ad7a08",
-  measurementId: "G-KKFBP5Z2YZ",
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDtRehC-Pjs-40d3wSn1UysUwDs-VIAts8",
+//   authDomain: "otp-pruebas-99497.firebaseapp.com",
+//   projectId: "otp-pruebas-99497",
+//   storageBucket: "otp-pruebas-99497.appspot.com",
+//   messagingSenderId: "636831196825",
+//   appId: "1:636831196825:web:de9e308fe74f38b5ad7a08",
+//   measurementId: "G-KKFBP5Z2YZ",
+// };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
