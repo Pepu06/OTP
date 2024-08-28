@@ -6,6 +6,7 @@ import {
   deleteDoc,
   doc,
   setDoc,
+  addDoc,
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
 import { db } from "../firebase/config";
@@ -14,6 +15,7 @@ const Administracion = () => {
   const [torneos, setTorneos] = useState([]);
   const [partidos, setPartidos] = useState([]);
   const [jugadores, setJugadores] = useState([]);
+  const [historicoTorneos, setHistoricoTorneos] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
@@ -21,8 +23,11 @@ const Administracion = () => {
   const [searchTermTorneos, setSearchTermTorneos] = useState("");
   const [searchTermPartidos, setSearchTermPartidos] = useState("");
   const [searchTermJugadores, setSearchTermJugadores] = useState("");
+  const [searchTermHistoricoTorneos, setSearchTermHistoricoTorneos] =
+    useState("");
 
   const [editingRow, setEditingRow] = useState(null);
+  const [addingRow, setAddingRow] = useState(null);
 
   // Cargar datos iniciales desde Firestore
   useEffect(() => {
@@ -34,13 +39,19 @@ const Administracion = () => {
         const torneosRef = collection(db, "torneos");
         const partidosRef = collection(db, "partidos");
         const jugadoresRef = collection(db, "jugadores");
+        const historicoTorneosRef = collection(db, "historicoTorneos");
 
-        const [torneosSnapshot, partidosSnapshot, jugadoresSnapshot] =
-          await Promise.all([
-            getDocs(torneosRef),
-            getDocs(partidosRef),
-            getDocs(jugadoresRef),
-          ]);
+        const [
+          torneosSnapshot,
+          partidosSnapshot,
+          jugadoresSnapshot,
+          historicoTorneosSnapshot,
+        ] = await Promise.all([
+          getDocs(torneosRef),
+          getDocs(partidosRef),
+          getDocs(jugadoresRef),
+          getDocs(historicoTorneosRef),
+        ]);
 
         const torneosData = torneosSnapshot.docs.map((doc) => ({
           ...doc.data(),
@@ -54,10 +65,17 @@ const Administracion = () => {
           ...doc.data(),
           ID: doc.id,
         }));
+        const historicoTorneosData = historicoTorneosSnapshot.docs.map(
+          (doc) => ({
+            ...doc.data(),
+            ID: doc.id,
+          })
+        );
 
         setTorneos(torneosData);
         setPartidos(partidosData);
         setJugadores(jugadoresData);
+        setHistoricoTorneos(historicoTorneosData);
       } catch (error) {
         console.error("Error al cargar los datos iniciales:", error);
       } finally {
@@ -70,6 +88,53 @@ const Administracion = () => {
     loadInitialData();
   }, []);
 
+  const [showForm, setShowForm] = useState(false);
+  const [newRowData, setNewRowData] = useState({
+    Nombre: "",
+    Categoria: "",
+    Fecha: "",
+    Club: "",
+    IDTorneo: "",
+    Instancia: "",
+    Resultado: "",
+    Equipo1: "",
+    Equipo2: "",
+    Ranking: "",
+  });
+
+  const handleAddRowSubmit = async (tableName) => {
+    try {
+      const collectionRef = collection(db, tableName);
+
+      // Asegúrate de que el campo ID esté presente en newRowData
+      if (!newRowData.ID) {
+        console.error("El campo ID es requerido");
+        return;
+      }
+
+      // Usa setDoc en lugar de addDoc
+      await setDoc(doc(collectionRef, newRowData.ID), newRowData);
+
+      setShowForm(false); // Ocultar formulario
+      setNewRowData({
+        Nombre: "",
+        Categoria: "",
+        Fecha: "",
+        Club: "",
+        IDTorneo: "",
+        Instancia: "",
+        Resultado: "",
+        Equipo1: "",
+        Equipo2: "",
+        Ranking: "",
+        ID: "", // Asegúrate de que el ID se resetea también
+      }); // Resetear datos del formulario
+      await fetchData(); // Recargar datos después de agregar la fila
+    } catch (error) {
+      console.error("Error al agregar la fila:", error);
+    }
+  };
+
   const fetchData = async () => {
     setLoading(true);
     setLoadingMessage("Cargando datos...");
@@ -78,13 +143,19 @@ const Administracion = () => {
       const torneosRef = collection(db, "torneos");
       const partidosRef = collection(db, "partidos");
       const jugadoresRef = collection(db, "jugadores");
+      const historicoTorneosRef = collection(db, "historicoTorneos");
 
-      const [torneosSnapshot, partidosSnapshot, jugadoresSnapshot] =
-        await Promise.all([
-          getDocs(torneosRef),
-          getDocs(partidosRef),
-          getDocs(jugadoresRef),
-        ]);
+      const [
+        torneosSnapshot,
+        partidosSnapshot,
+        jugadoresSnapshot,
+        historicoTorneosSnapshot,
+      ] = await Promise.all([
+        getDocs(torneosRef),
+        getDocs(partidosRef),
+        getDocs(jugadoresRef),
+        getDocs(historicoTorneosRef),
+      ]);
 
       const torneosData = torneosSnapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -98,10 +169,15 @@ const Administracion = () => {
         ...doc.data(),
         ID: doc.id,
       }));
+      const historicoTorneosData = historicoTorneosSnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        ID: doc.id,
+      }));
 
       setTorneos(torneosData);
       setPartidos(partidosData);
       setJugadores(jugadoresData);
+      setHistoricoTorneos(historicoTorneosData);
     } catch (error) {
       console.error("Error al cargar los datos:", error);
     } finally {
@@ -117,6 +193,7 @@ const Administracion = () => {
       torneos: setSearchTermTorneos,
       partidos: setSearchTermPartidos,
       jugadores: setSearchTermJugadores,
+      historicoTorneos: setSearchTermHistoricoTorneos,
     }[tableName];
     setSearchTerm(value);
   };
@@ -154,10 +231,14 @@ const Administracion = () => {
 
     try {
       await updateDoc(doc(db, tableName, editingRow.rowId), updatedRow);
-      setEditingRow(null);
     } catch (error) {
       console.error("Error al guardar:", error);
     }
+  };
+
+  const handleCancel = () => {
+    setEditingRow(null);
+    setAddingRow(null); // Ocultar formulario de agregar fila
   };
 
   const handleDelete = async (tableName, rowId) => {
@@ -237,7 +318,8 @@ const Administracion = () => {
         if (
           sheetName === "torneos" ||
           sheetName === "partidos" ||
-          sheetName === "jugadores"
+          sheetName === "jugadores" ||
+          sheetName === "historicoTorneos"
         ) {
           const collectionRef = collection(db, sheetName);
 
@@ -268,15 +350,123 @@ const Administracion = () => {
     reader.readAsArrayBuffer(file);
   };
 
-  // Renderizar tabla
+  const renderForm = (tableName) => {
+    const columns = {
+      torneos: ["ID", "Nombre", "Categoria", "Fecha", "Club"],
+      partidos: [
+        "ID",
+        "IDTorneo",
+        "Instancia",
+        "Equipo1",
+        "Resultado",
+        "Equipo2",
+        "Cancha",
+        "Horario",
+      ],
+      jugadores: [
+        "ID",
+        "Nombre",
+        "Ranking",
+        "Categoria",
+        "CJ",
+        "UP",
+        "UR",
+        "Cuartos",
+        "Semis",
+        "Finales",
+        "PJ",
+        "PG",
+        "Efectividad",
+        "Puntos",
+      ],
+      historicoTorneos: [
+        "ID",
+        "IDJugador",
+        "Tipo",
+        "Competicion",
+        "Fecha",
+        "Pareja",
+        "Categoria",
+        "Resultado",
+      ],
+    }[tableName];
+
+    return (
+      <div className="p-4 border border-gray-300 rounded-lg mb-4">
+        <h2 className="text-lg font-bold mb-2">Agregar Nueva Fila</h2>
+        {columns.map((column) => (
+          <div key={column} className="mb-2">
+            <label className="block text-sm font-medium text-gray-700">
+              {capitalizeFirstLetter(column)}
+            </label>
+            <input
+              type="text"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+              value={newRowData[column] || ""}
+              onChange={(e) =>
+                setNewRowData({ ...newRowData, [column]: e.target.value })
+              }
+            />
+          </div>
+        ))}
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+          onClick={() => handleAddRowSubmit(tableName)}
+        >
+          Guardar
+        </button>
+        <button
+          className="bg-gray-500 text-white px-4 py-2 rounded-lg ml-2"
+          onClick={() => handleCancel()}
+        >
+          Cancelar
+        </button>
+      </div>
+    );
+  };
+
   const renderTable = (rows, setRows, tableName, searchTerm) => {
     const columns = {
       torneos: ["ID", "Nombre", "Categoria", "Fecha", "Club"],
-      partidos: ["IDTorneo", "Instancia", "Equipo1", "Resultado", "Equipo2"],
-      jugadores: ["ID", "Nombre", "Ranking"],
+      partidos: [
+        "ID",
+        "IDTorneo",
+        "Instancia",
+        "Equipo1",
+        "Resultado",
+        "Equipo2",
+        "Cancha",
+        "Horario",
+      ],
+      jugadores: [
+        "ID",
+        "Nombre",
+        "Ranking",
+        "Categoria",
+        "CJ",
+        "UP",
+        "UR",
+        "Cuartos",
+        "Semis",
+        "Finales",
+        "PJ",
+        "PG",
+        "Efectividad",
+        "Puntos",
+      ],
+      historicoTorneos: [
+        "ID",
+        "IDJugador",
+        "Tipo",
+        "Competicion",
+        "Fecha",
+        "Pareja",
+        "Categoria",
+        "Resultado",
+      ],
     }[tableName];
 
-    const handleKeyDown = (e, tableName) => {
+    const handleKeyDown = (e) => {
       if (e.key === "Enter") {
         handleSave(tableName);
       }
@@ -298,7 +488,15 @@ const Administracion = () => {
                 ? "Buscar por IDTorneo"
                 : "Buscar por ID/Nombre"
             }
-            value={searchTerm}
+            value={
+              tableName === "torneos"
+                ? searchTermTorneos
+                : tableName === "partidos"
+                ? searchTermPartidos
+                : tableName === "historicoTorneos"
+                ? searchTermHistoricoTorneos
+                : searchTermJugadores
+            }
             onChange={(e) => handleSearchChange(e, tableName)}
             onClick={(e) => (e.target.placeholder = "")}
             onBlur={(e) =>
@@ -344,7 +542,7 @@ const Administracion = () => {
                               );
                               setRows(updatedRows);
                             }}
-                            onKeyDown={(e) => handleKeyDown(e, tableName)}
+                            onKeyDown={handleKeyDown}
                           />
                         ) : (
                           row[column] || ""
@@ -385,6 +583,15 @@ const Administracion = () => {
               </tbody>
             </table>
           </div>
+          <div className="flex justify-center mt-4">
+            <button
+              className="m-2 px-5 py-2 bg-pgreen hover:bg-blue-600 text-white rounded-lg font-medium"
+              onClick={() => setAddingRow(tableName)}
+            >
+              Agregar Fila
+            </button>
+          </div>
+          {addingRow === tableName && renderForm(tableName)}
         </div>
       </div>
     );
@@ -421,13 +628,21 @@ const Administracion = () => {
           {renderTable(partidos, setPartidos, "partidos", searchTermPartidos)}
         </div>
       </div>
-      <div className="flex justify-center mt-8 w-full">
-        <div className="w-full sm:max-w-[50%]">
+      <div className="flex flex-col sm:flex-row items-center sm:justify-between">
+        <div className="w-full sm:w-[50%] m-1">
           {renderTable(
             jugadores,
             setJugadores,
             "jugadores",
             searchTermJugadores
+          )}
+        </div>
+        <div className="w-full sm:w-[50%] sm:mt-0 mt-5 m-1">
+          {renderTable(
+            historicoTorneos,
+            setHistoricoTorneos,
+            "historicoTorneos",
+            searchTermHistoricoTorneos
           )}
         </div>
       </div>
