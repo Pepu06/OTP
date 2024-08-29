@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
@@ -18,6 +20,8 @@ import PerfilJugador from "./components/PerfilJugador";
 import Administracion from "./components/Administracion";
 import AdminContactSection from "./components/AdminContactSection";
 import TablaDeRankings from "./components/TablaDeRankings";
+import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute"; // Importar el ProtectedRoute
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -30,15 +34,17 @@ const ScrollToTop = () => {
 };
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de autenticación
+
   return (
     <Router>
       <ScrollToTop />
-      <MainContent />
+      <MainContent isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
     </Router>
   );
 };
 
-const MainContent = () => {
+const MainContent = ({ isAuthenticated, setIsAuthenticated }) => {
   const location = useLocation();
 
   return (
@@ -68,7 +74,6 @@ const MainContent = () => {
               element={
                 <>
                   <TablaDeRankings />
-                  {/* <Perfil /> */}
                   <ContactSection />
                 </>
               }
@@ -123,12 +128,18 @@ const MainContent = () => {
               }
             />
             <Route
+              path="/login"
+              element={<Login setIsAuthenticated={setIsAuthenticated} />}
+            />
+            <Route
               path="/adm"
               element={
-                <>
-                  <Administracion />
-                  <ContactSection />
-                </>
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <>
+                    <Administracion />
+                    <ContactSection />
+                  </>
+                </ProtectedRoute>
               }
             />
           </Routes>

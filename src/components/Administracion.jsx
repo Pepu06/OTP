@@ -109,10 +109,15 @@ const Administracion = () => {
     return (maxId + 1).toString();
   };
 
-  // Función para calcular el ranking basado en los puntos
-  const calculateRanking = (jugadores, newPlayerPoints) => {
+  // Función para calcular el ranking basado en la categoría y los puntos
+  const calculateRanking = (jugadores, newPlayerPoints, categoria) => {
+    // Filtrar jugadores por la categoría dada
+    const filteredPlayers = jugadores.filter(
+      (player) => player.Categoria === categoria
+    );
+
     // Ordenar jugadores por puntos de mayor a menor
-    const sortedPlayers = [...jugadores].sort((a, b) => b.Puntos - a.Puntos);
+    const sortedPlayers = [...filteredPlayers].sort((a, b) => b.Puntos - a.Puntos);
 
     // Encontrar el ranking del nuevo jugador
     const rank =
@@ -122,13 +127,11 @@ const Administracion = () => {
     return rank === 0 ? sortedPlayers.length + 1 : rank;
   };
 
-  // Modificar handleAddRowSubmit para incluir el cálculo del ranking
+  // Modificar handleAddRowSubmit para incluir el cálculo del ranking basado en la categoría
   const handleAddRowSubmit = async (tableName) => {
     try {
       const collectionRef = collection(db, tableName);
-      const rows = { torneos, partidos, jugadores, historicoTorneos }[
-        tableName
-      ];
+      const rows = { torneos, partidos, jugadores, historicoTorneos }[tableName];
       const newId = getNextId(rows);
 
       const newRowDataWithId = { ...newRowData, ID: newId };
@@ -145,7 +148,7 @@ const Administracion = () => {
           "Cancha",
           "Horario",
         ],
-        jugadores: ["Nombre", "Categoria"],
+        jugadores: ["Nombre", "Categoria", "Puntos"],
         historicoTorneos: [
           "IDJugador",
           "Tipo",
@@ -185,14 +188,35 @@ const Administracion = () => {
           }
         });
 
-        // Calcular el ranking del nuevo jugador
+        // Calcular el ranking del nuevo jugador basado en la categoría y puntos
         const newPlayerPoints = parseInt(newRowDataWithId.Puntos, 10);
-        const newRanking = calculateRanking(jugadores, newPlayerPoints);
+        const newRanking = calculateRanking(jugadores, newPlayerPoints, newRowDataWithId.Categoria);
         newRowDataWithId.Ranking = newRanking.toString();
-      }
 
-      await setDoc(doc(collectionRef, newId), newRowDataWithId);
-      setNewRowData(newRowDataWithId);
+        // Guardar el nuevo jugador en la base de datos
+        await setDoc(doc(collectionRef, newId), newRowDataWithId);
+
+        // Recalcular y actualizar rankings para todos los jugadores en la misma categoría
+        const updatedPlayers = jugadores
+          .filter(player => player.Categoria === newRowDataWithId.Categoria)
+          .concat(newRowDataWithId);
+
+        updatedPlayers.sort((a, b) => b.Puntos - a.Puntos);
+
+        await Promise.all(
+          updatedPlayers.map((player, index) => {
+            const updatedRanking = (index + 1).toString();
+            return updateDoc(doc(db, "jugadores", player.ID), {
+              Ranking: updatedRanking,
+            });
+          })
+        );
+
+        // Actualizar el estado local con los jugadores actualizados
+        setJugadores(updatedPlayers);
+      } else {
+        await setDoc(doc(collectionRef, newId), newRowDataWithId);
+      }
 
       setShowForm(false);
       setNewRowData({
@@ -208,11 +232,14 @@ const Administracion = () => {
         Equipo2: "",
         Ranking: "",
       });
+
       await fetchData();
     } catch (error) {
       console.error("Error al agregar la fila:", error);
     }
   };
+
+
 
   const fetchData = async () => {
     setLoading(true);
@@ -315,32 +342,27 @@ const Administracion = () => {
       // Si se edita un jugador, recalcular rankings
       if (tableName === "jugadores") {
         const updatedPlayerPoints = parseInt(updatedRow.Puntos, 10);
-        const newRanking = calculateRanking(jugadores, updatedPlayerPoints);
+        const updatedPlayers = jugadores
+          .filter(player => player.Categoria === updatedRow.Categoria)
+          .map(player =>
+            player.ID === updatedRow.ID
+              ? { ...player, Puntos: updatedPlayerPoints }
+              : player
+          );
 
-        // Actualizar el ranking del jugador editado
-        await updateDoc(doc(db, tableName, editingRow.rowId), {
-          Ranking: newRanking.toString(),
-        });
+        updatedPlayers.sort((a, b) => b.Puntos - a.Puntos);
 
-        // Recalcular el ranking para todos los jugadores
-        const updatedPlayers = await getDocs(collection(db, "jugadores"));
-        const allPlayers = updatedPlayers.docs.map((doc) => ({
-          ...doc.data(),
-          ID: doc.id,
-        }));
-
-        // Recalcular el ranking de cada jugador
         await Promise.all(
-          allPlayers.map(async (player) => {
-            const ranking = calculateRanking(allPlayers, player.Puntos);
-            await updateDoc(doc(db, "jugadores", player.ID), {
-              Ranking: ranking.toString(),
+          updatedPlayers.map((player, index) => {
+            const updatedRanking = (index + 1).toString();
+            return updateDoc(doc(db, "jugadores", player.ID), {
+              Ranking: updatedRanking,
             });
           })
         );
 
         // Actualizar el estado local con los jugadores actualizados
-        setJugadores(allPlayers);
+        setJugadores(updatedPlayers);
       }
 
       // Mostrar mensaje de confirmación
@@ -353,6 +375,7 @@ const Administracion = () => {
       await fetchData(); // Recargar datos después de guardar
     }
   };
+
 
   const handleCancel = () => {
     setEditingRow(null);
@@ -533,7 +556,7 @@ const Administracion = () => {
               value={
                 newRowData[column] ||
                 (tableName === "jugadores" &&
-                !["Nombre", "Categoria"].includes(column)
+                  !["Nombre", "Categoria"].includes(column)
                   ? ""
                   : "")
               }
@@ -632,24 +655,24 @@ const Administracion = () => {
               tableName === "torneos"
                 ? "Buscar por ID/Nombre"
                 : tableName === "partidos"
-                ? "Buscar por IDTorneo"
-                : "Buscar por ID/Nombre"
+                  ? "Buscar por IDTorneo"
+                  : "Buscar por ID/Nombre"
             }
             value={
               tableName === "torneos"
                 ? searchTermTorneos
                 : tableName === "partidos"
-                ? searchTermPartidos
-                : tableName === "historicoTorneos"
-                ? searchTermHistoricoTorneos
-                : searchTermJugadores
+                  ? searchTermPartidos
+                  : tableName === "historicoTorneos"
+                    ? searchTermHistoricoTorneos
+                    : searchTermJugadores
             }
             onChange={(e) => handleSearchChange(e, tableName)}
             onClick={(e) => (e.target.placeholder = "")}
             onBlur={(e) =>
-              (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
-                tableName
-              )}`)
+            (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
+              tableName
+            )}`)
             }
           />
         </div>
@@ -675,8 +698,8 @@ const Administracion = () => {
                     {columns.map((column, i) => (
                       <td key={i} className="px-5 py-4">
                         {editingRow &&
-                        editingRow.tableName === tableName &&
-                        editingRow.rowId === row.ID ? (
+                          editingRow.tableName === tableName &&
+                          editingRow.rowId === row.ID ? (
                           <input
                             type="text"
                             value={row[column] || ""}
@@ -698,8 +721,8 @@ const Administracion = () => {
                     ))}
                     <td className="px-5 text-center py-4">
                       {editingRow &&
-                      editingRow.tableName === tableName &&
-                      editingRow.rowId === row.ID ? (
+                        editingRow.tableName === tableName &&
+                        editingRow.rowId === row.ID ? (
                         <>
                           <button
                             className="text-green-600 hover:text-green-800"
