@@ -1,5 +1,5 @@
-import paletaizq from "../assets/paletaizq.png"; // Ajusta la ruta según tu estructura
-import paletader from "../assets/paletader.png"; // Ajusta la ruta según tu estructura
+import paletaizq from "../assets/paletaizq.png";
+import paletader from "../assets/paletader.png";
 
 const FinalTorneo = () => {
   return (
