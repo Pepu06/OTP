@@ -90,6 +90,7 @@ const Administracion = () => {
 
   const [showForm, setShowForm] = useState(false);
   const [newRowData, setNewRowData] = useState({
+    ID: "",
     Nombre: "",
     Categoria: "",
     Fecha: "",
@@ -102,21 +103,100 @@ const Administracion = () => {
     Ranking: "",
   });
 
+  const getNextId = (rows) => {
+    const ids = rows.map((row) => parseInt(row.ID, 10));
+    const maxId = Math.max(...ids, 0);
+    return (maxId + 1).toString();
+  };
+
+  // Función para calcular el ranking basado en los puntos
+  const calculateRanking = (jugadores, newPlayerPoints) => {
+    // Ordenar jugadores por puntos de mayor a menor
+    const sortedPlayers = [...jugadores].sort((a, b) => b.Puntos - a.Puntos);
+
+    // Encontrar el ranking del nuevo jugador
+    const rank =
+      sortedPlayers.findIndex((player) => player.Puntos < newPlayerPoints) + 1;
+
+    // Si el nuevo jugador tiene menos puntos que todos, su ranking será al final
+    return rank === 0 ? sortedPlayers.length + 1 : rank;
+  };
+
+  // Modificar handleAddRowSubmit para incluir el cálculo del ranking
   const handleAddRowSubmit = async (tableName) => {
     try {
       const collectionRef = collection(db, tableName);
+      const rows = { torneos, partidos, jugadores, historicoTorneos }[
+        tableName
+      ];
+      const newId = getNextId(rows);
 
-      // Asegúrate de que el campo ID esté presente en newRowData
-      if (!newRowData.ID) {
-        console.error("El campo ID es requerido");
-        return;
+      const newRowDataWithId = { ...newRowData, ID: newId };
+
+      // Validar campos obligatorios
+      const requiredFields = {
+        torneos: ["Nombre", "Categoria", "Fecha", "Club"],
+        partidos: [
+          "IDTorneo",
+          "Instancia",
+          "Equipo1",
+          "Resultado",
+          "Equipo2",
+          "Cancha",
+          "Horario",
+        ],
+        jugadores: ["Nombre", "Categoria"],
+        historicoTorneos: [
+          "IDJugador",
+          "Tipo",
+          "Competicion",
+          "Fecha",
+          "Pareja",
+          "Categoria",
+          "Resultado",
+        ],
+      }[tableName];
+
+      for (let field of requiredFields) {
+        if (!newRowDataWithId[field]) {
+          alert(`El campo ${field} es obligatorio.`);
+          return;
+        }
       }
 
-      // Usa setDoc en lugar de addDoc
-      await setDoc(doc(collectionRef, newRowData.ID), newRowData);
+      if (tableName === "jugadores") {
+        const additionalFields = [
+          "Ranking",
+          "CJ",
+          "UP",
+          "UR",
+          "Cuartos",
+          "Semis",
+          "Finales",
+          "PJ",
+          "PG",
+          "Efectividad",
+          "Puntos",
+        ];
 
-      setShowForm(false); // Ocultar formulario
+        additionalFields.forEach((field) => {
+          if (!newRowDataWithId[field]) {
+            newRowDataWithId[field] = "0";
+          }
+        });
+
+        // Calcular el ranking del nuevo jugador
+        const newPlayerPoints = parseInt(newRowDataWithId.Puntos, 10);
+        const newRanking = calculateRanking(jugadores, newPlayerPoints);
+        newRowDataWithId.Ranking = newRanking.toString();
+      }
+
+      await setDoc(doc(collectionRef, newId), newRowDataWithId);
+      setNewRowData(newRowDataWithId);
+
+      setShowForm(false);
       setNewRowData({
+        ID: "",
         Nombre: "",
         Categoria: "",
         Fecha: "",
@@ -127,9 +207,8 @@ const Administracion = () => {
         Equipo1: "",
         Equipo2: "",
         Ranking: "",
-        ID: "", // Asegúrate de que el ID se resetea también
-      }); // Resetear datos del formulario
-      await fetchData(); // Recargar datos después de agregar la fila
+      });
+      await fetchData();
     } catch (error) {
       console.error("Error al agregar la fila:", error);
     }
@@ -230,9 +309,48 @@ const Administracion = () => {
     const updatedRow = rows.find((row) => row.ID === editingRow.rowId);
 
     try {
+      // Guardar los cambios en la fila editada
       await updateDoc(doc(db, tableName, editingRow.rowId), updatedRow);
+
+      // Si se edita un jugador, recalcular rankings
+      if (tableName === "jugadores") {
+        const updatedPlayerPoints = parseInt(updatedRow.Puntos, 10);
+        const newRanking = calculateRanking(jugadores, updatedPlayerPoints);
+
+        // Actualizar el ranking del jugador editado
+        await updateDoc(doc(db, tableName, editingRow.rowId), {
+          Ranking: newRanking.toString(),
+        });
+
+        // Recalcular el ranking para todos los jugadores
+        const updatedPlayers = await getDocs(collection(db, "jugadores"));
+        const allPlayers = updatedPlayers.docs.map((doc) => ({
+          ...doc.data(),
+          ID: doc.id,
+        }));
+
+        // Recalcular el ranking de cada jugador
+        await Promise.all(
+          allPlayers.map(async (player) => {
+            const ranking = calculateRanking(allPlayers, player.Puntos);
+            await updateDoc(doc(db, "jugadores", player.ID), {
+              Ranking: ranking.toString(),
+            });
+          })
+        );
+
+        // Actualizar el estado local con los jugadores actualizados
+        setJugadores(allPlayers);
+      }
+
+      // Mostrar mensaje de confirmación
+      alert("Datos editados correctamente.");
     } catch (error) {
       console.error("Error al guardar:", error);
+    } finally {
+      // Limpiar estado de edición
+      setEditingRow(null);
+      await fetchData(); // Recargar datos después de guardar
     }
   };
 
@@ -352,9 +470,8 @@ const Administracion = () => {
 
   const renderForm = (tableName) => {
     const columns = {
-      torneos: ["ID", "Nombre", "Categoria", "Fecha", "Club"],
+      torneos: ["Nombre", "Categoria", "Fecha", "Club"],
       partidos: [
-        "ID",
         "IDTorneo",
         "Instancia",
         "Equipo1",
@@ -364,9 +481,7 @@ const Administracion = () => {
         "Horario",
       ],
       jugadores: [
-        "ID",
         "Nombre",
-        "Ranking",
         "Categoria",
         "CJ",
         "UP",
@@ -380,7 +495,6 @@ const Administracion = () => {
         "Puntos",
       ],
       historicoTorneos: [
-        "ID",
         "IDJugador",
         "Tipo",
         "Competicion",
@@ -390,6 +504,20 @@ const Administracion = () => {
         "Resultado",
       ],
     }[tableName];
+
+    const handleInputChange = (column, value) => {
+      if (value === "") {
+        setNewRowData({ ...newRowData, [column]: "0" });
+      } else {
+        setNewRowData({ ...newRowData, [column]: value });
+      }
+    };
+
+    const handleFocus = (column, value) => {
+      if (value === "0") {
+        setNewRowData({ ...newRowData, [column]: "" });
+      }
+    };
 
     return (
       <div className="p-4 border border-gray-300 rounded-lg mb-4">
@@ -402,13 +530,32 @@ const Administracion = () => {
             <input
               type="text"
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-              value={newRowData[column] || ""}
-              onChange={(e) =>
-                setNewRowData({ ...newRowData, [column]: e.target.value })
+              value={
+                newRowData[column] ||
+                (tableName === "jugadores" &&
+                !["Nombre", "Categoria"].includes(column)
+                  ? ""
+                  : "")
               }
+              onChange={(e) => handleInputChange(column, e.target.value)}
+              onFocus={() => handleFocus(column, newRowData[column])}
+              disabled={column === "ID"} // Deshabilitar el campo ID
             />
           </div>
         ))}
+        {newRowData.ID && (
+          <div className="mb-2">
+            <label className="block text-sm font-medium text-gray-700">
+              ID Asignado
+            </label>
+            <input
+              type="text"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+              value={newRowData.ID}
+              readOnly
+            />
+          </div>
+        )}
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded-lg"
           onClick={() => handleAddRowSubmit(tableName)}
@@ -585,10 +732,10 @@ const Administracion = () => {
           </div>
           <div className="flex justify-center mt-4">
             <button
-              className="m-2 px-5 py-2 bg-pgreen hover:bg-blue-600 text-white rounded-lg font-medium"
+              className="m-2 px-5 py-2 bg-pgreen hover:bg-green-700 hover:transition-all text-white rounded-lg font-medium"
               onClick={() => setAddingRow(tableName)}
             >
-              Agregar Fila
+              Agregar {capitalizeFirstLetter(tableName)}
             </button>
           </div>
           {addingRow === tableName && renderForm(tableName)}
