@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const Torneo = () => {
-  const { id, idTorneo, option } = useParams(); // Captura 'option' de la URL
+  const { id, idTorneo, option } = useParams();
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("Qualify");
 
   useEffect(() => {
-    // Sincroniza el estado con la URL cuando el componente se monta
     let cur =
       window.location.href.split("/")[
         window.location.href.split("/").length - 1
@@ -22,7 +21,7 @@ const Torneo = () => {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    navigate(`/torneo/${id}/${idTorneo}/${option.toLowerCase()}`); // Redirigir a la ruta correspondiente
+    navigate(`/torneo/${id}/${idTorneo}/${option.toLowerCase()}`);
   };
 
   return (

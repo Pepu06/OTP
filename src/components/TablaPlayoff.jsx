@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import copa from "../assets/copa.png"; // Ajusta la ruta según tu estructura
-import otp from "../assets/otp.png"; // Ajusta la ruta según tu estructura
+import copa from "../assets/copa.png"; 
+import otp from "../assets/otp.png"; 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 const TablaPlayoff = () => {
-  const { idTorneo } = useParams(); // Obtén el parámetro IDTorneo de la URL
+  const { idTorneo } = useParams(); 
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true); // Estado para manejar la carga
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true); // Empieza a cargar
+      setLoading(true); 
       try {
         const querySnapshot = await getDocs(collection(db, "partidos"));
         const data = querySnapshot.docs.map((doc) => doc.data());
@@ -40,14 +40,13 @@ const TablaPlayoff = () => {
           error
         );
       } finally {
-        setLoading(false); // Termina de cargar
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [idTorneo]);
 
-  // Si estamos cargando, muestra un indicador de carga
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -56,7 +55,6 @@ const TablaPlayoff = () => {
     );
   }
 
-  // Asigna los equipos a variables individuales
   const dieciseisavosData = data
     .filter((row) => row.Instancia === "Dieciseisavos")
     .slice(0, 16);

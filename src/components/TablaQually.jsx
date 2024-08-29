@@ -6,8 +6,8 @@ import { db } from "../firebase/config";
 const TablaQually = () => {
   const [partidos, setPartidos] = useState([]);
   const [filteredPartidos, setFilteredPartidos] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Estado para manejar el círculo de carga
-  const { idTorneo } = useParams(); // Captura 'idTorneo' de la URL
+  const [isLoading, setIsLoading] = useState(true);
+  const { idTorneo } = useParams();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const TablaQually = () => {
           error
         );
       } finally {
-        setIsLoading(false); // Deja de mostrar el círculo de carga una vez que los datos han cargado
+        setIsLoading(false);
       }
     };
 

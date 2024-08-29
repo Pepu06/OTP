@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Select from "react-select";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase/config"; // Asegúrate de que la ruta es correcta
+import { db } from "../firebase/config";
 
 const Perfil = () => {
   const [jugadores, setJugadores] = useState([]);
@@ -10,11 +10,9 @@ const Perfil = () => {
   useEffect(() => {
     const cargarJugadores = async () => {
       try {
-        // Obtener todos los documentos de la colección 'jugadores'
         const jugadoresRef = collection(db, "jugadores");
         const querySnapshot = await getDocs(jugadoresRef);
 
-        // Convertir los datos en el formato adecuado para Select
         const jugadoresData = querySnapshot.docs.map((doc) => {
           const data = doc.data();
           return {

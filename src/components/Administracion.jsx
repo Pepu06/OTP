@@ -6,7 +6,6 @@ import {
   deleteDoc,
   doc,
   setDoc,
-  addDoc,
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
 import { db } from "../firebase/config";
@@ -29,7 +28,6 @@ const Administracion = () => {
   const [editingRow, setEditingRow] = useState(null);
   const [addingRow, setAddingRow] = useState(null);
 
-  // Cargar datos iniciales desde Firestore
   useEffect(() => {
     const loadInitialData = async () => {
       setLoading(true);
@@ -81,7 +79,7 @@ const Administracion = () => {
       } finally {
         setLoading(false);
         setLoadingMessage("Datos cargados con éxito.");
-        setTimeout(() => setLoadingMessage(""), 3000); // Ocultar mensaje después de 3 segundos
+        setTimeout(() => setLoadingMessage(""), 3000);
       }
     };
 
@@ -109,34 +107,31 @@ const Administracion = () => {
     return (maxId + 1).toString();
   };
 
-  // Función para calcular el ranking basado en la categoría y los puntos
   const calculateRanking = (jugadores, newPlayerPoints, categoria) => {
-    // Filtrar jugadores por la categoría dada
     const filteredPlayers = jugadores.filter(
       (player) => player.Categoria === categoria
     );
 
-    // Ordenar jugadores por puntos de mayor a menor
-    const sortedPlayers = [...filteredPlayers].sort((a, b) => b.Puntos - a.Puntos);
+    const sortedPlayers = [...filteredPlayers].sort(
+      (a, b) => b.Puntos - a.Puntos
+    );
 
-    // Encontrar el ranking del nuevo jugador
     const rank =
       sortedPlayers.findIndex((player) => player.Puntos < newPlayerPoints) + 1;
 
-    // Si el nuevo jugador tiene menos puntos que todos, su ranking será al final
     return rank === 0 ? sortedPlayers.length + 1 : rank;
   };
 
-  // Modificar handleAddRowSubmit para incluir el cálculo del ranking basado en la categoría
   const handleAddRowSubmit = async (tableName) => {
     try {
       const collectionRef = collection(db, tableName);
-      const rows = { torneos, partidos, jugadores, historicoTorneos }[tableName];
+      const rows = { torneos, partidos, jugadores, historicoTorneos }[
+        tableName
+      ];
       const newId = getNextId(rows);
 
       const newRowDataWithId = { ...newRowData, ID: newId };
 
-      // Validar campos obligatorios
       const requiredFields = {
         torneos: ["Nombre", "Categoria", "Fecha", "Club"],
         partidos: [
@@ -188,17 +183,18 @@ const Administracion = () => {
           }
         });
 
-        // Calcular el ranking del nuevo jugador basado en la categoría y puntos
         const newPlayerPoints = parseInt(newRowDataWithId.Puntos, 10);
-        const newRanking = calculateRanking(jugadores, newPlayerPoints, newRowDataWithId.Categoria);
+        const newRanking = calculateRanking(
+          jugadores,
+          newPlayerPoints,
+          newRowDataWithId.Categoria
+        );
         newRowDataWithId.Ranking = newRanking.toString();
 
-        // Guardar el nuevo jugador en la base de datos
         await setDoc(doc(collectionRef, newId), newRowDataWithId);
 
-        // Recalcular y actualizar rankings para todos los jugadores en la misma categoría
         const updatedPlayers = jugadores
-          .filter(player => player.Categoria === newRowDataWithId.Categoria)
+          .filter((player) => player.Categoria === newRowDataWithId.Categoria)
           .concat(newRowDataWithId);
 
         updatedPlayers.sort((a, b) => b.Puntos - a.Puntos);
@@ -212,7 +208,6 @@ const Administracion = () => {
           })
         );
 
-        // Actualizar el estado local con los jugadores actualizados
         setJugadores(updatedPlayers);
       } else {
         await setDoc(doc(collectionRef, newId), newRowDataWithId);
@@ -238,8 +233,6 @@ const Administracion = () => {
       console.error("Error al agregar la fila:", error);
     }
   };
-
-
 
   const fetchData = async () => {
     setLoading(true);
@@ -292,7 +285,6 @@ const Administracion = () => {
     }
   };
 
-  // Manejar cambios en la búsqueda
   const handleSearchChange = (e, tableName) => {
     const value = e.target.value;
     const setSearchTerm = {
@@ -304,7 +296,6 @@ const Administracion = () => {
     setSearchTerm(value);
   };
 
-  // Filtrar filas según el término de búsqueda
   const filteredRows = (rows, searchTerm, tableName) => {
     if (!searchTerm) return rows;
 
@@ -321,12 +312,10 @@ const Administracion = () => {
     return rows.filter(filters[tableName]);
   };
 
-  // Capitalizar la primera letra
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
 
-  // Manejar la edición de filas
   const handleEdit = (tableName, rowId) => {
     setEditingRow({ tableName, rowId });
   };
@@ -336,15 +325,13 @@ const Administracion = () => {
     const updatedRow = rows.find((row) => row.ID === editingRow.rowId);
 
     try {
-      // Guardar los cambios en la fila editada
       await updateDoc(doc(db, tableName, editingRow.rowId), updatedRow);
 
-      // Si se edita un jugador, recalcular rankings
       if (tableName === "jugadores") {
         const updatedPlayerPoints = parseInt(updatedRow.Puntos, 10);
         const updatedPlayers = jugadores
-          .filter(player => player.Categoria === updatedRow.Categoria)
-          .map(player =>
+          .filter((player) => player.Categoria === updatedRow.Categoria)
+          .map((player) =>
             player.ID === updatedRow.ID
               ? { ...player, Puntos: updatedPlayerPoints }
               : player
@@ -361,25 +348,21 @@ const Administracion = () => {
           })
         );
 
-        // Actualizar el estado local con los jugadores actualizados
         setJugadores(updatedPlayers);
       }
 
-      // Mostrar mensaje de confirmación
       alert("Datos editados correctamente.");
     } catch (error) {
       console.error("Error al guardar:", error);
     } finally {
-      // Limpiar estado de edición
       setEditingRow(null);
-      await fetchData(); // Recargar datos después de guardar
+      await fetchData();
     }
   };
 
-
   const handleCancel = () => {
     setEditingRow(null);
-    setAddingRow(null); // Ocultar formulario de agregar fila
+    setAddingRow(null);
   };
 
   const handleDelete = async (tableName, rowId) => {
@@ -388,10 +371,8 @@ const Administracion = () => {
 
     try {
       if (tableName === "torneos") {
-        // Eliminar torneo
         await deleteDoc(doc(db, tableName, rowId));
 
-        // Eliminar partidos asociados al torneo
         const partidosRef = collection(db, "partidos");
         const partidosSnapshot = await getDocs(partidosRef);
         const partidosData = partidosSnapshot.docs.map((doc) => ({
@@ -399,23 +380,18 @@ const Administracion = () => {
           ID: doc.id,
         }));
 
-        // Filtrar partidos que corresponden al torneo eliminado
         const partidosToDelete = partidosData
           .filter((partido) => partido.IDTorneo == rowId)
           .map((partido) => deleteDoc(doc(partidosRef, partido.ID)));
 
-        // Esperar a que todas las eliminaciones se completen
         await Promise.all(partidosToDelete);
 
-        // Actualizar el estado para la tabla de partidos
         setPartidos(
           partidosData.filter((partido) => partido.IDTorneo !== rowId)
         );
       } else {
-        // Eliminar otras entidades (partidos, jugadores)
         await deleteDoc(doc(db, tableName, rowId));
 
-        // Actualizar el estado para la tabla correspondiente
         const setRows = {
           torneos: setTorneos,
           partidos: setPartidos,
@@ -425,17 +401,16 @@ const Administracion = () => {
         setRows((prevRows) => prevRows.filter((row) => row.ID !== rowId));
       }
 
-      await fetchData(); // Recargar datos después de eliminar
+      await fetchData();
 
       setLoading(false);
       setLoadingMessage("Datos eliminados con éxito.");
-      setTimeout(() => setLoadingMessage(""), 3000); // Ocultar mensaje después de 3 segundos
+      setTimeout(() => setLoadingMessage(""), 3000);
     } catch (error) {
       console.error("Error al eliminar:", error);
     }
   };
 
-  // Manejar la carga del archivo Excel
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -448,13 +423,13 @@ const Administracion = () => {
       const data = new Uint8Array(event.target.result);
       const workbook = XLSX.read(data, { type: "array" });
 
-      console.log("Nombres de las hojas en el archivo:", workbook.SheetNames); // Log para depuración
+      console.log("Nombres de las hojas en el archivo:", workbook.SheetNames);
 
       for (const sheetName of workbook.SheetNames) {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        console.log(`Procesando hoja: ${sheetName}`); // Log para depuración
+        console.log(`Procesando hoja: ${sheetName}`);
 
         if (
           sheetName === "torneos" ||
@@ -464,29 +439,27 @@ const Administracion = () => {
         ) {
           const collectionRef = collection(db, sheetName);
 
-          // Borrar colección existente
           const snapshot = await getDocs(collectionRef);
           const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
           await Promise.all(deletePromises);
 
-          // Agregar nuevos datos
           const addPromises = jsonData.map((record) => {
             const docId = String(record.ID);
             return setDoc(doc(collectionRef, docId), record);
           });
           await Promise.all(addPromises);
 
-          console.log(`Datos de la hoja ${sheetName} cargados con éxito.`); // Log para depuración
+          console.log(`Datos de la hoja ${sheetName} cargados con éxito.`);
         } else {
-          console.warn(`Hoja ${sheetName} no reconocida.`); // Log para depuración
+          console.warn(`Hoja ${sheetName} no reconocida.`);
         }
       }
 
-      await fetchData(); // Recargar datos después de procesar el archivo
+      await fetchData();
 
       setLoading(false);
       setLoadingMessage("Archivo procesado y datos actualizados en Firebase");
-      setTimeout(() => setLoadingMessage(""), 3000); // Ocultar mensaje después de 3 segundos
+      setTimeout(() => setLoadingMessage(""), 3000);
     };
     reader.readAsArrayBuffer(file);
   };
@@ -556,13 +529,13 @@ const Administracion = () => {
               value={
                 newRowData[column] ||
                 (tableName === "jugadores" &&
-                  !["Nombre", "Categoria"].includes(column)
+                !["Nombre", "Categoria"].includes(column)
                   ? ""
                   : "")
               }
               onChange={(e) => handleInputChange(column, e.target.value)}
               onFocus={() => handleFocus(column, newRowData[column])}
-              disabled={column === "ID"} // Deshabilitar el campo ID
+              disabled={column === "ID"}
             />
           </div>
         ))}
@@ -655,24 +628,24 @@ const Administracion = () => {
               tableName === "torneos"
                 ? "Buscar por ID/Nombre"
                 : tableName === "partidos"
-                  ? "Buscar por IDTorneo"
-                  : "Buscar por ID/Nombre"
+                ? "Buscar por IDTorneo"
+                : "Buscar por ID/Nombre"
             }
             value={
               tableName === "torneos"
                 ? searchTermTorneos
                 : tableName === "partidos"
-                  ? searchTermPartidos
-                  : tableName === "historicoTorneos"
-                    ? searchTermHistoricoTorneos
-                    : searchTermJugadores
+                ? searchTermPartidos
+                : tableName === "historicoTorneos"
+                ? searchTermHistoricoTorneos
+                : searchTermJugadores
             }
             onChange={(e) => handleSearchChange(e, tableName)}
             onClick={(e) => (e.target.placeholder = "")}
             onBlur={(e) =>
-            (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
-              tableName
-            )}`)
+              (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
+                tableName
+              )}`)
             }
           />
         </div>
@@ -698,13 +671,12 @@ const Administracion = () => {
                     {columns.map((column, i) => (
                       <td key={i} className="px-5 py-4">
                         {editingRow &&
-                          editingRow.tableName === tableName &&
-                          editingRow.rowId === row.ID ? (
+                        editingRow.tableName === tableName &&
+                        editingRow.rowId === row.ID ? (
                           <input
                             type="text"
                             value={row[column] || ""}
                             onChange={(e) => {
-                              // Actualizar el estado de la fila
                               const updatedRows = rows.map((r) =>
                                 r.ID === row.ID
                                   ? { ...r, [column]: e.target.value }
@@ -721,8 +693,8 @@ const Administracion = () => {
                     ))}
                     <td className="px-5 text-center py-4">
                       {editingRow &&
-                        editingRow.tableName === tableName &&
-                        editingRow.rowId === row.ID ? (
+                      editingRow.tableName === tableName &&
+                      editingRow.rowId === row.ID ? (
                         <>
                           <button
                             className="text-green-600 hover:text-green-800"

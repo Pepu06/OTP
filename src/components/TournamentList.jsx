@@ -26,7 +26,6 @@ const TournamentList = () => {
           ...doc.data(),
         }));
 
-        // Eliminar duplicados por ID
         const uniqueTournaments = data.reduce((acc, current) => {
           const x = acc.find((item) => item.ID === current.ID);
           if (!x) {
@@ -49,11 +48,9 @@ const TournamentList = () => {
   }, []);
 
   const filteredTournaments = tournaments.filter((tournament) => {
-    // Sanitización del searchQuery
     const sanitizedSearchQuery = searchQuery.replace(/[^\w\s]/gi, "");
 
-    // Expresión regular para búsqueda
-    const searchRegex = new RegExp(sanitizedSearchQuery, "i"); // 'i' para ignorar mayúsculas/minúsculas
+    const searchRegex = new RegExp(sanitizedSearchQuery, "i");
 
     const categoryMatches =
       selectedGender === "Todos" ||

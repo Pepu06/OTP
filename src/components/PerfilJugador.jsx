@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../firebase/config"; // Asegúrate de que la ruta es correcta
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config";
 import TablaDeRankings from "./TablaDeRankings";
 
 const PerfilJugador = () => {
-  const { jugadorId } = useParams(); // Obtén el jugadorId desde la URL
+  const { jugadorId } = useParams();
   const [jugador, setJugador] = useState(null);
   const [historicoTorneos, setHistoricoTorneos] = useState([]);
-  const [loading, setLoading] = useState(true); // Estado para manejar la carga
+  const [loading, setLoading] = useState(true);
 
   const scrollToTable = () => {
     const element = document.getElementById("Tabla");
@@ -19,19 +19,16 @@ const PerfilJugador = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true); // Empieza a cargar
+      setLoading(true);
 
       try {
-        // Verifica si jugadorId es válido
         if (!jugadorId) {
           throw new Error("Jugador ID no proporcionado.");
         }
 
-        // Obtener todos los documentos de la colección 'jugadores'
         const jugadoresRef = collection(db, "jugadores");
         const querySnapshot = await getDocs(jugadoresRef);
 
-        // Filtrar los documentos por el atributo ID
         const jugadoresData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -47,11 +44,9 @@ const PerfilJugador = () => {
           console.error("No se encontró el documento del jugador");
         }
 
-        // Obtener todos los documentos de la colección 'torneos'
         const torneosRef = collection(db, "historicoTorneos");
         const querySnapshotTorneos = await getDocs(torneosRef);
 
-        // Filtrar los documentos por el atributo jugadorId
         const torneosData = querySnapshotTorneos.docs.map((doc) => doc.data());
         console.log("Datos crudos de torneos:", torneosData);
         const historicoFiltrado = torneosData.filter(
@@ -63,7 +58,7 @@ const PerfilJugador = () => {
       } catch (error) {
         console.error("Error cargando datos desde Firestore:", error);
       } finally {
-        setLoading(false); // Termina de cargar
+        setLoading(false);
       }
     };
 
