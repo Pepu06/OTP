@@ -24,7 +24,7 @@ const Login = ({ setIsAuthenticated }) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
         setValidUsername(data.Usuario);
-        setValidPasswordHash(data.Contrasena); // Suponiendo que la contraseña está almacenada como un hash
+        setValidPasswordHash(data.Contrasena);
       } else {
         console.log("No se encontró el documento");
       }
@@ -44,9 +44,7 @@ const Login = ({ setIsAuthenticated }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Hashear la contraseña ingresada por el usuario
     const hashedPassword = await hashPassword(password);
-    console.log("Contraseña hasheada:", hashedPassword);
 
     if (username === validUsername && hashedPassword === validPasswordHash) {
       setIsAuthenticated(true);
