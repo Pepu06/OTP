@@ -11,7 +11,10 @@ const ContactSection = () => {
         Consultanos la fecha del próximo torneo
       </p>
       <div className="relative flex justify-between items-center px-4 py-8 w-full">
-        <a href="https://wa.me/91140962011" className=" absolute left-1/2 transform -translate-x-1/2 px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins">
+        <a
+          href="https://wa.me/91140962011"
+          className=" absolute left-1/2 transform -translate-x-1/2 px-5 py-2 bg-pgreen hover:bg-green-700 hover:transition-all text-white rounded-lg font-medium font-poppins"
+        >
           CONTACTO
         </a>
       </div>

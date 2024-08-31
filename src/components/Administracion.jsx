@@ -24,6 +24,39 @@ const Administracion = () => {
   const [searchTermJugadores, setSearchTermJugadores] = useState("");
   const [searchTermHistoricoTorneos, setSearchTermHistoricoTorneos] =
     useState("");
+  const [categoryOptions] = useState([
+    "C9",
+    "C8",
+    "C7",
+    "C6",
+    "C5",
+    "D7",
+    "D6",
+    "D5",
+    "D4",
+  ]);
+  const requiredFields = {
+    torneos: ["Nombre", "Categoria", "Fecha", "Club"],
+    partidos: [
+      "IDTorneo",
+      "Instancia",
+      "Equipo1",
+      "Resultado",
+      "Equipo2",
+      "Cancha",
+      "Horario",
+    ],
+    jugadores: ["Nombre", "Categoria", "Puntos"],
+    historicoTorneos: [
+      "IDJugador",
+      "Tipo",
+      "Competicion",
+      "Fecha",
+      "Pareja",
+      "Categoria",
+      "Resultado",
+    ],
+  };
 
   const [editingRow, setEditingRow] = useState(null);
   const [addingRow, setAddingRow] = useState(null);
@@ -522,21 +555,39 @@ const Administracion = () => {
           <div key={column} className="mb-2">
             <label className="block text-sm font-medium text-gray-700">
               {capitalizeFirstLetter(column)}
+              {requiredFields[tableName].includes(column) && (
+                <span className="text-red-500">*</span>
+              )}
             </label>
-            <input
-              type="text"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-              value={
-                newRowData[column] ||
-                (tableName === "jugadores" &&
-                !["Nombre", "Categoria"].includes(column)
-                  ? ""
-                  : "")
-              }
-              onChange={(e) => handleInputChange(column, e.target.value)}
-              onFocus={() => handleFocus(column, newRowData[column])}
-              disabled={column === "ID"}
-            />
+            {column === "Categoria" && tableName === "jugadores" ? (
+              <select
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                value={newRowData[column] || ""}
+                onChange={(e) => handleInputChange(column, e.target.value)}
+              >
+                <option value="">Seleccione una categoría</option>
+                {categoryOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="text"
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                value={
+                  newRowData[column] ||
+                  (tableName === "jugadores" &&
+                  !["Nombre", "Categoria"].includes(column)
+                    ? ""
+                    : "")
+                }
+                onChange={(e) => handleInputChange(column, e.target.value)}
+                onFocus={() => handleFocus(column, newRowData[column])}
+                disabled={column === "ID"}
+              />
+            )}
           </div>
         ))}
         {newRowData.ID && (
@@ -553,13 +604,13 @@ const Administracion = () => {
           </div>
         )}
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+          className="bg-pgreen hover:bg-green-700 hover:transition-all text-white px-4 py-2 rounded-lg"
           onClick={() => handleAddRowSubmit(tableName)}
         >
           Guardar
         </button>
         <button
-          className="bg-gray-500 text-white px-4 py-2 rounded-lg ml-2"
+          className="bg-gray-500 hover:bg-gray-700 hover:transition-all text-white px-4 py-2 rounded-lg ml-2"
           onClick={() => handleCancel()}
         >
           Cancelar
@@ -790,7 +841,7 @@ const Administracion = () => {
       </div>
       <div className="flex justify-center">
         <button
-          className="m-2 w-auto px-5 py-2 bg-pgreen hover:bg-green-600 text-white rounded-lg font-medium font-poppins"
+          className="m-2 w-auto px-5 py-2 bg-pgreen hover:bg-green-700 hover:transition-all text-white rounded-lg font-medium font-poppins"
           onClick={() => document.getElementById("fileInput").click()}
         >
           Cargar Archivo

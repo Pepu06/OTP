@@ -140,7 +140,7 @@ const TournamentList = () => {
                   selectedGender === gender
                     ? "text-pblue border-blue-600"
                     : "text-pgrey border-transparent"
-                } hover:text-pblue focus:outline-none border-b-2`}
+                } hover:text-pblue hover:transition-all hover:duration-500 focus:outline-none border-b-2`}
                 onClick={() => setSelectedGender(gender)}
               >
                 {gender}
@@ -208,7 +208,7 @@ const TournamentList = () => {
       <div className="flex justify-center mt-4">
         <a
           href="https://wa.me/91140962011/?text=Hola! Me gustaría inscribirme en un torneo! 🎾"
-          className="px-5 py-2 bg-pgreen text-white rounded-lg font-medium font-poppins"
+          className="px-5 py-2 bg-pgreen hover:bg-green-700 hover:transition-all text-white rounded-lg font-medium font-poppins"
         >
           INSCRIBIRME
         </a>
