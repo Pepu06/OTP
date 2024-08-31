@@ -472,17 +472,27 @@ const Administracion = () => {
         ) {
           const collectionRef = collection(db, sheetName);
 
+          // Verificar si la colección ya tiene documentos
           const snapshot = await getDocs(collectionRef);
-          const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
-          await Promise.all(deletePromises);
 
+          if (snapshot.empty) {
+            console.log(
+              `La colección ${sheetName} no existía. Creando nueva colección y agregando datos.`
+            );
+          } else {
+            console.log(
+              `La colección ${sheetName} ya existe. Agregando datos nuevos.`
+            );
+          }
+
+          // Agregar o actualizar los datos en la colección
           const addPromises = jsonData.map((record) => {
             const docId = String(record.ID);
-            return setDoc(doc(collectionRef, docId), record);
+            return setDoc(doc(collectionRef, docId), record, { merge: true });
           });
           await Promise.all(addPromises);
 
-          console.log(`Datos de la hoja ${sheetName} cargados con éxito.`);
+          console.log(`Datos de la hoja ${sheetName} procesados con éxito.`);
         } else {
           console.warn(`Hoja ${sheetName} no reconocida.`);
         }
