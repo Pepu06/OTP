@@ -54,7 +54,15 @@ const TournamentList = () => {
 
     const categoryMatches =
       selectedGender === "Todos" ||
-      tournament.Categoria.toLowerCase().includes(selectedGender.toLowerCase());
+      selectedGender === "Todos" ||
+      (selectedGender === "Masculino" &&
+        (tournament.Categoria.toLowerCase().includes("masculino") ||
+          tournament.Categoria.toLowerCase().includes("c"))) ||
+      (selectedGender === "Femenino" &&
+        (tournament.Categoria.toLowerCase().includes("femenino") ||
+          tournament.Categoria.toLowerCase().includes("d"))) ||
+      (selectedGender === "Mixto" &&
+        tournament.Categoria.toLowerCase().includes("mixto"));
 
     return (
       categoryMatches &&
