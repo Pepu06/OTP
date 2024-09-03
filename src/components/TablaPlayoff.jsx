@@ -168,9 +168,9 @@ const TablaPlayoff = () => {
             } min-w-[600px]`}
           >
             {dieciseisavosData.length > 0 && (
-              <div className="space-y-2">
+              <div className="space-y-2 relative z-10">
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center min-w-40 items-center">
                     {dieciseisavos1_1 || "Equipo"}
                   </div>
                 </div>
@@ -252,7 +252,7 @@ const TablaPlayoff = () => {
               </div>
             )}
             {octavosData.length > 0 && (
-              <div className="space-y-[65px] mt-7">
+              <div className="space-y-[65px] mt-7 relative z-10">
                 <div>
                   {cuartosData.length > 0 && (
                     <div
@@ -446,7 +446,7 @@ const TablaPlayoff = () => {
               </div>
             )}
             {cuartosData.length > 0 && (
-              <div className="space-y-[140px] mt-10">
+              <div className="space-y-[140px] mt-10 relative z-10">
                 <div className="mt-10">
                   {semisData.length > 0 && (
                     <div
@@ -542,7 +542,7 @@ const TablaPlayoff = () => {
               </div>
             )}
             {semisData.length > 0 && (
-              <div className="space-y-[300px] mt-24">
+              <div className="space-y-[300px] mt-24 relative z-10">
                 <div>
                   {finalData.length > 0 && (
                     <div
@@ -592,7 +592,7 @@ const TablaPlayoff = () => {
               </div>
             )}
             {finalData.length > 0 && (
-              <div className="mt-[280px]">
+              <div className="mt-[280px] relative z-10">
                 <div className="w-16 h-[260px] border-t-2 border-r-2 border-plightblue"></div>
                 <div className="bg-pgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
                   {final_1 ? final_1 : "Equipo"}
