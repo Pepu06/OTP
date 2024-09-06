@@ -6,6 +6,8 @@ import {
   deleteDoc,
   doc,
   setDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
 import { db } from "../firebase/config";
@@ -60,6 +62,8 @@ const Administracion = () => {
 
   const [editingRow, setEditingRow] = useState(null);
   const [addingRow, setAddingRow] = useState(null);
+
+  let nextPlayerId = 0;
 
   useEffect(() => {
     const loadInitialData = async () => {
@@ -444,6 +448,11 @@ const Administracion = () => {
     }
   };
 
+  const extractCategoryAndDateFromFileName = (fileName) => {
+    const [category, date] = fileName.split(" ");
+    return { date: date + ".", category };
+  };
+
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -458,48 +467,129 @@ const Administracion = () => {
 
       console.log("Nombres de las hojas en el archivo:", workbook.SheetNames);
 
+      const fileName = file.name.split(".")[0];
+      const { date, category } = extractCategoryAndDateFromFileName(fileName);
+
+      const torneosRef = collection(db, "torneos");
+      const q = query(torneosRef, where("Nombre", "==", fileName));
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) {
+        const torneosSnapshot = await getDocs(torneosRef);
+        const torneosData = torneosSnapshot.docs.map((doc) => doc.data());
+        const newId = getNextId(torneosData);
+
+        const newTorneo = {
+          ID: newId,
+          Nombre: fileName,
+          Club: "-",
+          Fecha: date,
+          Categoria: category,
+        };
+
+        await setDoc(doc(torneosRef, newId), newTorneo);
+        console.log("Torneo creado con éxito:", newTorneo);
+      }
+
       for (const sheetName of workbook.SheetNames) {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        console.log(`Procesando hoja: ${sheetName}`);
+        if (sheetName === "partidos") {
+          const jugadoresRef = collection(db, "jugadores");
+          const jugadoresSnapshot = await getDocs(jugadoresRef);
+          const jugadoresData = jugadoresSnapshot.docs.map((doc) => doc.data());
+          nextPlayerId = getNextId(jugadoresData);
 
-        if (
-          sheetName === "torneos" ||
-          sheetName === "partidos" ||
-          sheetName === "jugadores" ||
-          sheetName === "historicoTorneos"
-        ) {
-          const collectionRef = collection(db, sheetName);
+          const addPlayerPromises = jsonData.flatMap((record) => {
+            const equipos = [record.Equipo1, record.Equipo2];
+            return equipos.flatMap((equipo) => {
+              const jugadores = equipo
+                .split(/[-]/)
+                .map((jugador) => jugador.trim());
 
-          // Verificar si la colección ya tiene documentos
-          const snapshot = await getDocs(collectionRef);
+              return jugadores.map(async (jugador) => {
+                const jugadorQuery = query(
+                  jugadoresRef,
+                  where("Nombre", "==", jugador)
+                );
+                const jugadorSnapshot = await getDocs(jugadorQuery);
+                let puntos = "0";
 
-          if (snapshot.empty) {
-            console.log(
-              `La colección ${sheetName} no existía. Creando nueva colección y agregando datos.`
-            );
-          } else {
-            console.log(
-              `La colección ${sheetName} ya existe. Agregando datos nuevos.`
-            );
-          }
+                if (!jugadorSnapshot.empty) {
+                  const existingJugadorDoc = jugadorSnapshot.docs[0];
+                  const newId = existingJugadorDoc.id;
 
-          // Agregar o actualizar los datos en la colección
-          const addPromises = jsonData.map((record) => {
-            const docId = String(record.ID);
-            return setDoc(doc(collectionRef, docId), record, { merge: true });
+                  const updatedJugador = {
+                    ID: newId,
+                    Nombre: jugador,
+                    Categoria: category,
+                    CJ: "-",
+                    Cuartos: "-",
+                    Efectividad: "-",
+                    Ranking: "-",
+                    Finales: "-",
+                    PG: "-",
+                    PJ: "-",
+                    Puntos: puntos,
+                    Semis: "-",
+                    UP: "-",
+                    UR: "-",
+                  };
+
+                  await setDoc(doc(jugadoresRef, newId), updatedJugador);
+                  console.log("Jugador actualizado con éxito:", updatedJugador);
+                } else {
+                  const newId = parseInt(nextPlayerId, 10).toString();
+                  nextPlayerId = (parseInt(nextPlayerId, 10) + 1).toString();
+
+                  const newJugador = {
+                    ID: newId,
+                    Nombre: jugador,
+                    Categoria: category,
+                    CJ: "-",
+                    Cuartos: "-",
+                    Efectividad: "-",
+                    Ranking: "-",
+                    Finales: "-",
+                    PG: "-",
+                    PJ: "-",
+                    Puntos: puntos,
+                    Semis: "-",
+                    UP: "-",
+                    UR: "-",
+                  };
+
+                  await setDoc(doc(jugadoresRef, newId), newJugador);
+                  console.log("Jugador creado con éxito:", newJugador);
+                }
+
+                // Actualizar el ranking del jugador basado en sus puntos
+                const rank = calculateRanking(jugadoresData, puntos, category);
+
+                await updateDoc(
+                  doc(
+                    jugadoresRef,
+                    jugadorSnapshot.empty
+                      ? nextPlayerId
+                      : jugadorSnapshot.docs[0].id
+                  ),
+                  {
+                    Ranking: rank,
+                  }
+                );
+
+                console.log(`Ranking actualizado para ${jugador}: ${rank}`);
+              });
+            });
           });
-          await Promise.all(addPromises);
 
-          console.log(`Datos de la hoja ${sheetName} procesados con éxito.`);
-        } else {
-          console.warn(`Hoja ${sheetName} no reconocida.`);
+          await Promise.all(addPlayerPromises);
+          console.log("Todos los jugadores procesados con éxito.");
         }
       }
 
       await fetchData();
-
       setLoading(false);
       setLoadingMessage("Archivo procesado y datos actualizados en Firebase");
       setTimeout(() => setLoadingMessage(""), 3000);
@@ -735,6 +825,7 @@ const Administracion = () => {
                         editingRow.tableName === tableName &&
                         editingRow.rowId === row.ID ? (
                           <input
+                            className="border-2 border-pgreen rounded-sm max-w-24"
                             type="text"
                             value={row[column] || ""}
                             onChange={(e) => {

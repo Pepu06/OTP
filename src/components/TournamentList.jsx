@@ -148,7 +148,7 @@ const TournamentList = () => {
                   selectedGender === gender
                     ? "text-pblue border-blue-600"
                     : "text-pgrey border-transparent"
-                } hover:text-pblue hover:transition-all hover:duration-500 focus:outline-none border-b-2`}
+                } hover:text-pblue focus:outline-none border-b-2`}
                 onClick={() => setSelectedGender(gender)}
               >
                 {gender}

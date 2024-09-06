@@ -153,7 +153,7 @@ const TablaPlayoff = () => {
   return (
     <div className="flex justify-center items-center m-4 relative bg-cover bg-center">
       <div className="overflow-x-auto sm:overflow-x-visible w-full">
-        <div className="flex justify-start md:justify-start items-center m-4 relative bg-cover bg-center">
+        <div className="flex justify-start md:justify-center lg:justify-start items-center m-4 relative bg-cover bg-center">
           <div
             className={`grid ${
               existeDieciseisavos
@@ -263,7 +263,7 @@ const TablaPlayoff = () => {
                       }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center text-">
                     {equipo1_1 ? equipo1_1 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
