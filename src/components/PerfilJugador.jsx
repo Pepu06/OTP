@@ -79,7 +79,7 @@ const PerfilJugador = () => {
   return (
     <div className="relative p-4">
       {/* Contenedor del perfil */}
-      <div className="absolute h-[409px] sm:top-16 top-[105px] left-0 right-0 mx-auto w-3/5 sm:w-1/5 sm:left-0 sm:ml-16 sm:mr-16 bg-white p-4 rounded-lg shadow-md z-20">
+      <div className="absolute h-[409px] sm:top-16 top-[105px] left-0 right-0 mx-auto w-3/5 sm:w-[300px] sm:left-0 sm:ml-16 sm:mr-16 bg-white p-4 rounded-lg shadow-md z-20">
         <div className="text-center">
           <div className="bg-green-200 rounded-full w-40 h-40 mx-auto mb-4 mt-1"></div>
           <div className="w-50 h-24 bg-[#D9D9D9] flex flex-col items-center justify-center text-center text-[#373B3A] mb-1">
