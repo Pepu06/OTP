@@ -79,7 +79,7 @@ const TablaQually = () => {
             >
               Pareja 2
             </th>
-            <th
+            {/* <th
               scope="col"
               className="border-2 border-gray-100 px-6 py-3 bg-pgreen font-light"
             >
@@ -90,7 +90,7 @@ const TablaQually = () => {
               className="border-2 border-gray-100 px-6 py-3 bg-pgreen font-light"
             >
               Horario
-            </th>
+            </th> */}
           </tr>
         </thead>
         <tbody>
@@ -108,12 +108,12 @@ const TablaQually = () => {
               <td className="px-6 py-4 text-center border-2 border-gray-100">
                 {partido.Equipo2}
               </td>
-              <td className="px-6 py-4 text-center border-2 border-gray-100">
+              {/* <td className="px-6 py-4 text-center border-2 border-gray-100">
                 {partido.Cancha}
               </td>
               <td className="px-6 py-4 text-center border-2 border-gray-100">
                 {partido.Horario}
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>
