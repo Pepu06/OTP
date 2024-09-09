@@ -428,6 +428,7 @@ const Administracion = () => {
         setPartidos(
           partidosData.filter((partido) => partido.IDTorneo !== rowId)
         );
+        actualizarJugadores();
       } else {
         await deleteDoc(doc(db, tableName, rowId));
 
