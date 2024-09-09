@@ -147,7 +147,7 @@ const PerfilJugador = () => {
                   <span>Partidos Ganados</span> <span>{jugador.PG}</span>
                 </li>
                 <li className="flex justify-between border-b py-2">
-                  <span>Efectividad</span> <span>{jugador.Efectividad}</span>
+                  <span>Efectividad</span> <span>{jugador.Efectividad}%</span>
                 </li>
               </ul>
             </div>
@@ -162,23 +162,19 @@ const PerfilJugador = () => {
           <table className="min-w-full">
             <thead>
               <tr>
-                <th className="text-left p-2">Tipo</th>
-                <th className="text-left p-2">Competición</th>
-                <th className="text-left p-2">Fecha</th>
-                <th className="text-left p-2">Pareja</th>
-                <th className="text-left p-2">Categoría</th>
-                <th className="text-left p-2">Resultado</th>
+                <th className="text-center p-2">Nombre</th>
+                <th className="text-center p-2">Fecha</th>
+                <th className="text-center p-2">Pareja</th>
+                <th className="text-center p-2">Categoría</th>
               </tr>
             </thead>
             <tbody>
               {historicoTorneos.map((torneo, index) => (
                 <tr key={index}>
-                  <td className="border-t p-2">{torneo.Tipo}</td>
-                  <td className="border-t p-2">{torneo.Competicion}</td>
-                  <td className="border-t p-2">{torneo.Fecha}</td>
-                  <td className="border-t p-2">{torneo.Pareja}</td>
-                  <td className="border-t p-2">{torneo.Categoria}</td>
-                  <td className="border-t p-2">{torneo.Resultado}</td>
+                  <td className="border-t text-center p-2">{torneo.Nombre}</td>
+                  <td className="border-t text-center p-2">{torneo.Fecha}</td>
+                  <td className="border-t text-center p-2">{torneo.Pareja}</td>
+                  <td className="border-t text-center p-2">{torneo.Categoria}</td>
                 </tr>
               ))}
             </tbody>

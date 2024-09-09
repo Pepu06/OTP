@@ -168,9 +168,9 @@ const TablaDeRankings = () => {
                         (window.location.href = `/perfil/${row.ID}`)
                       }
                     >
-                      <td className="px-4 py-2">{row.ranking}°</td>
+                      <td className="px-4 py-2 text-black">{row.ranking}°</td>
                       <td className="px-4 py-2">{row.ID}</td>
-                      <td className="px-4 py-2 text-center">{row.nombre}</td>
+                      <td className="px-4 py-2 text-center text-black">{row.nombre}</td>
                       <td className="px-4 py-2 text-right">{row.categoria}</td>
                       <td className="px-4 py-2 text-right">{row.puntos}</td>
                     </tr>

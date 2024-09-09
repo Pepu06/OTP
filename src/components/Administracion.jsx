@@ -52,12 +52,10 @@ const Administracion = () => {
     jugadores: ["Nombre", "Categoria", "Puntos"],
     historicoTorneos: [
       "IDJugador",
-      "Tipo",
-      "Competicion",
+      "Nombre",
       "Fecha",
       "Pareja",
       "Categoria",
-      "Resultado",
     ],
   };
 
@@ -187,12 +185,10 @@ const Administracion = () => {
         jugadores: ["Nombre", "Categoria", "Puntos"],
         historicoTorneos: [
           "IDJugador",
-          "Tipo",
-          "Competicion",
+          "Nombre",
           "Fecha",
           "Pareja",
           "Categoria",
-          "Resultado",
         ],
       }[tableName];
 
@@ -616,6 +612,7 @@ const Administracion = () => {
       }
 
       await actualizarJugadores();
+      await calcularRankingPorCategoria();
 
       await fetchData();
       setLoading(false);
@@ -625,10 +622,57 @@ const Administracion = () => {
     reader.readAsArrayBuffer(file);
   };
 
+  const calcularRankingPorCategoria = async () => {
+
+    const jugadoresRef = collection(db, "jugadores");
+
+    // Obtener todos los jugadores
+    const jugadoresSnapshot = await getDocs(jugadoresRef);
+    const jugadores = jugadoresSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      nombre: doc.data().Nombre,
+      categoria: doc.data().Categoria,
+      puntos: doc.data().Puntos,
+    }));
+
+    // Agrupar jugadores por categoría
+    const categorias = jugadores.reduce((acc, jugador) => {
+      const categoria = jugador.categoria;
+      if (!acc[categoria]) {
+        acc[categoria] = [];
+      }
+      acc[categoria].push(jugador);
+      return acc;
+    }, {});
+
+    // Recorrer cada categoría y calcular el ranking
+    for (const [categoria, jugadoresEnCategoria] of Object.entries(categorias)) {
+      // Ordenar los jugadores por puntos de mayor a menor
+      jugadoresEnCategoria.sort((a, b) => b.puntos - a.puntos);
+
+      // Asignar ranking basado en la posición
+      for (let i = 0; i < jugadoresEnCategoria.length; i++) {
+        const jugador = jugadoresEnCategoria[i];
+        const ranking = i + 1;
+
+        // Actualizar el ranking del jugador en la base de datos
+        await updateDoc(doc(jugadoresRef, jugador.id), {
+          Ranking: ranking,
+        });
+
+        console.log(
+          `Jugador: ${jugador.nombre}, Categoría: ${categoria}, Ranking: ${ranking}, Puntos: ${jugador.puntos}`
+        );
+      }
+    }
+    window.location.reload()
+  };
+
   const actualizarJugadores = async () => {
     const jugadoresRef = collection(db, "jugadores");
     const partidosRef = collection(db, "partidos");
     const torneosRef = collection(db, "torneos");
+    const historicoTorneosRef = collection(db, "historicoTorneos");
 
     // Obtener todos los jugadores
     const jugadoresSnapshot = await getDocs(jugadoresRef);
@@ -650,9 +694,12 @@ const Administracion = () => {
       games2: doc.data().Games2,
     }));
 
-    // Obtener todos los torneos para asociar las fechas
+    // Obtener todos los torneos para asociar las fechas y nombres
     const torneosSnapshot = await getDocs(torneosRef);
     const torneosMap = new Map(
+      torneosSnapshot.docs.map((doc) => [doc.id, doc.data().Nombre])
+    );
+    const torneosFechasMap = new Map(
       torneosSnapshot.docs.map((doc) => [doc.id, doc.data().Fecha])
     );
 
@@ -700,7 +747,8 @@ const Administracion = () => {
         games1,
         games2,
       } = partido;
-      const torneoFecha = torneosMap.get(idTorneo);
+      const torneoNombre = torneosMap.get(idTorneo);
+      const torneoFecha = torneosFechasMap.get(idTorneo);
 
       equipos.forEach((equipo) => {
         const jugadoresEnEquipo = equipo
@@ -710,7 +758,7 @@ const Administracion = () => {
           for (const jugador of jugadores) {
             if (jugador.nombre === nombre) {
               // Actualizar datos del jugador
-              jugadoresDatos[jugador.id].torneos.set(idTorneo, torneoFecha);
+              jugadoresDatos[jugador.id].torneos.set(idTorneo, torneoNombre);
               jugadoresDatos[jugador.id].partidos.add(partidoId);
               jugadoresDatos[jugador.id].instancias.set(partidoId, instancia);
 
@@ -734,7 +782,7 @@ const Administracion = () => {
               if (
                 !jugadoresDatos[jugador.id].ultimoTorneoFecha ||
                 torneoActualFecha >
-                  new Date(jugadoresDatos[jugador.id].ultimoTorneoFecha)
+                new Date(jugadoresDatos[jugador.id].ultimoTorneoFecha)
               ) {
                 jugadoresDatos[jugador.id].ultimoTorneoFecha = torneoFecha;
                 // Limpiar el último partido dentro del torneo
@@ -743,8 +791,7 @@ const Administracion = () => {
 
               if (
                 jugadoresDatos[jugador.id].ultimoTorneoFecha === torneoFecha &&
-                (!jugadoresDatos[jugador.id].ultimoPartidoId ||
-                  partidoId > jugadoresDatos[jugador.id].ultimoPartidoId)
+                (!jugadoresDatos[jugador.id].ultimoPartidoId || partidoId > jugadoresDatos[jugador.id].ultimoPartidoId)
               ) {
                 jugadoresDatos[jugador.id].ultimoPartidoId = partidoId;
                 jugadoresDatos[jugador.id].instanciaUltimoTorneo = instancia;
@@ -826,41 +873,49 @@ const Administracion = () => {
         });
 
         // Mostrar en consola
-        const rank = calculateRanking(
-          jugadores,
-          datos.puntos,
-          jugadores.find((j) => j.id === jugadorId).categoria
-        );
-        await updateDoc(doc(jugadoresRef, jugadorId), {
-          Ranking: rank,
-        });
         console.log(
           `Jugador ID: ${jugadorId}\n` +
-            `IDs de torneos: ${Array.from(datos.torneos.keys()).join(", ")}\n` +
-            `Fechas de torneos: ${Array.from(datos.torneos.values()).join(
-              ", "
-            )}\n` +
-            `Total únicos: ${uniqueTorneosCount}\n` +
-            `IDs de partidos: ${Array.from(datos.partidos).join(", ")}\n` +
-            `Total partidos únicos: ${uniquePartidosCount}\n` +
-            `Instancias de partidos: ${Array.from(datos.instancias.entries())
-              .map(([id, instancia]) => `Partido ${id}: Instancia ${instancia}`)
-              .join(", ")}\n` +
-            `Finales: ${datos.conteoInstancias.Final}\n` +
-            `Semifinales: ${datos.conteoInstancias.Semifinal}\n` +
-            `Cuartos: ${datos.conteoInstancias.Cuartos}\n` +
-            `Octavos: ${datos.conteoInstancias.Octavos}\n` +
-            `Dieciseisavos: ${datos.conteoInstancias.Dieciseisavos}\n` +
-            `Qually: ${datos.conteoInstancias.Qually}\n` +
-            `Último torneo fecha: ${datos.ultimoTorneoFecha}\n` +
-            `Pareja en el último torneo: ${datos.parejaUltimoTorneo}\n` +
-            `Instancia en el último torneo: ${datos.instanciaUltimoTorneo}\n` +
-            `Partidos ganados: ${datos.partidosGanados}\n` +
-            `Último partido ID: ${datos.ultimoPartidoId}\n` +
-            `Puntos acumulados: ${datos.puntos}\n` +
-            `Efectividad: ${efectividad.toFixed(2)}%` +
-            `Ranking: ${datos.Ranking}` // Mostrar efectividad
+          `IDs de torneos: ${Array.from(datos.torneos.keys()).join(", ")}\n` +
+          `Nombres de torneos: ${Array.from(datos.torneos.values()).join(", ")}\n` +
+          `Total únicos: ${uniqueTorneosCount}\n` +
+          `IDs de partidos: ${Array.from(datos.partidos).join(", ")}\n` +
+          `Total partidos únicos: ${uniquePartidosCount}\n` +
+          `Instancias de partidos: ${Array.from(datos.instancias.entries())
+            .map(([id, instancia]) => `Partido ${id}: Instancia ${instancia}`)
+            .join(", ")}\n` +
+          `Finales: ${datos.conteoInstancias.Final}\n` +
+          `Semifinales: ${datos.conteoInstancias.Semifinal}\n` +
+          `Cuartos: ${datos.conteoInstancias.Cuartos}\n` +
+          `Octavos: ${datos.conteoInstancias.Octavos}\n` +
+          `Dieciseisavos: ${datos.conteoInstancias.Dieciseisavos}\n` +
+          `Qually: ${datos.conteoInstancias.Qually}\n` +
+          `Último torneo fecha: ${datos.ultimoTorneoFecha}\n` +
+          `Pareja en el último torneo: ${datos.parejaUltimoTorneo}\n` +
+          `Instancia en el último torneo: ${datos.instanciaUltimoTorneo}\n` +
+          `Partidos ganados: ${datos.partidosGanados}\n` +
+          `Último partido ID: ${datos.ultimoPartidoId}\n` +
+          `Puntos acumulados: ${datos.puntos}\n` +
+          `Efectividad: ${efectividad.toFixed(2)}%` // Mostrar efectividad
         );
+
+        // Crear y agregar documentos a historicoTorneos
+        const historicoTorneosPromises = Array.from(datos.torneos.entries()).map(
+          async ([torneoId, torneoNombre]) => {
+            const nuevoId = getNextId(await getDocs(historicoTorneosRef).then(snapshot => snapshot.docs.map(doc => doc.data())));
+            const documentoHistorico = {
+              ID: nuevoId,
+              IDJugador: jugadorId,
+              Nombre: torneoNombre, // Nombre del torneo
+              Fecha: datos.ultimoTorneoFecha,
+              Pareja: datos.parejaUltimoTorneo,
+              Categoria: datos.instanciaUltimoTorneo, // Instancia del último torneo
+            };
+
+            await setDoc(doc(historicoTorneosRef, nuevoId), documentoHistorico);
+          }
+        );
+
+        await Promise.all(historicoTorneosPromises);
       }
     );
 
@@ -869,6 +924,9 @@ const Administracion = () => {
 
     console.log("Actualización completa.");
   };
+
+
+
 
   const renderForm = (tableName) => {
     const columns = {
@@ -899,12 +957,10 @@ const Administracion = () => {
       ],
       historicoTorneos: [
         "IDJugador",
-        "Tipo",
-        "Competicion",
+        "Nombre",
         "Fecha",
         "Pareja",
         "Categoria",
-        "Resultado",
       ],
     }[tableName];
 
@@ -953,7 +1009,7 @@ const Administracion = () => {
                 value={
                   newRowData[column] ||
                   (tableName === "jugadores" &&
-                  !["Nombre", "Categoria"].includes(column)
+                    !["Nombre", "Categoria"].includes(column)
                     ? ""
                     : "")
                 }
@@ -1026,12 +1082,10 @@ const Administracion = () => {
       historicoTorneos: [
         "ID",
         "IDJugador",
-        "Tipo",
-        "Competicion",
+        "Nombre",
         "Fecha",
         "Pareja",
         "Categoria",
-        "Resultado",
       ],
     }[tableName];
 
@@ -1054,24 +1108,24 @@ const Administracion = () => {
               tableName === "torneos"
                 ? "Buscar por ID/Nombre"
                 : tableName === "partidos"
-                ? "Buscar por IDTorneo"
-                : "Buscar por ID/Nombre"
+                  ? "Buscar por IDTorneo"
+                  : "Buscar por ID/Nombre"
             }
             value={
               tableName === "torneos"
                 ? searchTermTorneos
                 : tableName === "partidos"
-                ? searchTermPartidos
-                : tableName === "historicoTorneos"
-                ? searchTermHistoricoTorneos
-                : searchTermJugadores
+                  ? searchTermPartidos
+                  : tableName === "historicoTorneos"
+                    ? searchTermHistoricoTorneos
+                    : searchTermJugadores
             }
             onChange={(e) => handleSearchChange(e, tableName)}
             onClick={(e) => (e.target.placeholder = "")}
             onBlur={(e) =>
-              (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
-                tableName
-              )}`)
+            (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
+              tableName
+            )}`)
             }
           />
         </div>
@@ -1097,8 +1151,8 @@ const Administracion = () => {
                     {columns.map((column, i) => (
                       <td key={i} className="px-5 py-4">
                         {editingRow &&
-                        editingRow.tableName === tableName &&
-                        editingRow.rowId === row.ID ? (
+                          editingRow.tableName === tableName &&
+                          editingRow.rowId === row.ID ? (
                           <input
                             className="border-2 border-pgreen rounded-sm max-w-24"
                             type="text"
@@ -1120,8 +1174,8 @@ const Administracion = () => {
                     ))}
                     <td className="px-5 text-center py-4">
                       {editingRow &&
-                      editingRow.tableName === tableName &&
-                      editingRow.rowId === row.ID ? (
+                        editingRow.tableName === tableName &&
+                        editingRow.rowId === row.ID ? (
                         <>
                           <button
                             className="text-green-600 hover:text-green-800"
