@@ -6,6 +6,8 @@ import {
   deleteDoc,
   doc,
   setDoc,
+  orderBy,
+  limit,
   query,
   where,
 } from "firebase/firestore";
@@ -140,10 +142,22 @@ const Administracion = () => {
   });
 
   const getNextId = (rows) => {
-    const ids = rows.map((row) => parseInt(row.ID, 10));
+    if (!Array.isArray(rows)) {
+      throw new Error("Expected rows to be an array");
+    }
+
+    // Filtrar IDs válidos y convertirlos a números
+    const ids = rows
+      .map((row) => {
+        const id = parseInt(row.ID, 10);
+        return isNaN(id) ? 0 : id;
+      });
+
+    // Encontrar el máximo ID y retornar el siguiente
     const maxId = Math.max(...ids, 0);
     return (maxId + 1).toString();
   };
+
 
   const calculateRanking = (jugadores, newPlayerPoints, categoria) => {
     const filteredPlayers = jugadores.filter(
@@ -159,6 +173,7 @@ const Administracion = () => {
 
     return rank === 0 ? sortedPlayers.length + 1 : rank;
   };
+
 
   const handleAddRowSubmit = async (tableName) => {
     try {
@@ -346,6 +361,9 @@ const Administracion = () => {
       jugadores: (row) =>
         row.ID.toString().includes(searchTerm) ||
         row.Nombre.toLowerCase().includes(searchTerm.toLowerCase()),
+      historicoTorneos: (row) =>
+        row.ID.toString().includes(searchTerm) ||
+        row.Nombre.toLowerCase().includes(searchTerm.toLowerCase()),
     };
 
     return rows.filter(filters[tableName]);
@@ -428,7 +446,30 @@ const Administracion = () => {
         setPartidos(
           partidosData.filter((partido) => partido.IDTorneo !== rowId)
         );
-        actualizarJugadores();
+        // Verificar si existen jugadores asociados a los partidos eliminados
+        const jugadoresRef = collection(db, "jugadores");
+        const jugadoresSnapshot = await getDocs(jugadoresRef);
+        const jugadoresData = jugadoresSnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          ID: doc.id,
+        }));
+
+        // Obtener jugadores de los partidos eliminados
+        const jugadoresEnPartidosEliminados = partidosData.flatMap((partido) => {
+          const equipo1Jugadores = partido.Equipo1.split("-");
+          const equipo2Jugadores = partido.Equipo2.split("-");
+          return [...equipo1Jugadores, ...equipo2Jugadores];
+        });
+
+        // Filtrar los jugadores que existen en la base de datos
+        const jugadoresExistentes = jugadoresEnPartidosEliminados.filter((jugador) =>
+          jugadoresData.some((jugadorDoc) => jugadorDoc.Nombre === jugador.trim())
+        );
+
+        // Si hay jugadores relacionados, actualizarlos
+        if (jugadoresExistentes.length > 0) {
+          await actualizarJugadores();
+        }
       } else {
         await deleteDoc(doc(db, tableName, rowId));
 
@@ -436,6 +477,7 @@ const Administracion = () => {
           torneos: setTorneos,
           partidos: setPartidos,
           jugadores: setJugadores,
+          historicoTorneos: setHistoricoTorneos,
         }[tableName];
 
         setRows((prevRows) => prevRows.filter((row) => row.ID !== rowId));
@@ -532,7 +574,6 @@ const Administracion = () => {
           console.log("Todos los partidos procesados con éxito.");
         }
       }
-
       for (const sheetName of workbook.SheetNames) {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
@@ -543,6 +584,9 @@ const Administracion = () => {
           const jugadoresSnapshot = await getDocs(jugadoresRef);
           const jugadoresData = jugadoresSnapshot.docs.map((doc) => doc.data());
           let nextPlayerId = getNextId(jugadoresData);
+          const historicoSnapshot = await getDocs(historicoTorneosRef);
+          const historicoTorneosData = historicoSnapshot.docs.map((doc) => doc.data());
+          let nextHistoricoTorneoId = getNextId(historicoTorneosData);
           const processedPlayers = new Set();
 
           const addPlayerPromises = jsonData.flatMap((record) => {
@@ -602,20 +646,19 @@ const Administracion = () => {
                 const historicoSnapshot = await getDocs(historicoQuery);
 
                 if (historicoSnapshot.empty) {
-                  const historicoTorneoId = getNextId(jugadoresData);
+                  nextHistoricoTorneoId = (parseInt(nextHistoricoTorneoId, 10) + 1).toString();
                   const pareja = jugadores.length > 1 ? jugadores[(index + 1) % jugadores.length] : "-";
 
                   const nuevoHistoricoTorneo = {
-                    ID: historicoTorneoId,
+                    ID: nextHistoricoTorneoId,
                     IDJugador: jugadorId,
                     Nombre: fileName,
                     Fecha: date,
                     Pareja: pareja,
                     Categoria: category,
                   };
-
                   await setDoc(
-                    doc(historicoTorneosRef, historicoTorneoId.toString()),
+                    doc(historicoTorneosRef, nextHistoricoTorneoId.toString()),
                     nuevoHistoricoTorneo
                   );
                   console.log("Historial del torneo creado con éxito:", nuevoHistoricoTorneo);
@@ -642,6 +685,34 @@ const Administracion = () => {
     };
     reader.readAsArrayBuffer(file);
   };
+
+  // const eliminarTodosLosJugadores = async () => {
+  //   try {
+  //     // Referencia a la colección "jugadores"
+  //     const jugadoresRef = collection(db, "historicoTorneos");
+
+  //     // Obtener todos los documentos de la colección
+  //     const snapshot = await getDocs(jugadoresRef);
+
+  //     if (snapshot.empty) {
+  //       console.log("No hay jugadores para eliminar.");
+  //       return;
+  //     }
+
+  //     // Crear un array de promesas para eliminar cada documento
+  //     const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
+
+  //     // Esperar a que todas las promesas se resuelvan
+  //     await Promise.all(deletePromises);
+
+  //     console.log("Todos los jugadores han sido eliminados con éxito.");
+  //   } catch (error) {
+  //     console.error("Error al eliminar los jugadores:", error);
+  //   }
+  // };
+
+  // // Llama a la función cuando sea necesario
+  // eliminarTodosLosJugadores();
 
 
   const calcularRankingPorCategoria = async () => {
@@ -687,7 +758,7 @@ const Administracion = () => {
         );
       }
     }
-    window.location.reload()
+    // window.location.reload()
   };
 
   const actualizarJugadores = async () => {
