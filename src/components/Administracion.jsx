@@ -993,10 +993,6 @@ const Administracion = () => {
     await Promise.all(updatePromises);
   };
 
-  // Llamar a la función para actualizar jugadores
-  actualizarJugadores();
-
-
   const renderForm = (tableName) => {
     const columns = {
       torneos: ["Nombre", "Categoria", "Fecha", "Club"],
