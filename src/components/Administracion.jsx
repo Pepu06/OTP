@@ -62,8 +62,6 @@ const Administracion = () => {
   const [editingRow, setEditingRow] = useState(null);
   const [addingRow, setAddingRow] = useState(null);
 
-  let nextPlayerId = 0;
-
   useEffect(() => {
     const loadInitialData = async () => {
       setLoading(true);
