@@ -20,7 +20,7 @@ const TablaPlayoff = () => {
         const filtered = data.filter(
           (partido) =>
             partido.IDTorneo == idTorneo &&
-            (partido.Instancia.includes("Dieciseisavos") ||
+            (partido.Instancia.includes("16avos") ||
               partido.Instancia.includes("Octavos") ||
               partido.Instancia.includes("Cuartos") ||
               partido.Instancia.includes("Semifinal") ||
@@ -56,7 +56,7 @@ const TablaPlayoff = () => {
   }
 
   const dieciseisavosData = data
-    .filter((row) => row.Instancia.includes("Dieciseisavos"))
+    .filter((row) => row.Instancia.includes("16avos"))
     .slice(0, 16);
   console.log("Datos de dieciseisavos:", dieciseisavosData);
   const octavosData = data
@@ -631,7 +631,7 @@ const TablaPlayoff = () => {
                       ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
                       : dieciseisavosData.length == 0
                       ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
-                      : `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[57px]`
+                      : `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]`
                   }`}
                 ></div>
                 <div className="bg-pgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
@@ -645,7 +645,7 @@ const TablaPlayoff = () => {
                       ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
                       : dieciseisavosData.length == 0
                       ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
-                      : "w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[57px]"
+                      : "w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]"
                   }`}
                 ></div>
               </div>
@@ -662,7 +662,7 @@ const TablaPlayoff = () => {
                           ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
                           : dieciseisavosData.length == 0
                           ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                          : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[57px]"
+                          : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -678,7 +678,7 @@ const TablaPlayoff = () => {
                           ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
                           : dieciseisavosData.length == 0
                           ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -693,7 +693,7 @@ const TablaPlayoff = () => {
                           ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
                           : dieciseisavosData.length == 0
                           ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                          : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[57px]"
+                          : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -709,7 +709,7 @@ const TablaPlayoff = () => {
                           ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
                           : dieciseisavosData.length == 0
                           ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -726,7 +726,7 @@ const TablaPlayoff = () => {
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
                           ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -740,7 +740,7 @@ const TablaPlayoff = () => {
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
                           ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -753,7 +753,7 @@ const TablaPlayoff = () => {
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
                           ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -767,7 +767,7 @@ const TablaPlayoff = () => {
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
                           ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -780,7 +780,7 @@ const TablaPlayoff = () => {
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
                           ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -794,7 +794,7 @@ const TablaPlayoff = () => {
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
                           ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -807,7 +807,7 @@ const TablaPlayoff = () => {
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
                           ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -821,7 +821,7 @@ const TablaPlayoff = () => {
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
                           ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[57px]"
+                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -836,7 +836,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -848,7 +848,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -859,7 +859,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -871,7 +871,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -883,7 +883,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -895,7 +895,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -907,7 +907,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -919,7 +919,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -931,7 +931,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -943,7 +943,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -955,7 +955,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -967,7 +967,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -979,7 +979,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -991,7 +991,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -1003,7 +1003,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}
@@ -1015,7 +1015,7 @@ const TablaPlayoff = () => {
                       className={`${
                         octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[57px]"
+                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                       }`}
                     ></div>
                   )}

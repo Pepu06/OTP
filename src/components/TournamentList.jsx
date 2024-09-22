@@ -77,7 +77,7 @@ const TournamentList = () => {
     dots: false,
     infinite: selectedGender === "Todos" && searchQuery === "",
     speed: 500,
-    slidesToShow: windowSmall ? 3 : 4,
+    slidesToShow: windowSmall ? 2 : 3,
     slidesToScroll: 1,
     autoplay: true,
     swipeToSlide: true,

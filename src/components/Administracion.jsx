@@ -6,8 +6,6 @@ import {
   deleteDoc,
   doc,
   setDoc,
-  orderBy,
-  limit,
   query,
   where,
 } from "firebase/firestore";
@@ -52,13 +50,7 @@ const Administracion = () => {
       "Horario",
     ],
     jugadores: ["Nombre", "Categoria", "Puntos"],
-    historicoTorneos: [
-      "IDJugador",
-      "Nombre",
-      "Fecha",
-      "Pareja",
-      "Categoria",
-    ],
+    historicoTorneos: ["IDJugador", "Nombre", "Fecha", "Pareja", "Categoria"],
   };
 
   const [editingRow, setEditingRow] = useState(null);
@@ -145,17 +137,15 @@ const Administracion = () => {
     }
 
     // Filtrar IDs válidos y convertirlos a números
-    const ids = rows
-      .map((row) => {
-        const id = parseInt(row.ID, 10);
-        return isNaN(id) ? 0 : id;
-      });
+    const ids = rows.map((row) => {
+      const id = parseInt(row.ID, 10);
+      return isNaN(id) ? 0 : id;
+    });
 
     // Encontrar el máximo ID y retornar el siguiente
     const maxId = Math.max(...ids, 0);
     return (maxId + 1).toString();
   };
-
 
   const calculateRanking = (jugadores, newPlayerPoints, categoria) => {
     const filteredPlayers = jugadores.filter(
@@ -171,7 +161,6 @@ const Administracion = () => {
 
     return rank === 0 ? sortedPlayers.length + 1 : rank;
   };
-
 
   const handleAddRowSubmit = async (tableName) => {
     try {
@@ -453,15 +442,20 @@ const Administracion = () => {
         }));
 
         // Obtener jugadores de los partidos eliminados
-        const jugadoresEnPartidosEliminados = partidosData.flatMap((partido) => {
-          const equipo1Jugadores = partido.Equipo1.split("-");
-          const equipo2Jugadores = partido.Equipo2.split("-");
-          return [...equipo1Jugadores, ...equipo2Jugadores];
-        });
+        const jugadoresEnPartidosEliminados = partidosData.flatMap(
+          (partido) => {
+            const equipo1Jugadores = partido.Equipo1.split("-");
+            const equipo2Jugadores = partido.Equipo2.split("-");
+            return [...equipo1Jugadores, ...equipo2Jugadores];
+          }
+        );
 
         // Filtrar los jugadores que existen en la base de datos
-        const jugadoresExistentes = jugadoresEnPartidosEliminados.filter((jugador) =>
-          jugadoresData.some((jugadorDoc) => jugadorDoc.Nombre === jugador.trim())
+        const jugadoresExistentes = jugadoresEnPartidosEliminados.filter(
+          (jugador) =>
+            jugadoresData.some(
+              (jugadorDoc) => jugadorDoc.Nombre === jugador.trim()
+            )
         );
 
         // Si hay jugadores relacionados, actualizarlos
@@ -564,7 +558,10 @@ const Administracion = () => {
               Horario: record.Horario || "-",
             };
 
-            await setDoc(doc(partidosRef, nextPartidoId.toString()), newPartido);
+            await setDoc(
+              doc(partidosRef, nextPartidoId.toString()),
+              newPartido
+            );
             console.log("Partido creado con éxito:", newPartido);
             nextPartidoId = (parseInt(nextPartidoId, 10) + 1).toString();
           }
@@ -583,7 +580,9 @@ const Administracion = () => {
           const jugadoresData = jugadoresSnapshot.docs.map((doc) => doc.data());
           let nextPlayerId = getNextId(jugadoresData);
           const historicoSnapshot = await getDocs(historicoTorneosRef);
-          const historicoTorneosData = historicoSnapshot.docs.map((doc) => doc.data());
+          const historicoTorneosData = historicoSnapshot.docs.map((doc) =>
+            doc.data()
+          );
           let nextHistoricoTorneoId = getNextId(historicoTorneosData);
           const processedPlayers = new Set();
 
@@ -644,8 +643,13 @@ const Administracion = () => {
                 const historicoSnapshot = await getDocs(historicoQuery);
 
                 if (historicoSnapshot.empty) {
-                  nextHistoricoTorneoId = (parseInt(nextHistoricoTorneoId, 10) + 1).toString();
-                  const pareja = jugadores.length > 1 ? jugadores[(index + 1) % jugadores.length] : "-";
+                  nextHistoricoTorneoId = (
+                    parseInt(nextHistoricoTorneoId, 10) + 1
+                  ).toString();
+                  const pareja =
+                    jugadores.length > 1
+                      ? jugadores[(index + 1) % jugadores.length]
+                      : "-";
 
                   const nuevoHistoricoTorneo = {
                     ID: nextHistoricoTorneoId,
@@ -659,19 +663,26 @@ const Administracion = () => {
                     doc(historicoTorneosRef, nextHistoricoTorneoId.toString()),
                     nuevoHistoricoTorneo
                   );
-                  console.log("Historial del torneo creado con éxito:", nuevoHistoricoTorneo);
+                  console.log(
+                    "Historial del torneo creado con éxito:",
+                    nuevoHistoricoTorneo
+                  );
                 } else {
-                  console.log("Historial del torneo ya existente para el jugador:", jugador);
+                  console.log(
+                    "Historial del torneo ya existente para el jugador:",
+                    jugador
+                  );
                 }
               });
             });
           });
 
           await Promise.all(addPlayerPromises);
-          console.log("Todos los jugadores y sus historiales de torneos procesados con éxito.");
+          console.log(
+            "Todos los jugadores y sus historiales de torneos procesados con éxito."
+          );
         }
       }
-
 
       await actualizarJugadores();
       await calcularRankingPorCategoria();
@@ -712,9 +723,7 @@ const Administracion = () => {
   // // Llama a la función cuando sea necesario
   // eliminarTodosLosJugadores();
 
-
   const calcularRankingPorCategoria = async () => {
-
     const jugadoresRef = collection(db, "jugadores");
 
     // Obtener todos los jugadores
@@ -737,7 +746,9 @@ const Administracion = () => {
     }, {});
 
     // Recorrer cada categoría y calcular el ranking
-    for (const [categoria, jugadoresEnCategoria] of Object.entries(categorias)) {
+    for (const [categoria, jugadoresEnCategoria] of Object.entries(
+      categorias
+    )) {
       // Ordenar los jugadores por puntos de mayor a menor
       jugadoresEnCategoria.sort((a, b) => b.puntos - a.puntos);
 
@@ -756,7 +767,6 @@ const Administracion = () => {
         );
       }
     }
-    // window.location.reload()
   };
 
   const actualizarJugadores = async () => {
@@ -764,8 +774,28 @@ const Administracion = () => {
     const partidosRef = collection(db, "partidos");
     const torneosRef = collection(db, "torneos");
 
-    // Obtener todos los jugadores
+    // Reiniciar todos los jugadores a 0
     const jugadoresSnapshot = await getDocs(jugadoresRef);
+    const resetPromises = jugadoresSnapshot.docs.map((doc) =>
+      updateDoc(doc.ref, {
+        CJ: 0,
+        PJ: 0,
+        Finales: 0,
+        Semis: 0,
+        Cuartos: 0,
+        Octavos: 0,
+        Dieciseisavos: 0,
+        Qually: 0,
+        UP: "",
+        UR: "",
+        PG: 0,
+        Puntos: 0,
+        Efectividad: 0,
+      })
+    );
+    await Promise.all(resetPromises);
+
+    // Obtener todos los jugadores
     const jugadores = jugadoresSnapshot.docs.map((doc) => ({
       id: doc.id,
       nombre: doc.data().Nombre,
@@ -818,7 +848,7 @@ const Administracion = () => {
 
     // Función para calcular puntos según la instancia
     const calcularPuntosPorInstancia = (instancia) => {
-      if (instancia.includes("Dieciseisavos")) return 2;
+      if (instancia.includes("16avos")) return 2;
       if (instancia.includes("Octavos")) return 3;
       if (instancia.includes("Cuartos")) return 4;
       if (instancia.includes("Semifinal")) return 5;
@@ -861,7 +891,7 @@ const Administracion = () => {
                 jugadoresDatos[jugador.id].conteoInstancias.Cuartos++;
               } else if (instancia.includes("Octavos")) {
                 jugadoresDatos[jugador.id].conteoInstancias.Octavos++;
-              } else if (instancia.includes("Dieciseisavos")) {
+              } else if (instancia.includes("16avos")) {
                 jugadoresDatos[jugador.id].conteoInstancias.Dieciseisavos++;
               } else if (instancia.includes("Qually")) {
                 jugadoresDatos[jugador.id].conteoInstancias.Qually++;
@@ -872,7 +902,7 @@ const Administracion = () => {
               if (
                 !jugadoresDatos[jugador.id].ultimoTorneoFecha ||
                 torneoActualFecha >
-                new Date(jugadoresDatos[jugador.id].ultimoTorneoFecha)
+                  new Date(jugadoresDatos[jugador.id].ultimoTorneoFecha)
               ) {
                 jugadoresDatos[jugador.id].ultimoTorneoFecha = torneoFecha;
                 // Limpiar el último partido dentro del torneo
@@ -881,7 +911,8 @@ const Administracion = () => {
 
               if (
                 jugadoresDatos[jugador.id].ultimoTorneoFecha === torneoFecha &&
-                (!jugadoresDatos[jugador.id].ultimoPartidoId || partidoId > jugadoresDatos[jugador.id].ultimoPartidoId)
+                (!jugadoresDatos[jugador.id].ultimoPartidoId ||
+                  partidoId > jugadoresDatos[jugador.id].ultimoPartidoId)
               ) {
                 jugadoresDatos[jugador.id].ultimoPartidoId = partidoId;
                 jugadoresDatos[jugador.id].instanciaUltimoTorneo = instancia;
@@ -1018,13 +1049,7 @@ const Administracion = () => {
         "Efectividad",
         "Puntos",
       ],
-      historicoTorneos: [
-        "IDJugador",
-        "Nombre",
-        "Fecha",
-        "Pareja",
-        "Categoria",
-      ],
+      historicoTorneos: ["IDJugador", "Nombre", "Fecha", "Pareja", "Categoria"],
     }[tableName];
 
     const handleInputChange = (column, value) => {
@@ -1072,7 +1097,7 @@ const Administracion = () => {
                 value={
                   newRowData[column] ||
                   (tableName === "jugadores" &&
-                    !["Nombre", "Categoria"].includes(column)
+                  !["Nombre", "Categoria"].includes(column)
                     ? ""
                     : "")
                 }
@@ -1171,24 +1196,24 @@ const Administracion = () => {
               tableName === "torneos"
                 ? "Buscar por ID/Nombre"
                 : tableName === "partidos"
-                  ? "Buscar por IDTorneo"
-                  : "Buscar por ID/Nombre"
+                ? "Buscar por IDTorneo"
+                : "Buscar por ID/Nombre"
             }
             value={
               tableName === "torneos"
                 ? searchTermTorneos
                 : tableName === "partidos"
-                  ? searchTermPartidos
-                  : tableName === "historicoTorneos"
-                    ? searchTermHistoricoTorneos
-                    : searchTermJugadores
+                ? searchTermPartidos
+                : tableName === "historicoTorneos"
+                ? searchTermHistoricoTorneos
+                : searchTermJugadores
             }
             onChange={(e) => handleSearchChange(e, tableName)}
             onClick={(e) => (e.target.placeholder = "")}
             onBlur={(e) =>
-            (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
-              tableName
-            )}`)
+              (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
+                tableName
+              )}`)
             }
           />
         </div>
@@ -1214,8 +1239,8 @@ const Administracion = () => {
                     {columns.map((column, i) => (
                       <td key={i} className="px-5 py-4">
                         {editingRow &&
-                          editingRow.tableName === tableName &&
-                          editingRow.rowId === row.ID ? (
+                        editingRow.tableName === tableName &&
+                        editingRow.rowId === row.ID ? (
                           <input
                             className="border-2 border-pgreen rounded-sm max-w-24"
                             type="text"
@@ -1237,8 +1262,8 @@ const Administracion = () => {
                     ))}
                     <td className="px-5 text-center py-4">
                       {editingRow &&
-                        editingRow.tableName === tableName &&
-                        editingRow.rowId === row.ID ? (
+                      editingRow.tableName === tableName &&
+                      editingRow.rowId === row.ID ? (
                         <>
                           <button
                             className="text-green-600 hover:text-green-800"
@@ -1269,7 +1294,7 @@ const Administracion = () => {
               </tbody>
             </table>
           </div>
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center my-2">
             <button
               className="m-2 px-5 py-2 bg-pgreen hover:bg-green-700 hover:transition-all text-white rounded-lg font-medium"
               onClick={() => setAddingRow(tableName)}
@@ -1306,16 +1331,21 @@ const Administracion = () => {
         style={{ display: "none" }}
         onChange={handleFileUpload}
       />
-      <div className="flex flex-col sm:flex-row items-center sm:justify-between">
-        <div className="w-full sm:w-[50%] m-1">
+      <hr className="border-t border-gray-400 w-full my-4" />
+      <div className="flex flex-col items-center">
+        <div className="w-full m-1">
           {renderTable(torneos, setTorneos, "torneos", searchTermTorneos)}
         </div>
-        <div className="w-full sm:w-[50%] sm:mt-0 mt-5 m-1">
+      </div>
+      <hr className="border-t border-gray-400 w-full my-4" />
+      <div className="flex flex-col items-center">
+        <div className="w-full sm:mt-0 mt-5 m-1">
           {renderTable(partidos, setPartidos, "partidos", searchTermPartidos)}
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row items-center sm:justify-between">
-        <div className="w-full sm:w-[50%] m-1">
+      <hr className="border-t border-gray-400 w-full my-4" />
+      <div className="flex flex-col items-center">
+        <div className="w-full m-1">
           {renderTable(
             jugadores,
             setJugadores,
@@ -1323,7 +1353,10 @@ const Administracion = () => {
             searchTermJugadores
           )}
         </div>
-        <div className="w-full sm:w-[50%] sm:mt-0 mt-5 m-1">
+      </div>
+      <hr className="border-t border-gray-400 w-full my-4" />
+      <div className="flex flex-col items-center">
+        <div className="w-full sm:mt-0 mt-5 m-1">
           {renderTable(
             historicoTorneos,
             setHistoricoTorneos,
@@ -1334,10 +1367,10 @@ const Administracion = () => {
       </div>
       <div className="flex justify-center">
         <button
-          className="m-2 w-auto px-5 py-2 bg-pgreen hover:bg-green-700 hover:transition-all text-white rounded-lg font-medium font-poppins"
+          className="m-2 w-auto px-5 py-2 bg-green-700 hover:bg-green-950 hover:transition-all text-white rounded-lg font-extrabold font-poppins"
           onClick={() => document.getElementById("fileInput").click()}
         >
-          Cargar Archivo
+          CARGAR ARCHIVO
         </button>
       </div>
     </div>
