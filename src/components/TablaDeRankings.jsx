@@ -112,7 +112,6 @@ const TablaDeRankings = () => {
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                 >
-                  <option value="Todas">Todas las Categorías</option>
                   {categories.map((category, index) => (
                     <option key={index} value={category}>
                       {category}
