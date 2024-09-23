@@ -49,11 +49,9 @@ const TournamentList = () => {
 
   const filteredTournaments = tournaments.filter((tournament) => {
     const sanitizedSearchQuery = searchQuery.replace(/[^\w\s]/gi, "");
-
     const searchRegex = new RegExp(sanitizedSearchQuery, "i");
 
     const categoryMatches =
-      selectedGender === "Todos" ||
       selectedGender === "Todos" ||
       (selectedGender === "Masculino" &&
         (tournament.Categoria.toLowerCase().includes("masculino") ||
@@ -64,18 +62,24 @@ const TournamentList = () => {
       (selectedGender === "Mixto" &&
         tournament.Categoria.toLowerCase().includes("mixto"));
 
-    return (
-      categoryMatches &&
-      (searchRegex.test(tournament.Nombre) ||
-        searchRegex.test(tournament.Fecha) ||
-        searchRegex.test(tournament.Club))
-    );
+    const searchMatches =
+      searchRegex.test(tournament.Nombre) ||
+      searchRegex.test(tournament.Fecha) ||
+      searchRegex.test(tournament.Club);
+
+    return categoryMatches && searchMatches;
   });
 
+  console.log("Torneos filtrados:", filteredTournaments);
+
   const windowSmall = window.innerWidth < 640;
+  const uniqueFilteredTournaments = Array.from(
+    new Set(filteredTournaments.map(tournament => tournament.ID))
+  ).map(id => filteredTournaments.find(tournament => tournament.ID === id));
+
   const settings = {
     dots: false,
-    infinite: selectedGender === "Todos" && searchQuery === "",
+    infinite: uniqueFilteredTournaments.length > (windowSmall ? 2 : 3), // Asegúrate de tener suficientes torneos para infinito
     speed: 500,
     slidesToShow: windowSmall ? 2 : 3,
     slidesToScroll: 1,
@@ -84,7 +88,6 @@ const TournamentList = () => {
     draggable: true,
     touchThreshold: 1000,
   };
-
   const handleTournamentClick = (name, ID) => {
     navigate(`/torneo/${name}/${ID}/qualify`);
   };
@@ -93,31 +96,33 @@ const TournamentList = () => {
     setShowAll(!showAll);
   };
 
-  const renderTournamentItem = (tournament) => (
-    <div
-      key={tournament.ID}
-      className="flex flex-col items-center text-center p-2 transition-transform transform hover:scale-105"
-    >
-      <div className="flex flex-col items-center">
-        <button
-          className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-pgrey text-xl font-bold focus:outline-none"
-          onClick={() =>
-            handleTournamentClick(tournament.Nombre, tournament.ID)
-          }
-          aria-label={`Ver torneo ${tournament.Nombre}`}
-        >
-          <span className="text-2xl">🏆</span>
-        </button>
-        <div className="text-center font-medium">
-          <span className="font-bold mb-1">{tournament.Nombre}</span>
-          <br />
-          <span className="text-pgrey mb-1">{tournament.Club}</span>
-          <br />
-          <span className="text-pgrey">{tournament.Categoria}</span>
+  const renderTournamentItem = (tournament) => {
+    return (
+      <div
+        key={tournament.ID}
+        className="flex flex-col items-center text-center p-2 transition-transform transform hover:scale-105"
+      >
+        <div className="flex flex-col items-center">
+          <button
+            className="bg-gray-200 h-24 w-24 mb-2 rounded-full flex items-center justify-center text-pgrey text-xl font-bold focus:outline-none"
+            onClick={() =>
+              handleTournamentClick(tournament.Nombre, tournament.ID)
+            }
+            aria-label={`Ver torneo ${tournament.Nombre}`}
+          >
+            <span className="text-2xl">🏆</span>
+          </button>
+          <div className="text-center font-medium">
+            <span className="font-bold mb-1">{tournament.Nombre}</span>
+            <br />
+            <span className="text-pgrey mb-1">{tournament.Club}</span>
+            <br />
+            <span className="text-pgrey">{tournament.Categoria}</span>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   if (isLoading) {
     return (
@@ -144,11 +149,10 @@ const TournamentList = () => {
             {["Todos", "Masculino", "Mixto", "Femenino"].map((gender) => (
               <button
                 key={gender}
-                className={`sm:px-4 sm:py-2 ${
-                  selectedGender === gender
-                    ? "text-pblue border-blue-600"
-                    : "text-pgrey border-transparent"
-                } hover:text-pblue focus:outline-none border-b-2`}
+                className={`sm:px-4 sm:py-2 ${selectedGender === gender
+                  ? "text-pblue border-blue-600"
+                  : "text-pgrey border-transparent"
+                  } hover:text-pblue focus:outline-none border-b-2`}
                 onClick={() => setSelectedGender(gender)}
               >
                 {gender}
@@ -180,18 +184,27 @@ const TournamentList = () => {
       >
         <div className="w-full max-w-4xl">
           {searchQuery || showAll ? (
-            <div className="grid grid-cols-2 gap-4">
-              {filteredTournaments.map((tournament) =>
-                renderTournamentItem(tournament)
+            <div className="grid grid-cols-2 gap-4 justify-center items-center">
+              {filteredTournaments.length > 0 ? (
+                filteredTournaments.map((tournament) =>
+                  renderTournamentItem(tournament)
+                )
+              ) : (
+                <div className="text-center">No se encontraron torneos.</div>
               )}
             </div>
           ) : (
             <Slider {...settings}>
-              {filteredTournaments.map((tournament) =>
-                renderTournamentItem(tournament)
+              {uniqueFilteredTournaments.length > 0 ? (
+                uniqueFilteredTournaments.map((tournament) =>
+                  renderTournamentItem(tournament)
+                )
+              ) : (
+                <div>No se encontraron torneos.</div>
               )}
             </Slider>
           )}
+
         </div>
       </motion.div>
       <div className="flex flex-col justify-center items-center">

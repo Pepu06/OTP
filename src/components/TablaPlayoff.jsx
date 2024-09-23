@@ -155,147 +155,142 @@ const TablaPlayoff = () => {
       <div className="overflow-x-auto sm:overflow-x-visible w-full">
         <div className="flex justify-start md:justify-center lg:justify-start items-center m-4 relative bg-cover bg-center">
           <div
-            className={`grid ${
-              existeDieciseisavos
+            className={`grid ${existeDieciseisavos
                 ? "grid-cols-5"
                 : octavosData.length > 0
-                ? "grid-cols-4"
-                : cuartosData.length > 0
-                ? "grid-cols-3"
-                : semisData.length > 0
-                ? "grid-cols-2"
-                : "grid-cols-1"
-            } min-w-[600px]`}
+                  ? "grid-cols-4"
+                  : cuartosData.length > 0
+                    ? "grid-cols-3"
+                    : semisData.length > 0
+                      ? "grid-cols-2"
+                      : "grid-cols-1"
+              } min-w-[600px]`}
           >
             {dieciseisavosData.length > 0 && (
-              <div className="space-y-2">
+              <div className="space-y-2 items-center justify-center">
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_1 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_1 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_2 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_2 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_3 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_3 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_4 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_4 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_5 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_5 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_6 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_6 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_7 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_7 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_8 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_8 || "Equipo"}
                   </div>
                 </div>
               </div>
             )}
             {octavosData.length > 0 && (
-              <div className="space-y-[65px] mt-7">
+              <div className="space-y-[65px] mt-7 items-center justify-center">
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center text-">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center text-">
                     {equipo1_1 ? equipo1_1 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo2_1 ? equipo2_1 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -303,23 +298,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo1_2 ? equipo1_2 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -327,23 +320,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo2_2 ? equipo2_2 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -351,23 +342,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo1_3 ? equipo1_3 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -375,23 +364,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo2_3 ? equipo2_3 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -399,23 +386,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo1_4 ? equipo1_4 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -423,178 +408,164 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo2_4 ? equipo2_4 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        }`}
                     ></div>
                   )}
                 </div>
               </div>
             )}
             {cuartosData.length > 0 && (
-              <div className="space-y-[140px] mt-10">
+              <div className="space-y-[140px] mt-10 items-center justify-center">
                 <div className="mt-10">
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : "w-16 h-10 border-t-2 border-r-2 border-pblue"
-                      }`}
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {cuartos1_1 ? cuartos1_1 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : "w-16 h-10 border-b-2 border-r-2 border-pblue"
-                      }`}
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : "w-16 h-10 border-t-2 border-r-2 border-pblue"
-                      }`}
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {cuartos2_1 ? cuartos2_1 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : "w-16 h-10 border-b-2 border-r-2 border-pblue"
-                      }`}
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : "w-16 h-10 border-t-2 border-r-2 border-pblue"
-                      }`}
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {cuartos1_2 ? cuartos1_2 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : "w-16 h-10 border-b-2 border-r-2 border-pblue"
-                      }`}
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : "w-16 h-10 border-t-2 border-r-2 border-pblue"
-                      }`}
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {cuartos2_2 ? cuartos2_2 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : "w-16 h-10 border-b-2 border-r-2 border-pblue"
-                      }`}
+                        }`}
                     ></div>
                   )}
                 </div>
               </div>
             )}
             {semisData.length > 0 && (
-              <div className="space-y-[300px] mt-24">
+              <div className="space-y-[300px] mt-24 items-center justify-center">
                 <div>
                   {finalData.length > 0 && (
                     <div
-                      className={`${
-                        semisData.length > 0 && cuartosData == 0
+                      className={`${semisData.length > 0 && cuartosData == 0
                           ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
                           : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen"
-                      }`}
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {semis1_1 ? semis1_1 : "Equipo"}
                   </div>
                   {finalData.length > 0 && (
                     <div
-                      className={`${
-                        semisData.length > 0 && cuartosData == 0
+                      className={`${semisData.length > 0 && cuartosData == 0
                           ? "w-16 h-28 border-t-2 border-r-2 border-white"
                           : "w-16 h-28 border-b-2 border-r-2 border-plightgreen"
-                      }`}
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {finalData.length > 0 && (
                     <div
-                      className={`${
-                        semisData.length > 0 && cuartosData == 0
+                      className={`${semisData.length > 0 && cuartosData == 0
                           ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
                           : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen"
-                      }`}
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {semis2_1 ? semis2_1 : "Equipo"}
                   </div>
                   {finalData.length > 0 && (
                     <div
-                      className={`${
-                        semisData.length > 0 && cuartosData == 0
+                      className={`${semisData.length > 0 && cuartosData == 0
                           ? "w-16 h-28 border-t-2 border-r-2 border-white"
                           : "w-16 h-28 border-b-2 border-r-2 border-plightgreen"
-                      }`}
+                        }`}
                     ></div>
                   )}
                 </div>
               </div>
             )}
             {finalData.length > 0 && (
-              <div className="mt-[280px]">
+              <div className="mt-[280px] items-center justify-center">
                 <div className="w-16 h-[260px] border-t-2 border-r-2 border-plightblue"></div>
-                <div className="bg-pgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                <div className="bg-pgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                   {final_1 ? final_1 : "Equipo"}
                 </div>
                 <div className="w-16 h-[250px] border-b-2 border-r-2 border-plightblue"></div>
@@ -609,270 +580,251 @@ const TablaPlayoff = () => {
             <img src={otp} alt="otp" className=" mt-5" />
           </div>
           <div
-            className={`grid ${
-              existeDieciseisavos
+            className={`grid ${existeDieciseisavos
                 ? "grid-cols-5"
                 : octavosData.length > 0
-                ? "grid-cols-4"
-                : cuartosData.length > 0
-                ? "grid-cols-3"
-                : semisData.length > 0
-                ? "grid-cols-2"
-                : "grid-cols-1"
-            } min-w-[600px]`}
+                  ? "grid-cols-4"
+                  : cuartosData.length > 0
+                    ? "grid-cols-3"
+                    : semisData.length > 0
+                      ? "grid-cols-2"
+                      : "grid-cols-1"
+              } min-w-[600px]`}
           >
             {finalData.length > 0 && (
-              <div className="mt-[280px]">
+              <div className="mt-[280px] items-center justify-center">
                 <div
-                  className={`${
-                    finalData.length > 0 && semisData == 0
+                  className={`${finalData.length > 0 && semisData == 0
                       ? "w-16 h-[260px] border-t-2 border-r-2 border-white"
                       : octavosData.length == 0
-                      ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
-                      : dieciseisavosData.length == 0
-                      ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
-                      : `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]`
-                  }`}
+                        ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
+                          : `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]`
+                    }`}
                 ></div>
-                <div className="bg-pgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                <div className="bg-pgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                   {final_2 ? final_2 : "Equipo"}
                 </div>
                 <div
-                  className={`${
-                    finalData.length > 0 && semisData == 0
+                  className={`${finalData.length > 0 && semisData == 0
                       ? "w-16 h-[250px] border-b-2 border-r-2 border-white"
                       : octavosData.length == 0
-                      ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
-                      : dieciseisavosData.length == 0
-                      ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
-                      : "w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]"
-                  }`}
+                        ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
+                          : "w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]"
+                    }`}
                 ></div>
               </div>
             )}
             {semisData.length > 0 && (
-              <div className="space-y-[300px] mt-24">
+              <div className="space-y-[300px] mt-24 items-center justify-center">
                 <div>
                   {finalData.length > 0 && (
                     <div
-                      className={`${
-                        semisData.length > 0 && cuartosData == 0
+                      className={`${semisData.length > 0 && cuartosData == 0
                           ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
                           : octavosData.length == 0
-                          ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
-                          : dieciseisavosData.length == 0
-                          ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                          : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
+                            : dieciseisavosData.length == 0
+                              ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
+                              : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {semis1_2 ? semis1_2 : "Equipo"}
                   </div>
                   {finalData.length > 0 && (
                     <div
-                      className={`${
-                        semisData.length > 0 && cuartosData == 0
+                      className={`${semisData.length > 0 && cuartosData == 0
                           ? "w-16 h-28 border-t-2 border-r-2 border-white"
                           : octavosData.length == 0
-                          ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
-                          : dieciseisavosData.length == 0
-                          ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
+                            : dieciseisavosData.length == 0
+                              ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
+                              : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {finalData.length > 0 && (
                     <div
-                      className={`${
-                        semisData.length > 0 && cuartosData == 0
+                      className={`${semisData.length > 0 && cuartosData == 0
                           ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
                           : octavosData.length == 0
-                          ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
-                          : dieciseisavosData.length == 0
-                          ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                          : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
+                            : dieciseisavosData.length == 0
+                              ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
+                              : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center z-20">
+                  <div className="bg-plightblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center z-20">
                     {semis2_2 ? semis2_2 : "Equipo"}
                   </div>
                   {finalData.length > 0 && (
                     <div
-                      className={`${
-                        semisData.length > 0 && cuartosData == 0
+                      className={`${semisData.length > 0 && cuartosData == 0
                           ? "w-16 h-28 border-t-2 border-r-2 border-white"
                           : octavosData.length == 0
-                          ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
-                          : dieciseisavosData.length == 0
-                          ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
+                            : dieciseisavosData.length == 0
+                              ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
+                              : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
               </div>
             )}
             {cuartosData.length > 0 && (
-              <div className="space-y-[140px] mt-10">
+              <div className="space-y-[140px] mt-10 items-center justify-center">
                 <div className="mt-10">
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
-                          ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {cuartos1_3 ? cuartos1_3 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
-                          ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
-                          ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {cuartos2_3 ? cuartos2_3 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
-                          ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
-                          ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {cuartos1_4 ? cuartos1_4 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
-                          ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
-                          ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-plightgreen text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-plightgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {cuartos2_4 ? cuartos2_4 : "Equipo"}
                   </div>
                   {semisData.length > 0 && (
                     <div
-                      className={`${
-                        cuartosData.length > 0 && octavosData == 0
+                      className={`${cuartosData.length > 0 && octavosData == 0
                           ? "w-16 h-10 border-t-2 border-r-2 border-white"
                           : dieciseisavosData.length == 0
-                          ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
-                      }`}
+                            ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
               </div>
             )}
             {octavosData.length > 0 && (
-              <div className="space-y-[65px] mt-7">
+              <div className="space-y-[65px] mt-7 items-center justify-center">
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo1_5 ? equipo1_5 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo2_5 ? equipo2_5 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -880,23 +832,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo1_6 ? equipo1_6 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -904,23 +854,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo2_6 ? equipo2_6 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -928,23 +876,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo1_7 ? equipo1_7 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -952,23 +898,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo2_7 ? equipo2_7 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -976,23 +920,21 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo1_8 ? equipo1_8 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
@@ -1000,107 +942,105 @@ const TablaPlayoff = () => {
                 <div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
-                  <div className="bg-pblue text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-pblue text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {equipo2_8 ? equipo2_8 : "Equipo"}
                   </div>
                   {cuartosData.length > 0 && (
                     <div
-                      className={`${
-                        octavosData.length > 0 && dieciseisavosData == 0
+                      className={`${octavosData.length > 0 && dieciseisavosData == 0
                           ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-300 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
-                      }`}
+                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        }`}
                     ></div>
                   )}
                 </div>
               </div>
             )}
             {dieciseisavosData.length > 0 && (
-              <div className="space-y-2">
+              <div className="space-y-2 items-center justify-center">
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_9 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_9 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_10 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_10 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_11 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_11 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_12 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_12 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_13 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_13 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_14 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_14 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_15 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_15 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos1_16 || "Equipo"}
                   </div>
                 </div>
                 <div>
-                  <div className="bg-green-400 text-white p-2 rounded-lg text-center text-sm min-h-16 justify-center items-center">
+                  <div className="bg-green-400 text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
                     {dieciseisavos2_16 || "Equipo"}
                   </div>
                 </div>

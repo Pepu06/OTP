@@ -47,7 +47,6 @@ const Administracion = () => {
       "Games2",
       "Equipo2",
       "Cancha",
-      "Horario",
     ],
     jugadores: ["Nombre", "Categoria", "Puntos"],
     historicoTorneos: ["IDJugador", "Nombre", "Fecha", "Pareja", "Categoria"],
@@ -182,7 +181,6 @@ const Administracion = () => {
           "Games2",
           "Equipo2",
           "Cancha",
-          "Horario",
         ],
         jugadores: ["Nombre", "Categoria", "Puntos"],
         historicoTorneos: [
@@ -555,7 +553,6 @@ const Administracion = () => {
               Games2: record.Games2 || 0,
               Instancia: record.Instancia,
               Cancha: record.Cancha || "-",
-              Horario: record.Horario || "-",
             };
 
             await setDoc(
@@ -587,7 +584,7 @@ const Administracion = () => {
           const processedPlayers = new Set();
 
           const addPlayerPromises = jsonData.flatMap((record) => {
-            const equipos = [record.Equipo1, record.Equipo2];
+            const equipos = [record.Equipo1, record.Equipo2].map(equipo => equipo.replace(/\s+y\s+/g, '-'));
             return equipos.flatMap((equipo) => {
               const jugadores = equipo
                 .split(/[-]/)
@@ -694,34 +691,6 @@ const Administracion = () => {
     };
     reader.readAsArrayBuffer(file);
   };
-
-  // const eliminarTodosLosJugadores = async () => {
-  //   try {
-  //     // Referencia a la colección "jugadores"
-  //     const jugadoresRef = collection(db, "historicoTorneos");
-
-  //     // Obtener todos los documentos de la colección
-  //     const snapshot = await getDocs(jugadoresRef);
-
-  //     if (snapshot.empty) {
-  //       console.log("No hay jugadores para eliminar.");
-  //       return;
-  //     }
-
-  //     // Crear un array de promesas para eliminar cada documento
-  //     const deletePromises = snapshot.docs.map((doc) => deleteDoc(doc.ref));
-
-  //     // Esperar a que todas las promesas se resuelvan
-  //     await Promise.all(deletePromises);
-
-  //     console.log("Todos los jugadores han sido eliminados con éxito.");
-  //   } catch (error) {
-  //     console.error("Error al eliminar los jugadores:", error);
-  //   }
-  // };
-
-  // // Llama a la función cuando sea necesario
-  // eliminarTodosLosJugadores();
 
   const calcularRankingPorCategoria = async () => {
     const jugadoresRef = collection(db, "jugadores");
@@ -902,7 +871,7 @@ const Administracion = () => {
               if (
                 !jugadoresDatos[jugador.id].ultimoTorneoFecha ||
                 torneoActualFecha >
-                  new Date(jugadoresDatos[jugador.id].ultimoTorneoFecha)
+                new Date(jugadoresDatos[jugador.id].ultimoTorneoFecha)
               ) {
                 jugadoresDatos[jugador.id].ultimoTorneoFecha = torneoFecha;
                 // Limpiar el último partido dentro del torneo
@@ -1033,7 +1002,6 @@ const Administracion = () => {
         "Games2",
         "Equipo2",
         "Cancha",
-        "Horario",
       ],
       jugadores: [
         "Nombre",
@@ -1097,7 +1065,7 @@ const Administracion = () => {
                 value={
                   newRowData[column] ||
                   (tableName === "jugadores" &&
-                  !["Nombre", "Categoria"].includes(column)
+                    !["Nombre", "Categoria"].includes(column)
                     ? ""
                     : "")
                 }
@@ -1149,7 +1117,6 @@ const Administracion = () => {
         "Games2",
         "Equipo2",
         "Cancha",
-        "Horario",
       ],
       jugadores: [
         "ID",
@@ -1196,24 +1163,24 @@ const Administracion = () => {
               tableName === "torneos"
                 ? "Buscar por ID/Nombre"
                 : tableName === "partidos"
-                ? "Buscar por IDTorneo"
-                : "Buscar por ID/Nombre"
+                  ? "Buscar por IDTorneo"
+                  : "Buscar por ID/Nombre"
             }
             value={
               tableName === "torneos"
                 ? searchTermTorneos
                 : tableName === "partidos"
-                ? searchTermPartidos
-                : tableName === "historicoTorneos"
-                ? searchTermHistoricoTorneos
-                : searchTermJugadores
+                  ? searchTermPartidos
+                  : tableName === "historicoTorneos"
+                    ? searchTermHistoricoTorneos
+                    : searchTermJugadores
             }
             onChange={(e) => handleSearchChange(e, tableName)}
             onClick={(e) => (e.target.placeholder = "")}
             onBlur={(e) =>
-              (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
-                tableName
-              )}`)
+            (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
+              tableName
+            )}`)
             }
           />
         </div>
@@ -1239,8 +1206,8 @@ const Administracion = () => {
                     {columns.map((column, i) => (
                       <td key={i} className="px-5 py-4">
                         {editingRow &&
-                        editingRow.tableName === tableName &&
-                        editingRow.rowId === row.ID ? (
+                          editingRow.tableName === tableName &&
+                          editingRow.rowId === row.ID ? (
                           <input
                             className="border-2 border-pgreen rounded-sm max-w-24"
                             type="text"
@@ -1262,8 +1229,8 @@ const Administracion = () => {
                     ))}
                     <td className="px-5 text-center py-4">
                       {editingRow &&
-                      editingRow.tableName === tableName &&
-                      editingRow.rowId === row.ID ? (
+                        editingRow.tableName === tableName &&
+                        editingRow.rowId === row.ID ? (
                         <>
                           <button
                             className="text-green-600 hover:text-green-800"

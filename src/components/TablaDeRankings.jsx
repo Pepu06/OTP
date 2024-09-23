@@ -73,20 +73,40 @@ const TablaDeRankings = () => {
       <div className="w-full max-w-screen-lg mb-5" style={{ width: "80%" }}>
         {/* Mostrar solo el selector de categorías si no se ha seleccionado ninguna */}
         {selectedCategory === "" ? (
-          <div className="flex justify-center items-center">
-            <select
-              className="border border-pgrey w-60 h-10 rounded-lg px-3 text-center text-pgrey"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              <option value="">Selecciona una Categoría</option>
-              {categories.map((category, index) => (
-                <option key={index} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
+          <div>
+            <div className="flex justify-center items-center p-40">
+              <div className="relative w-60">
+                <select
+                  className="w-full h-16 rounded-lg px-4 py-3 text-lg text-white bg-pblue appearance-none pr-10" // Agrega pr-10 para espacio en el lado derecho
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                  <option className="text-center" value="" disabled>Elegí una Categoría</option>
+                  {categories.map((category, index) => (
+                    <option key={index} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+                {/* Flecha personalizada a la derecha */}
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"> {/* Cambia pr-3 a pr-2 para menos separación */}
+                  <svg
+                    className="w-5 h-5 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
+
         ) : (
           <div className="relative overflow-x-auto w-full items-center">
             <h1 className="flex text-pblue justify-center font-daysone text-4xl mb-3">
