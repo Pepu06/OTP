@@ -57,7 +57,7 @@ const TablaDeRankings = () => {
     setTimeout(() => {
       setSelectedCategory(newCategory); // Actualiza la categoría después de 3 segundos
       setLoading(false); // Detiene la carga
-    }, 2000); // 3 segundos de espera
+    }, 1000); // 1 segundo de espera
   };
 
   const filteredRankings = rankings.filter((row) => {
