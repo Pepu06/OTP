@@ -49,9 +49,20 @@ const TablaDeRankings = () => {
     fetchData();
   }, []);
 
+  // Manejar el cambio de categoría con la demora de 3 segundos
+  const handleCategoryChange = (newCategory) => {
+    setLoading(true); // Empieza a cargar
+    setSelectedCategory(""); // Limpia la categoría seleccionada
+
+    setTimeout(() => {
+      setSelectedCategory(newCategory); // Actualiza la categoría después de 3 segundos
+      setLoading(false); // Detiene la carga
+    }, 2000); // 3 segundos de espera
+  };
+
   const filteredRankings = rankings.filter((row) => {
     const matchesCategory =
-      selectedCategory === "" || // Si no hay categoría seleccionada, no muestra rankings
+      selectedCategory === "" || // Si no hay categoría seleccionada
       row.categoria.toLowerCase() === selectedCategory.toLowerCase();
 
     return (
@@ -74,22 +85,26 @@ const TablaDeRankings = () => {
         {/* Mostrar solo el selector de categorías si no se ha seleccionado ninguna */}
         {selectedCategory === "" ? (
           <div>
+            <h1 className="flex text-pblue justify-center font-daysone text-4xl mb-3">
+              Rankings
+            </h1>
             <div className="flex justify-center items-center p-40">
               <div className="relative w-60">
                 <select
-                  className="w-auto sm:w-full h-16 rounded-lg px-4 py-3 text-lg text-white bg-pblue appearance-none pr-10" // Agrega pr-10 para espacio en el lado derecho
+                  className="w-auto sm:w-full h-16 rounded-lg px-4 py-3 text-lg text-white bg-pblue appearance-none pr-10"
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  onChange={(e) => handleCategoryChange(e.target.value)} // Llama a la función con la demora
                 >
-                  <option className="text-center" value="" disabled>Elegí una Categoría</option>
+                  <option className="text-center" value="" disabled>
+                    Elegí una Categoría
+                  </option>
                   {categories.map((category, index) => (
                     <option key={index} value={category}>
                       {category}
                     </option>
                   ))}
                 </select>
-                {/* Flecha personalizada a la derecha */}
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"> {/* Cambia pr-3 a pr-2 para menos separación */}
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                   <svg
                     className="w-5 h-5 text-white"
                     fill="currentColor"
@@ -106,7 +121,6 @@ const TablaDeRankings = () => {
               </div>
             </div>
           </div>
-
         ) : (
           <div className="relative overflow-x-auto w-full items-center">
             <h1 className="flex text-pblue justify-center font-daysone text-4xl mb-3">
@@ -130,7 +144,7 @@ const TablaDeRankings = () => {
                 <select
                   className="border border-pgrey w-52 rounded-lg px-3 text-center text-pgrey"
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  onChange={(e) => handleCategoryChange(e.target.value)} // Manejo de cambio de categoría con delay
                 >
                   {categories.map((category, index) => (
                     <option key={index} value={category}>
@@ -155,21 +169,12 @@ const TablaDeRankings = () => {
                 {isCategoryListVisible && (
                   <div className="absolute right-0 top-full mt-2 w-52 border border-pgrey rounded-lg bg-white z-10 shadow-lg">
                     <div className="flex flex-col">
-                      <button
-                        className="p-2 text-left hover:bg-gray-200"
-                        onClick={() => {
-                          setSelectedCategory("Todas");
-                          setIsCategoryListVisible(false);
-                        }}
-                      >
-                        Todas las Categorías
-                      </button>
                       {categories.map((category, index) => (
                         <button
                           key={index}
                           className="p-2 text-left hover:bg-gray-200"
                           onClick={() => {
-                            setSelectedCategory(category);
+                            handleCategoryChange(category); // Manejo de cambio de categoría con delay
                             setIsCategoryListVisible(false);
                           }}
                         >
@@ -202,16 +207,11 @@ const TablaDeRankings = () => {
                     filteredRankings.map((row, index) => (
                       <tr
                         key={index}
-                        className="bg-white border-b text-pgrey hover:bg-gray-100 cursor-pointer"
-                        onClick={() =>
-                          (window.location.href = `/perfil/${row.ID}`)
-                        }
+                        className="hover:bg-gray-100 cursor-pointer"
                       >
-                        <td className="px-4 py-2 text-black">{row.ranking}°</td>
-                        <td className="px-4 py-2">{row.ID}</td>
-                        <td className="px-4 py-2 text-center text-black">
-                          {row.nombre}
-                        </td>
+                        <td className="px-4 py-2 text-left">{row.ranking}</td>
+                        <td className="px-4 py-2 text-left">{row.ID}</td>
+                        <td className="px-4 py-2 text-center">{row.nombre}</td>
                         <td className="px-4 py-2 text-right">
                           {row.categoria}
                         </td>
@@ -221,7 +221,7 @@ const TablaDeRankings = () => {
                   ) : (
                     <tr>
                       <td colSpan="5" className="px-4 py-2 text-center">
-                        No hay resultados
+                        No se encontraron rankings para esta categoría
                       </td>
                     </tr>
                   )}
