@@ -13,7 +13,6 @@ const TablaDeRankings = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       try {
         const querySnapshot = await getDocs(collection(db, "jugadores"));
         const data = querySnapshot.docs.map((doc) => doc.data());
