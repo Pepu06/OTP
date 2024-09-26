@@ -77,7 +77,7 @@ const TablaDeRankings = () => {
             <div className="flex justify-center items-center p-40">
               <div className="relative w-60">
                 <select
-                  className="w-full h-16 rounded-lg px-4 py-3 text-lg text-white bg-pblue appearance-none pr-10" // Agrega pr-10 para espacio en el lado derecho
+                  className="w-auto sm:w-full h-16 rounded-lg px-4 py-3 text-lg text-white bg-pblue appearance-none pr-10" // Agrega pr-10 para espacio en el lado derecho
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                 >
