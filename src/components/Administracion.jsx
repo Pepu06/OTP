@@ -42,10 +42,10 @@ const Administracion = () => {
     partidos: [
       "IDTorneo",
       "Instancia",
-      "Equipo1",
-      "Games1",
-      "Games2",
-      "Equipo2",
+      "Pareja 1",
+      "Games P1",
+      "Games P2",
+      "Pareja 2",
       "Cancha",
     ],
     jugadores: ["Nombre", "Categoria", "Puntos"],
@@ -122,11 +122,11 @@ const Administracion = () => {
     Club: "",
     IDTorneo: "",
     Instancia: "",
-    Games1: "",
-    Games2: "",
+    GamesP1: "",
+    GamesP2: "",
     Resultado: "",
-    Equipo1: "",
-    Equipo2: "",
+    Pareja1: "",
+    Pareja2: "",
     Ranking: "",
   });
 
@@ -176,10 +176,10 @@ const Administracion = () => {
         partidos: [
           "IDTorneo",
           "Instancia",
-          "Equipo1",
-          "Games1",
-          "Games2",
-          "Equipo2",
+          "Pareja 1",
+          "Games P1",
+          "Games P2",
+          "Pareja 2",
           "Cancha",
         ],
         jugadores: ["Nombre", "Categoria", "Puntos"],
@@ -259,11 +259,11 @@ const Administracion = () => {
         Club: "",
         IDTorneo: "",
         Instancia: "",
-        Games1: "",
-        Games2: "",
+        GamesP1: "",
+        GamesP2: "",
         Resultado: "",
-        Equipo1: "",
-        Equipo2: "",
+        Pareja1: "",
+        Pareja2: "",
         Ranking: "",
       });
 
@@ -431,6 +431,7 @@ const Administracion = () => {
         setPartidos(
           partidosData.filter((partido) => partido.IDTorneo !== rowId)
         );
+
         // Verificar si existen jugadores asociados a los partidos eliminados
         const jugadoresRef = collection(db, "jugadores");
         const jugadoresSnapshot = await getDocs(jugadoresRef);
@@ -442,18 +443,20 @@ const Administracion = () => {
         // Obtener jugadores de los partidos eliminados
         const jugadoresEnPartidosEliminados = partidosData.flatMap(
           (partido) => {
-            const equipo1Jugadores = partido.Equipo1.split("-");
-            const equipo2Jugadores = partido.Equipo2.split("-");
-            return [...equipo1Jugadores, ...equipo2Jugadores];
+            const Pareja1Jugadores = partido.Pareja1
+              ? partido.Pareja1.split("-").map((jugador) => jugador.trim())
+              : [];
+            const Pareja2Jugadores = partido.Pareja2
+              ? partido.Pareja2.split("-").map((jugador) => jugador.trim())
+              : [];
+            return [...Pareja1Jugadores, ...Pareja2Jugadores];
           }
         );
 
         // Filtrar los jugadores que existen en la base de datos
         const jugadoresExistentes = jugadoresEnPartidosEliminados.filter(
           (jugador) =>
-            jugadoresData.some(
-              (jugadorDoc) => jugadorDoc.Nombre === jugador.trim()
-            )
+            jugadoresData.some((jugadorDoc) => jugadorDoc.Nombre === jugador)
         );
 
         // Si hay jugadores relacionados, actualizarlos
@@ -538,21 +541,37 @@ const Administracion = () => {
         if (sheetName === "partidos") {
           const partidosRef = collection(db, "partidos");
 
-          // Crear cada partido con un nuevo ID
           for (const record of jsonData) {
             const partidosSnapshot = await getDocs(partidosRef);
             const partidosData = partidosSnapshot.docs.map((doc) => doc.data());
             let nextPartidoId = getNextId(partidosData);
 
+            const cleanField = (field) => {
+              const parejaIndex = field.indexOf("Pareja");
+              const gamesIndex = field.indexOf("Games");
+              if (parejaIndex !== -1 && parejaIndex + 6 < field.length) {
+              return field.slice(0, parejaIndex + 6) + field.slice(parejaIndex + 7);
+              }
+              if (gamesIndex !== -1 && gamesIndex + 5 < field.length) {
+              return field.slice(0, gamesIndex + 5) + field.slice(gamesIndex + 6);
+              }
+              return field;
+            };
+
+            const cleanedRecord = Object.keys(record).reduce((acc, key) => {
+              acc[cleanField(key)] = record[key];
+              return acc;
+            }, {});
+
             const newPartido = {
               ID: nextPartidoId.toString(),
               IDTorneo: torneoId,
-              Equipo1: record.Equipo1,
-              Equipo2: record.Equipo2,
-              Games1: record.Games1 || 0,
-              Games2: record.Games2 || 0,
-              Instancia: record.Instancia,
-              Cancha: record.Cancha || "-",
+              Pareja1: cleanedRecord.Pareja1,
+              Pareja2: cleanedRecord.Pareja2,
+              GamesP1: cleanedRecord.GamesP1 || 0,
+              GamesP2: cleanedRecord.GamesP2 || 0,
+              Instancia: cleanedRecord.Instancia,
+              Cancha: cleanedRecord.Cancha || "-",
             };
 
             await setDoc(
@@ -561,11 +580,21 @@ const Administracion = () => {
             );
             console.log("Partido creado con éxito:", newPartido);
             nextPartidoId = (parseInt(nextPartidoId, 10) + 1).toString();
+
+            // Si la instancia es "Final", detener la lectura
+            if (record.Instancia === "Final") {
+              console.log(
+                "Instancia Final encontrada. Deteniendo la lectura del archivo."
+              );
+              break; // Detener el bucle si se encuentra la instancia "Final"
+            }
           }
 
           console.log("Todos los partidos procesados con éxito.");
         }
       }
+
+      // El resto de tu código permanece igual...
       for (const sheetName of workbook.SheetNames) {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
@@ -584,7 +613,10 @@ const Administracion = () => {
           const processedPlayers = new Set();
 
           const addPlayerPromises = jsonData.flatMap((record) => {
-            const equipos = [record.Equipo1, record.Equipo2].map(equipo => equipo.replace(/\s+y\s+/g, '-'));
+            const equipos = [record.Pareja1, record.Pareja2].map((equipo) =>
+              equipo ? equipo.replace(/\s+y\s+/g, "-") : ""
+            );
+
             return equipos.flatMap((equipo) => {
               const jugadores = equipo
                 .split(/[-]/)
@@ -776,11 +808,11 @@ const Administracion = () => {
     const partidosSnapshot = await getDocs(partidosRef);
     const partidos = partidosSnapshot.docs.map((doc) => ({
       id: doc.id,
-      equipos: [doc.data().Equipo1, doc.data().Equipo2],
+      equipos: [doc.data().Pareja1, doc.data().Pareja2],
       idTorneo: doc.data().IDTorneo,
       instancia: doc.data().Instancia,
-      games1: doc.data().Games1,
-      games2: doc.data().Games2,
+      GamesP1: doc.data().GamesP1,
+      GamesP2: doc.data().GamesP2,
     }));
 
     // Obtener todos los torneos para asociar las fechas y nombres
@@ -833,8 +865,8 @@ const Administracion = () => {
         idTorneo,
         instancia,
         equipos,
-        games1,
-        games2,
+        GamesP1,
+        GamesP2,
       } = partido;
       const torneoNombre = torneosMap.get(idTorneo);
       const torneoFecha = torneosFechasMap.get(idTorneo);
@@ -871,7 +903,7 @@ const Administracion = () => {
               if (
                 !jugadoresDatos[jugador.id].ultimoTorneoFecha ||
                 torneoActualFecha >
-                new Date(jugadoresDatos[jugador.id].ultimoTorneoFecha)
+                  new Date(jugadoresDatos[jugador.id].ultimoTorneoFecha)
               ) {
                 jugadoresDatos[jugador.id].ultimoTorneoFecha = torneoFecha;
                 // Limpiar el último partido dentro del torneo
@@ -892,14 +924,14 @@ const Administracion = () => {
                 calcularPuntosPorInstancia(instancia)
               );
               if (equipo === equipos[0]) {
-                // Si el jugador está en Equipo1
-                if (games1 > games2) {
+                // Si el jugador está en Pareja1
+                if (GamesP1 > GamesP2) {
                   jugadoresDatos[jugador.id].partidosGanados++;
                   jugadoresDatos[jugador.id].puntos += puntosPorPartido;
                 }
               } else {
-                // Si el jugador está en Equipo2
-                if (games2 > games1) {
+                // Si el jugador está en Pareja2
+                if (GamesP2 > GamesP1) {
                   jugadoresDatos[jugador.id].partidosGanados++;
                   jugadoresDatos[jugador.id].puntos += puntosPorPartido;
                 }
@@ -931,14 +963,14 @@ const Administracion = () => {
         let pareja = null;
         if (ultimoPartido) {
           const { equipos, instancia } = ultimoPartido;
-          const [equipo1, equipo2] = equipos;
+          const [Pareja1, Pareja2] = equipos;
 
           if (
-            equipo1.includes(jugadores.find((j) => j.id === jugadorId).nombre)
+            Pareja1.includes(jugadores.find((j) => j.id === jugadorId).nombre)
           ) {
-            pareja = equipo1;
+            pareja = Pareja1;
           } else {
-            pareja = equipo2;
+            pareja = Pareja2;
           }
 
           datos.parejaUltimoTorneo = pareja;
@@ -997,10 +1029,10 @@ const Administracion = () => {
       partidos: [
         "IDTorneo",
         "Instancia",
-        "Equipo1",
-        "Games1",
-        "Games2",
-        "Equipo2",
+        "Pareja 1",
+        "Games P1",
+        "Games P2",
+        "Pareja 2",
         "Cancha",
       ],
       jugadores: [
@@ -1065,7 +1097,7 @@ const Administracion = () => {
                 value={
                   newRowData[column] ||
                   (tableName === "jugadores" &&
-                    !["Nombre", "Categoria"].includes(column)
+                  !["Nombre", "Categoria"].includes(column)
                     ? ""
                     : "")
                 }
@@ -1112,10 +1144,10 @@ const Administracion = () => {
         "ID",
         "IDTorneo",
         "Instancia",
-        "Equipo1",
-        "Games1",
-        "Games2",
-        "Equipo2",
+        "Pareja 1",
+        "Games P1",
+        "Games P2",
+        "Pareja 2",
         "Cancha",
       ],
       jugadores: [
@@ -1163,24 +1195,24 @@ const Administracion = () => {
               tableName === "torneos"
                 ? "Buscar por ID/Nombre"
                 : tableName === "partidos"
-                  ? "Buscar por IDTorneo"
-                  : "Buscar por ID/Nombre"
+                ? "Buscar por IDTorneo"
+                : "Buscar por ID/Nombre"
             }
             value={
               tableName === "torneos"
                 ? searchTermTorneos
                 : tableName === "partidos"
-                  ? searchTermPartidos
-                  : tableName === "historicoTorneos"
-                    ? searchTermHistoricoTorneos
-                    : searchTermJugadores
+                ? searchTermPartidos
+                : tableName === "historicoTorneos"
+                ? searchTermHistoricoTorneos
+                : searchTermJugadores
             }
             onChange={(e) => handleSearchChange(e, tableName)}
             onClick={(e) => (e.target.placeholder = "")}
             onBlur={(e) =>
-            (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
-              tableName
-            )}`)
+              (e.target.placeholder = `Buscar ${capitalizeFirstLetter(
+                tableName
+              )}`)
             }
           />
         </div>
@@ -1206,8 +1238,8 @@ const Administracion = () => {
                     {columns.map((column, i) => (
                       <td key={i} className="px-5 py-4">
                         {editingRow &&
-                          editingRow.tableName === tableName &&
-                          editingRow.rowId === row.ID ? (
+                        editingRow.tableName === tableName &&
+                        editingRow.rowId === row.ID ? (
                           <input
                             className="border-2 border-pgreen rounded-sm max-w-24"
                             type="text"
@@ -1229,8 +1261,8 @@ const Administracion = () => {
                     ))}
                     <td className="px-5 text-center py-4">
                       {editingRow &&
-                        editingRow.tableName === tableName &&
-                        editingRow.rowId === row.ID ? (
+                      editingRow.tableName === tableName &&
+                      editingRow.rowId === row.ID ? (
                         <>
                           <button
                             className="text-green-600 hover:text-green-800"
