@@ -42,10 +42,10 @@ const Administracion = () => {
     partidos: [
       "IDTorneo",
       "Instancia",
-      "Pareja 1",
-      "Games P1",
-      "Games P2",
-      "Pareja 2",
+      "Pareja1",
+      "GamesP1",
+      "GamesP2",
+      "Pareja2",
       "Cancha",
     ],
     jugadores: ["Nombre", "Categoria", "Puntos"],
@@ -176,10 +176,10 @@ const Administracion = () => {
         partidos: [
           "IDTorneo",
           "Instancia",
-          "Pareja 1",
-          "Games P1",
-          "Games P2",
-          "Pareja 2",
+          "Pareja1",
+          "GamesP1",
+          "GamesP2",
+          "Pareja2",
           "Cancha",
         ],
         jugadores: ["Nombre", "Categoria", "Puntos"],
@@ -537,8 +537,8 @@ const Administracion = () => {
       for (const sheetName of workbook.SheetNames) {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
-
-        if (sheetName.toLowerCase().includes("esquema")) {
+        
+        if (sheetName.toLowerCase().includes("partidos")) {
           const partidosRef = collection(db, "partidos");
 
           for (const record of jsonData) {
@@ -993,30 +993,6 @@ const Administracion = () => {
           Puntos: datos.puntos, // Actualizar puntos con base en partidos ganados y el tipo de instancia
           Efectividad: efectividad, // Agregar efectividad al documento
         });
-
-        // Mostrar en consola
-        // console.log(
-        //   `Jugador ID: ${jugadorId}\n` +
-        //   `IDs de torneos: ${Array.from(datos.torneos.keys()).join(", ")}\n` +
-        //   `Nombres de torneos: ${Array.from(datos.torneos.values()).join(", ")}\n` +
-        //   `Total únicos: ${uniqueTorneosCount}\n` +
-        //   `IDs de partidos: ${Array.from(datos.partidos).join(", ")}\n` +
-        //   `Total partidos únicos: ${uniquePartidosCount}\n` +
-        //   `Instancias de partidos: ${Array.from(datos.instancias.entries())
-        //     .map(([partidoId, instancia]) => `${partidoId}: ${instancia}`)
-        //     .join(", ")}\n` +
-        //   `Finales: ${datos.conteoInstancias.Final}\n` +
-        //   `Semis: ${datos.conteoInstancias.Semifinal}\n` +
-        //   `Cuartos: ${datos.conteoInstancias.Cuartos}\n` +
-        //   `Octavos: ${datos.conteoInstancias.Octavos}\n` +
-        //   `Dieciseisavos: ${datos.conteoInstancias.Dieciseisavos}\n` +
-        //   `Qually: ${datos.conteoInstancias.Qually}\n` +
-        //   `Pareja del último torneo: ${datos.parejaUltimoTorneo}\n` +
-        //   `Instancia del último torneo: ${datos.instanciaUltimoTorneo}\n` +
-        //   `Partidos ganados: ${datos.partidosGanados}\n` +
-        //   `Puntos actualizados: ${datos.puntos}\n` +
-        //   `Efectividad: ${efectividad.toFixed(2)}%`
-        // );
       }
     );
 
@@ -1029,10 +1005,10 @@ const Administracion = () => {
       partidos: [
         "IDTorneo",
         "Instancia",
-        "Pareja 1",
-        "Games P1",
-        "Games P2",
-        "Pareja 2",
+        "Pareja1",
+        "GamesP1",
+        "GamesP2",
+        "Pareja2",
         "Cancha",
       ],
       jugadores: [
@@ -1144,10 +1120,10 @@ const Administracion = () => {
         "ID",
         "IDTorneo",
         "Instancia",
-        "Pareja 1",
-        "Games P1",
-        "Games P2",
-        "Pareja 2",
+        "Pareja1",
+        "GamesP1",
+        "GamesP2",
+        "Pareja2",
         "Cancha",
       ],
       jugadores: [
