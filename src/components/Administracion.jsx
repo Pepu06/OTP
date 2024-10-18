@@ -538,7 +538,7 @@ const Administracion = () => {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        if (sheetName === "partidos") {
+        if (sheetName.toLowerCase().includes("esquema")) {
           const partidosRef = collection(db, "partidos");
 
           for (const record of jsonData) {
