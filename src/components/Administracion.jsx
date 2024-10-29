@@ -500,226 +500,216 @@ const Administracion = () => {
 
     const reader = new FileReader();
     reader.onload = async (event) => {
-      const data = new Uint8Array(event.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
+      try {
+        const data = new Uint8Array(event.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
 
-      console.log("Nombres de las hojas en el archivo:", workbook.SheetNames);
+        console.log("Nombres de las hojas en el archivo:", workbook.SheetNames);
 
-      const fileName = file.name.split(".")[0];
-      const { date, category } = extractCategoryAndDateFromFileName(fileName);
+        const fileName = file.name.split(".")[0];
+        const { date, category } = extractCategoryAndDateFromFileName(fileName);
 
-      const torneosRef = collection(db, "torneos");
-      const q = query(torneosRef, where("Nombre", "==", fileName));
-      const snapshot = await getDocs(q);
+        const torneosRef = collection(db, "torneos");
+        const q = query(torneosRef, where("Nombre", "==", fileName));
+        const snapshot = await getDocs(q);
 
-      let torneoId;
+        let torneoId;
 
-      if (snapshot.empty) {
-        const torneosSnapshot = await getDocs(torneosRef);
-        const torneosData = torneosSnapshot.docs.map((doc) => doc.data());
-        const newId = getNextId(torneosData);
+        if (snapshot.empty) {
+          const torneosSnapshot = await getDocs(torneosRef);
+          const torneosData = torneosSnapshot.docs.map((doc) => doc.data());
+          const newId = getNextId(torneosData);
 
-        const newTorneo = {
-          ID: newId,
-          Nombre: fileName,
-          Club: "-",
-          Fecha: date,
-          Categoria: category,
-        };
+          const newTorneo = {
+            ID: newId,
+            Nombre: fileName,
+            Club: "-",
+            Fecha: date,
+            Categoria: category,
+          };
 
-        await setDoc(doc(torneosRef, newId), newTorneo);
-        console.log("Torneo creado con éxito:", newTorneo);
-        torneoId = newId;
-      } else {
-        torneoId = snapshot.docs[0].id;
-      }
-
-      for (const sheetName of workbook.SheetNames) {
-        const worksheet = workbook.Sheets[sheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-        
-        if (sheetName.toLowerCase().includes("partidos")) {
-          const partidosRef = collection(db, "partidos");
-
-          for (const record of jsonData) {
-            const partidosSnapshot = await getDocs(partidosRef);
-            const partidosData = partidosSnapshot.docs.map((doc) => doc.data());
-            let nextPartidoId = getNextId(partidosData);
-
-            const cleanField = (field) => {
-              const parejaIndex = field.indexOf("Pareja");
-              const gamesIndex = field.indexOf("Games");
-              if (parejaIndex !== -1 && parejaIndex + 6 < field.length) {
-              return field.slice(0, parejaIndex + 6) + field.slice(parejaIndex + 7);
-              }
-              if (gamesIndex !== -1 && gamesIndex + 5 < field.length) {
-              return field.slice(0, gamesIndex + 5) + field.slice(gamesIndex + 6);
-              }
-              return field;
-            };
-
-            const cleanedRecord = Object.keys(record).reduce((acc, key) => {
-              acc[cleanField(key)] = record[key];
-              return acc;
-            }, {});
-
-            const newPartido = {
-              ID: nextPartidoId.toString(),
-              IDTorneo: torneoId,
-              Pareja1: cleanedRecord.Pareja1,
-              Pareja2: cleanedRecord.Pareja2,
-              GamesP1: cleanedRecord.GamesP1 || 0,
-              GamesP2: cleanedRecord.GamesP2 || 0,
-              Instancia: cleanedRecord.Instancia,
-              Cancha: cleanedRecord.Cancha || "-",
-            };
-
-            await setDoc(
-              doc(partidosRef, nextPartidoId.toString()),
-              newPartido
-            );
-            console.log("Partido creado con éxito:", newPartido);
-            nextPartidoId = (parseInt(nextPartidoId, 10) + 1).toString();
-
-            // Si la instancia es "Final", detener la lectura
-            if (record.Instancia === "Final") {
-              console.log(
-                "Instancia Final encontrada. Deteniendo la lectura del archivo."
-              );
-              break; // Detener el bucle si se encuentra la instancia "Final"
-            }
-          }
-
-          console.log("Todos los partidos procesados con éxito.");
+          await setDoc(doc(torneosRef, newId), newTorneo);
+          console.log("Torneo creado con éxito:", newTorneo);
+          torneoId = newId;
+        } else {
+          torneoId = snapshot.docs[0].id;
         }
-      }
 
-      // El resto de tu código permanece igual...
-      for (const sheetName of workbook.SheetNames) {
-        const worksheet = workbook.Sheets[sheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+        for (const sheetName of workbook.SheetNames) {
+          const worksheet = workbook.Sheets[sheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-        if (sheetName === "partidos") {
-          const jugadoresRef = collection(db, "jugadores");
-          const historicoTorneosRef = collection(db, "historicoTorneos");
-          const jugadoresSnapshot = await getDocs(jugadoresRef);
-          const jugadoresData = jugadoresSnapshot.docs.map((doc) => doc.data());
-          let nextPlayerId = getNextId(jugadoresData);
-          const historicoSnapshot = await getDocs(historicoTorneosRef);
-          const historicoTorneosData = historicoSnapshot.docs.map((doc) =>
-            doc.data()
-          );
-          let nextHistoricoTorneoId = getNextId(historicoTorneosData);
-          const processedPlayers = new Set();
+          if (sheetName.toLowerCase().includes("partidos")) {
+            const partidosRef = collection(db, "partidos");
+            const jugadoresRef = collection(db, "jugadores");
+            const historicoTorneosRef = collection(db, "historicoTorneos");
 
-          const addPlayerPromises = jsonData.flatMap((record) => {
-            const equipos = [record.Pareja1, record.Pareja2].map((equipo) =>
-              equipo ? equipo.replace(/\s+y\s+/g, "-") : ""
-            );
+            for (const record of jsonData) {
+              const partidosSnapshot = await getDocs(partidosRef);
+              const partidosData = partidosSnapshot.docs.map((doc) =>
+                doc.data()
+              );
+              let nextPartidoId = getNextId(partidosData);
 
-            return equipos.flatMap((equipo) => {
-              const jugadores = equipo
-                .split(/[-]/)
-                .map((jugador) => jugador.trim());
-
-              return jugadores.map(async (jugador, index) => {
-                if (processedPlayers.has(jugador)) {
-                  return;
+              const cleanField = (field) => {
+                const parejaIndex = field.indexOf("Pareja");
+                const gamesIndex = field.indexOf("Games");
+                if (parejaIndex !== -1 && parejaIndex + 6 < field.length) {
+                  return (
+                    field.slice(0, parejaIndex + 6) +
+                    field.slice(parejaIndex + 7)
+                  );
                 }
+                if (gamesIndex !== -1 && gamesIndex + 5 < field.length) {
+                  return (
+                    field.slice(0, gamesIndex + 5) + field.slice(gamesIndex + 6)
+                  );
+                }
+                return field;
+              };
 
-                processedPlayers.add(jugador);
+              const cleanedRecord = Object.keys(record).reduce((acc, key) => {
+                acc[cleanField(key)] = record[key];
+                return acc;
+              }, {});
 
-                const jugadorQuery = query(
+              const newPartido = {
+                ID: nextPartidoId.toString(),
+                IDTorneo: torneoId,
+                Pareja1: cleanedRecord.Pareja1,
+                Pareja2: cleanedRecord.Pareja2,
+                GamesP1: cleanedRecord.GamesP1 || 0,
+                GamesP2: cleanedRecord.GamesP2 || 0,
+                Instancia: cleanedRecord.Instancia,
+                Cancha: cleanedRecord.Cancha || "-",
+              };
+              await setDoc(
+                doc(partidosRef, nextPartidoId.toString()),
+                newPartido
+              );
+              console.log("Partido creado con éxito:", newPartido);
+
+              // Process players for this match
+              const allPlayers = [
+                ...newPartido.Pareja1.split("-"),
+                ...newPartido.Pareja2.split("-"),
+              ].map((name) => name.trim());
+
+              for (const playerName of allPlayers) {
+                // Check if player exists
+                const playerQuery = query(
                   jugadoresRef,
-                  where("Nombre", "==", jugador)
+                  where("Nombre", "==", playerName)
                 );
-                const jugadorSnapshot = await getDocs(jugadorQuery);
-                let jugadorId;
+                const playerSnapshot = await getDocs(playerQuery);
 
-                if (!jugadorSnapshot.empty) {
-                  jugadorId = jugadorSnapshot.docs[0].id;
-                } else {
-                  jugadorId = nextPlayerId.toString();
-                  nextPlayerId = (parseInt(nextPlayerId, 10) + 1).toString();
+                let playerId;
+                if (playerSnapshot.empty) {
+                  // Create new player
+                  const jugadoresSnapshot = await getDocs(jugadoresRef);
+                  const jugadoresData = jugadoresSnapshot.docs.map((doc) =>
+                    doc.data()
+                  );
+                  playerId = getNextId(jugadoresData);
 
-                  const newJugador = {
-                    ID: jugadorId,
-                    Nombre: jugador,
+                  const newPlayer = {
+                    ID: playerId,
+                    Nombre: playerName,
                     Categoria: category,
-                    CJ: "-",
-                    Cuartos: "-",
-                    Efectividad: "-",
-                    Ranking: 0,
-                    Finales: "-",
-                    PG: "-",
-                    PJ: "-",
-                    Puntos: 0,
-                    Semis: "-",
+                    CJ: "1",
+                    Cuartos: "0",
+                    Efectividad: "0",
+                    Ranking: "0",
+                    Finales: "0",
+                    PG: "0",
+                    PJ: "1",
+                    Puntos: "0",
+                    Semis: "0",
                     UP: "-",
                     UR: "-",
                   };
 
-                  await setDoc(doc(jugadoresRef, jugadorId), newJugador);
-                  console.log("Jugador creado con éxito:", newJugador);
+                  await setDoc(doc(jugadoresRef, playerId), newPlayer);
+                  console.log("Jugador creado con éxito:", newPlayer);
+                } else {
+                  playerId = playerSnapshot.docs[0].id;
+                  // Update existing player
+                  const playerData = playerSnapshot.docs[0].data();
+                  await updateDoc(doc(jugadoresRef, playerId), {
+                    CJ: (parseInt(playerData.CJ) + 1).toString(),
+                    PJ: (parseInt(playerData.PJ) + 1).toString(),
+                  });
                 }
 
-                // Verificar si el histórico ya existe
+                // Add or update tournament history
                 const historicoQuery = query(
                   historicoTorneosRef,
-                  where("IDJugador", "==", jugadorId),
+                  where("IDJugador", "==", playerId),
                   where("Nombre", "==", fileName)
                 );
                 const historicoSnapshot = await getDocs(historicoQuery);
 
                 if (historicoSnapshot.empty) {
-                  nextHistoricoTorneoId = (
-                    parseInt(nextHistoricoTorneoId, 10) + 1
-                  ).toString();
-                  const pareja =
-                    jugadores.length > 1
-                      ? jugadores[(index + 1) % jugadores.length]
-                      : "-";
+                  const historicoSnapshot = await getDocs(historicoTorneosRef);
+                  const historicoData = historicoSnapshot.docs.map((doc) =>
+                    doc.data()
+                  );
+                  const historicoId = getNextId(historicoData);
 
-                  const nuevoHistoricoTorneo = {
-                    ID: nextHistoricoTorneoId,
-                    IDJugador: jugadorId,
+                  const newHistorico = {
+                    ID: historicoId,
+                    IDJugador: playerId,
                     Nombre: fileName,
                     Fecha: date,
-                    Pareja: pareja,
+                    Pareja: allPlayers.find((p) => p !== playerName) || "-",
                     Categoria: category,
                   };
+
                   await setDoc(
-                    doc(historicoTorneosRef, nextHistoricoTorneoId.toString()),
-                    nuevoHistoricoTorneo
+                    doc(historicoTorneosRef, historicoId),
+                    newHistorico
                   );
                   console.log(
                     "Historial del torneo creado con éxito:",
-                    nuevoHistoricoTorneo
-                  );
-                } else {
-                  console.log(
-                    "Historial del torneo ya existente para el jugador:",
-                    jugador
+                    newHistorico
                   );
                 }
-              });
-            });
-          });
+              }
 
-          await Promise.all(addPlayerPromises);
-          console.log(
-            "Todos los jugadores y sus historiales de torneos procesados con éxito."
-          );
+              nextPartidoId = (parseInt(nextPartidoId, 10) + 1).toString();
+
+              // If the instancia includes "Final", stop reading if the next is undefined or has no instancia
+              if (record.Instancia.includes("Final")) {
+                const nextRecord = jsonData[jsonData.indexOf(record) + 1];
+                console.log("nextRecord:", nextRecord);
+                if (!nextRecord || nextRecord.Instancia === undefined) {
+                  console.log(
+                    "Instancia Final encontrada y el próximo registro no tiene instancia Final. Deteniendo la lectura del archivo."
+                  );
+                  break;
+                }
+              }
+            }
+
+            console.log("Todos los partidos procesados con éxito.");
+          }
         }
+
+        await actualizarJugadores();
+        await calcularRankingPorCategoria();
+
+        await fetchData();
+        setLoading(false);
+        setLoadingMessage("Archivo procesado y datos actualizados en Firebase");
+        setTimeout(() => setLoadingMessage(""), 3000);
+      } catch (error) {
+        console.error("Error al procesar el archivo:", error);
+        setLoading(false);
+        setLoadingMessage(
+          "Error al procesar el archivo. Por favor, inténtelo de nuevo."
+        );
+        setTimeout(() => setLoadingMessage(""), 3000);
       }
-
-      await actualizarJugadores();
-      await calcularRankingPorCategoria();
-
-      await fetchData();
-      setLoading(false);
-      setLoadingMessage("Archivo procesado y datos actualizados en Firebase");
-      setTimeout(() => setLoadingMessage(""), 3000);
     };
     reader.readAsArrayBuffer(file);
   };
@@ -815,6 +805,7 @@ const Administracion = () => {
       GamesP2: doc.data().GamesP2,
     }));
 
+    console.log("Partidos:", partidos);
     // Obtener todos los torneos para asociar las fechas y nombres
     const torneosSnapshot = await getDocs(torneosRef);
     const torneosMap = new Map(
@@ -941,62 +932,6 @@ const Administracion = () => {
         });
       });
     });
-
-    // Obtener los datos de los partidos para encontrar la pareja y la instancia
-    const partidosMap = new Map(partidos.map((p) => [p.id, p]));
-
-    // Actualizar la colección de jugadores con los datos
-    const updatePromises = Object.entries(jugadoresDatos).map(
-      async ([jugadorId, datos]) => {
-        const uniqueTorneosCount = datos.torneos.size; // Contar torneos únicos
-        const uniquePartidosCount = datos.partidos.size; // Contar partidos únicos
-
-        // Calcular efectividad
-        const totalPartidosJugados = uniquePartidosCount;
-        const efectividad =
-          totalPartidosJugados > 0
-            ? (datos.partidosGanados / totalPartidosJugados) * 100
-            : 0;
-
-        // Obtener el último partido y su información
-        const ultimoPartido = partidosMap.get(datos.ultimoPartidoId);
-        let pareja = null;
-        if (ultimoPartido) {
-          const { equipos, instancia } = ultimoPartido;
-          const [Pareja1, Pareja2] = equipos;
-
-          if (
-            Pareja1.includes(jugadores.find((j) => j.id === jugadorId).nombre)
-          ) {
-            pareja = Pareja1;
-          } else {
-            pareja = Pareja2;
-          }
-
-          datos.parejaUltimoTorneo = pareja;
-          datos.instanciaUltimoTorneo = instancia;
-        }
-
-        // Actualizar el documento del jugador
-        await updateDoc(doc(jugadoresRef, jugadorId), {
-          CJ: uniqueTorneosCount,
-          PJ: uniquePartidosCount,
-          Finales: datos.conteoInstancias.Final,
-          Semis: datos.conteoInstancias.Semifinal,
-          Cuartos: datos.conteoInstancias.Cuartos,
-          Octavos: datos.conteoInstancias.Octavos,
-          Dieciseisavos: datos.conteoInstancias.Dieciseisavos,
-          Qually: datos.conteoInstancias.Qually,
-          UP: datos.parejaUltimoTorneo,
-          UR: datos.instanciaUltimoTorneo,
-          PG: datos.partidosGanados,
-          Puntos: datos.puntos, // Actualizar puntos con base en partidos ganados y el tipo de instancia
-          Efectividad: efectividad, // Agregar efectividad al documento
-        });
-      }
-    );
-
-    await Promise.all(updatePromises);
   };
 
   const renderForm = (tableName) => {
