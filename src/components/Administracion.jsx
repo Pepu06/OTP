@@ -11,6 +11,8 @@ import {
 } from "firebase/firestore";
 import * as XLSX from "xlsx";
 import { db } from "../firebase/config";
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Administracion = () => {
   const [torneos, setTorneos] = useState([]);
@@ -54,6 +56,31 @@ const Administracion = () => {
 
   const [editingRow, setEditingRow] = useState(null);
   const [addingRow, setAddingRow] = useState(null);
+
+  const notify = ({ message }) =>
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  const notifyError = ({ message }) =>
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
 
   useEffect(() => {
     const loadInitialData = async () => {
@@ -316,6 +343,7 @@ const Administracion = () => {
       setHistoricoTorneos(historicoTorneosData);
     } catch (error) {
       console.error("Error al cargar los datos:", error);
+      notifyError({ message: "Error al cargar los datos." });
     } finally {
       setLoading(false);
       setLoadingMessage("");
@@ -476,11 +504,17 @@ const Administracion = () => {
 
       await fetchData();
 
-      setLoading(false);
       setLoadingMessage("Datos eliminados con éxito.");
+      setLoading(false);
+      notify({ message: "Datos eliminados con éxito." });
       setTimeout(() => setLoadingMessage(""), 3000);
     } catch (error) {
       console.error("Error al eliminar:", error);
+      setLoadingMessage(
+        "Error al eliminar los datos. Por favor, inténtelo de nuevo."
+      );
+      setLoading(false);
+      notifyError({ message: "Error al eliminar los datos." });
     }
   };
 
@@ -533,11 +567,14 @@ const Administracion = () => {
           torneoId = snapshot.docs[0].id;
         }
 
+        let partidosSheetFound = false;
+
         for (const sheetName of workbook.SheetNames) {
           const worksheet = workbook.Sheets[sheetName];
           const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
           if (sheetName.toLowerCase().includes("partidos")) {
+            partidosSheetFound = true;
             const partidosRef = collection(db, "partidos");
             const jugadoresRef = collection(db, "jugadores");
             const historicoTorneosRef = collection(db, "historicoTorneos");
@@ -685,19 +722,25 @@ const Administracion = () => {
           }
         }
 
+        if (!partidosSheetFound) {
+          notifyError({ message: "No se encontró ninguna hoja de partidos." });
+        }
+
         await actualizarJugadores();
         await calcularRankingPorCategoria();
 
         await fetchData();
-        setLoading(false);
         setLoadingMessage("Archivo procesado y datos actualizados en Firebase");
+        setLoading(false);
+        notify({ message: "Archivo procesado con éxito." });
         setTimeout(() => setLoadingMessage(""), 3000);
       } catch (error) {
+        notifyError({ message: "Error al procesar el archivo." });
         console.error("Error al procesar el archivo:", error);
-        setLoading(false);
         setLoadingMessage(
           "Error al procesar el archivo. Por favor, inténtelo de nuevo."
         );
+        setLoading(false);
         setTimeout(() => setLoadingMessage(""), 3000);
       }
     };
@@ -788,13 +831,20 @@ const Administracion = () => {
       ];
 
       for (const { pareja, games } of parejas) {
-        const jugadoresPareja = pareja.split("-").map((nombre) => nombre.trim());
+        const jugadoresPareja = pareja
+          .split("-")
+          .map((nombre) => nombre.trim());
         for (const nombreJugador of jugadoresPareja) {
-          const jugador = resetJugadores.find((j) => j.Nombre === nombreJugador);
+          const jugador = resetJugadores.find(
+            (j) => j.Nombre === nombreJugador
+          );
           if (jugador) {
             jugador.CJ = (parseInt(jugador.CJ) + 1).toString();
             jugador.PJ = (parseInt(jugador.PJ) + 1).toString();
-            if (games > (pareja === partido.Pareja1 ? partido.GamesP2 : partido.GamesP1)) {
+            if (
+              games >
+              (pareja === partido.Pareja1 ? partido.GamesP2 : partido.GamesP1)
+            ) {
               jugador.PG = (parseInt(jugador.PG) + 1).toString();
             }
 
@@ -1115,6 +1165,18 @@ const Administracion = () => {
 
   return (
     <div className="flex flex-col p-4">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <div className="flex flex-col items-center">
