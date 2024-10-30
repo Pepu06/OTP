@@ -134,12 +134,12 @@ const MainContent = ({ isAuthenticated, setIsAuthenticated }) => {
             <Route
               path="/adm"
               element={
-                // <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <>
                     <Administracion />
                     <ContactSection />
                   </>
-                // </ProtectedRoute>
+                </ProtectedRoute>
               }
             />
           </Routes>
