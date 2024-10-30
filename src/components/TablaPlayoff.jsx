@@ -21,6 +21,7 @@ const TablaPlayoff = () => {
           (partido) =>
             partido.IDTorneo == idTorneo &&
             (partido.Instancia.includes("16avos") ||
+              partido.Instancia.includes("Dieciseisavos") ||
               partido.Instancia.includes("Octavos") ||
               partido.Instancia.includes("Cuartos") ||
               partido.Instancia.includes("Semifinal") ||
@@ -95,7 +96,7 @@ const TablaPlayoff = () => {
     dieciseisavos1_14,
     dieciseisavos1_15,
     dieciseisavos1_16,
-  ] = dieciseisavosData.map((partido) => partido.Equipo1);
+  ] = dieciseisavosData.map((partido) => partido.Pareja1);
 
   const [
     dieciseisavos2_1,
@@ -114,7 +115,7 @@ const TablaPlayoff = () => {
     dieciseisavos2_14,
     dieciseisavos2_15,
     dieciseisavos2_16,
-  ] = dieciseisavosData.map((partido) => partido.Equipo2);
+  ] = dieciseisavosData.map((partido) => partido.Pareja2);
 
   const [
     equipo1_1,
@@ -125,7 +126,7 @@ const TablaPlayoff = () => {
     equipo1_6,
     equipo1_7,
     equipo1_8,
-  ] = octavosData.map((partido) => partido.Equipo1);
+  ] = octavosData.map((partido) => partido.Pareja1);
   const [
     equipo2_1,
     equipo2_2,
@@ -135,20 +136,20 @@ const TablaPlayoff = () => {
     equipo2_6,
     equipo2_7,
     equipo2_8,
-  ] = octavosData.map((partido) => partido.Equipo2);
+  ] = octavosData.map((partido) => partido.Pareja2);
 
   const [cuartos1_1, cuartos1_2, cuartos1_3, cuartos1_4] = cuartosData.map(
-    (partido) => partido.Equipo1
+    (partido) => partido.Pareja1
   );
   const [cuartos2_1, cuartos2_2, cuartos2_3, cuartos2_4] = cuartosData.map(
-    (partido) => partido.Equipo2
+    (partido) => partido.Pareja2
   );
 
-  const [semis1_1, semis1_2] = semisData.map((partido) => partido.Equipo1);
-  const [semis2_1, semis2_2] = semisData.map((partido) => partido.Equipo2);
+  const [semis1_1, semis1_2] = semisData.map((partido) => partido.Pareja1);
+  const [semis2_1, semis2_2] = semisData.map((partido) => partido.Pareja2);
 
-  const [final_1] = finalData.map((partido) => partido.Equipo1);
-  const [final_2] = finalData.map((partido) => partido.Equipo2);
+  const [final_1] = finalData.map((partido) => partido.Pareja1);
+  const [final_2] = finalData.map((partido) => partido.Pareja2);
 
   return (
     <div className="flex justify-center items-center m-4 relative bg-cover bg-center">
@@ -156,14 +157,14 @@ const TablaPlayoff = () => {
         <div className="flex justify-start md:justify-center lg:justify-start items-center m-4 relative bg-cover bg-center">
           <div
             className={`grid ${existeDieciseisavos
-                ? "grid-cols-5"
-                : octavosData.length > 0
-                  ? "grid-cols-4"
-                  : cuartosData.length > 0
-                    ? "grid-cols-3"
-                    : semisData.length > 0
-                      ? "grid-cols-2"
-                      : "grid-cols-1"
+              ? "grid-cols-5"
+              : octavosData.length > 0
+                ? "grid-cols-4"
+                : cuartosData.length > 0
+                  ? "grid-cols-3"
+                  : semisData.length > 0
+                    ? "grid-cols-2"
+                    : "grid-cols-1"
               } min-w-[600px]`}
           >
             {dieciseisavosData.length > 0 && (
@@ -256,8 +257,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -267,8 +268,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -277,8 +278,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -288,8 +289,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -299,8 +300,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -310,8 +311,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -321,8 +322,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -332,8 +333,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -343,8 +344,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -354,8 +355,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -365,8 +366,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -376,8 +377,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -387,8 +388,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -398,8 +399,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -409,8 +410,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -420,8 +421,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2"
                         }`}
                     ></div>
                   )}
@@ -434,8 +435,8 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : "w-16 h-10 border-t-2 border-r-2 border-pblue"
                         }`}
                     ></div>
                   )}
@@ -445,8 +446,8 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : "w-16 h-10 border-b-2 border-r-2 border-pblue"
                         }`}
                     ></div>
                   )}
@@ -455,8 +456,8 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : "w-16 h-10 border-t-2 border-r-2 border-pblue"
                         }`}
                     ></div>
                   )}
@@ -466,8 +467,8 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : "w-16 h-10 border-b-2 border-r-2 border-pblue"
                         }`}
                     ></div>
                   )}
@@ -476,8 +477,8 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : "w-16 h-10 border-t-2 border-r-2 border-pblue"
                         }`}
                     ></div>
                   )}
@@ -487,8 +488,8 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : "w-16 h-10 border-b-2 border-r-2 border-pblue"
                         }`}
                     ></div>
                   )}
@@ -497,8 +498,8 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : "w-16 h-10 border-t-2 border-r-2 border-pblue"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : "w-16 h-10 border-t-2 border-r-2 border-pblue"
                         }`}
                     ></div>
                   )}
@@ -508,8 +509,8 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : "w-16 h-10 border-b-2 border-r-2 border-pblue"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : "w-16 h-10 border-b-2 border-r-2 border-pblue"
                         }`}
                     ></div>
                   )}
@@ -522,8 +523,8 @@ const TablaPlayoff = () => {
                   {finalData.length > 0 && (
                     <div
                       className={`${semisData.length > 0 && cuartosData == 0
-                          ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
-                          : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen"
+                        ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
+                        : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen"
                         }`}
                     ></div>
                   )}
@@ -533,8 +534,8 @@ const TablaPlayoff = () => {
                   {finalData.length > 0 && (
                     <div
                       className={`${semisData.length > 0 && cuartosData == 0
-                          ? "w-16 h-28 border-t-2 border-r-2 border-white"
-                          : "w-16 h-28 border-b-2 border-r-2 border-plightgreen"
+                        ? "w-16 h-28 border-t-2 border-r-2 border-white"
+                        : "w-16 h-28 border-b-2 border-r-2 border-plightgreen"
                         }`}
                     ></div>
                   )}
@@ -543,8 +544,8 @@ const TablaPlayoff = () => {
                   {finalData.length > 0 && (
                     <div
                       className={`${semisData.length > 0 && cuartosData == 0
-                          ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
-                          : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen"
+                        ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
+                        : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen"
                         }`}
                     ></div>
                   )}
@@ -554,8 +555,8 @@ const TablaPlayoff = () => {
                   {finalData.length > 0 && (
                     <div
                       className={`${semisData.length > 0 && cuartosData == 0
-                          ? "w-16 h-28 border-t-2 border-r-2 border-white"
-                          : "w-16 h-28 border-b-2 border-r-2 border-plightgreen"
+                        ? "w-16 h-28 border-t-2 border-r-2 border-white"
+                        : "w-16 h-28 border-b-2 border-r-2 border-plightgreen"
                         }`}
                     ></div>
                   )}
@@ -581,26 +582,26 @@ const TablaPlayoff = () => {
           </div>
           <div
             className={`grid ${existeDieciseisavos
-                ? "grid-cols-5"
-                : octavosData.length > 0
-                  ? "grid-cols-4"
-                  : cuartosData.length > 0
-                    ? "grid-cols-3"
-                    : semisData.length > 0
-                      ? "grid-cols-2"
-                      : "grid-cols-1"
+              ? "grid-cols-5"
+              : octavosData.length > 0
+                ? "grid-cols-4"
+                : cuartosData.length > 0
+                  ? "grid-cols-3"
+                  : semisData.length > 0
+                    ? "grid-cols-2"
+                    : "grid-cols-1"
               } min-w-[600px]`}
           >
             {finalData.length > 0 && (
               <div className="mt-[280px] items-center justify-center">
                 <div
                   className={`${finalData.length > 0 && semisData == 0
-                      ? "w-16 h-[260px] border-t-2 border-r-2 border-white"
-                      : octavosData.length == 0
-                        ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
-                        : dieciseisavosData.length == 0
-                          ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
-                          : `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]`
+                    ? "w-16 h-[260px] border-t-2 border-r-2 border-white"
+                    : octavosData.length == 0
+                      ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
+                      : dieciseisavosData.length == 0
+                        ? `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
+                        : `w-16 h-[260px] border-t-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]`
                     }`}
                 ></div>
                 <div className="bg-pgreen text-white p-3 overflow-y-auto rounded-lg text-sm min-h-16 max-h-16 flex text-center justify-center">
@@ -608,12 +609,12 @@ const TablaPlayoff = () => {
                 </div>
                 <div
                   className={`${finalData.length > 0 && semisData == 0
-                      ? "w-16 h-[250px] border-b-2 border-r-2 border-white"
-                      : octavosData.length == 0
-                        ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
-                        : dieciseisavosData.length == 0
-                          ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
-                          : "w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]"
+                    ? "w-16 h-[250px] border-b-2 border-r-2 border-white"
+                    : octavosData.length == 0
+                      ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[140px]`
+                      : dieciseisavosData.length == 0
+                        ? `w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[110px]`
+                        : "w-16 h-[250px] border-b-2 border-r-2 border-plightblue -scale-x-100 translate-x-[69px]"
                     }`}
                 ></div>
               </div>
@@ -624,12 +625,12 @@ const TablaPlayoff = () => {
                   {finalData.length > 0 && (
                     <div
                       className={`${semisData.length > 0 && cuartosData == 0
-                          ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
-                          : octavosData.length == 0
-                            ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
-                            : dieciseisavosData.length == 0
-                              ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                              : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
+                        ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
+                        : octavosData.length == 0
+                          ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
+                          : dieciseisavosData.length == 0
+                            ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
+                            : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -639,12 +640,12 @@ const TablaPlayoff = () => {
                   {finalData.length > 0 && (
                     <div
                       className={`${semisData.length > 0 && cuartosData == 0
-                          ? "w-16 h-28 border-t-2 border-r-2 border-white"
-                          : octavosData.length == 0
-                            ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
-                            : dieciseisavosData.length == 0
-                              ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                              : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-28 border-t-2 border-r-2 border-white"
+                        : octavosData.length == 0
+                          ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
+                          : dieciseisavosData.length == 0
+                            ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -653,12 +654,12 @@ const TablaPlayoff = () => {
                   {finalData.length > 0 && (
                     <div
                       className={`${semisData.length > 0 && cuartosData == 0
-                          ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
-                          : octavosData.length == 0
-                            ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
-                            : dieciseisavosData.length == 0
-                              ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                              : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
+                        ? "mt-14 w-16 h-24 border-t-2 border-r-2 border-white"
+                        : octavosData.length == 0
+                          ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
+                          : dieciseisavosData.length == 0
+                            ? `mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
+                            : "mt-14 w-16 h-24 border-t-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -668,12 +669,12 @@ const TablaPlayoff = () => {
                   {finalData.length > 0 && (
                     <div
                       className={`${semisData.length > 0 && cuartosData == 0
-                          ? "w-16 h-28 border-t-2 border-r-2 border-white"
-                          : octavosData.length == 0
-                            ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
-                            : dieciseisavosData.length == 0
-                              ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
-                              : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-28 border-t-2 border-r-2 border-white"
+                        : octavosData.length == 0
+                          ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[140px]`
+                          : dieciseisavosData.length == 0
+                            ? `w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[110px]`
+                            : "w-16 h-28 border-b-2 border-r-2 border-plightgreen -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -686,10 +687,10 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : dieciseisavosData.length == 0
-                            ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                            : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -699,10 +700,10 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : dieciseisavosData.length == 0
-                            ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                            : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -711,10 +712,10 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : dieciseisavosData.length == 0
-                            ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                            : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -724,10 +725,10 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : dieciseisavosData.length == 0
-                            ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                            : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -736,10 +737,10 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : dieciseisavosData.length == 0
-                            ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                            : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -749,10 +750,10 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : dieciseisavosData.length == 0
-                            ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                            : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -761,10 +762,10 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : dieciseisavosData.length == 0
-                            ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                            : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                          : "w-16 h-10 border-t-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -774,10 +775,10 @@ const TablaPlayoff = () => {
                   {semisData.length > 0 && (
                     <div
                       className={`${cuartosData.length > 0 && octavosData == 0
-                          ? "w-16 h-10 border-t-2 border-r-2 border-white"
-                          : dieciseisavosData.length == 0
-                            ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
-                            : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
+                        ? "w-16 h-10 border-t-2 border-r-2 border-white"
+                        : dieciseisavosData.length == 0
+                          ? `w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[110px]`
+                          : "w-16 h-10 border-b-2 border-r-2 border-pblue -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -790,8 +791,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -801,8 +802,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -811,8 +812,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -822,8 +823,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -833,8 +834,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -844,8 +845,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -855,8 +856,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -866,8 +867,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -877,8 +878,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -888,8 +889,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -899,8 +900,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -910,8 +911,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -921,8 +922,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -932,8 +933,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -943,8 +944,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-t-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}
@@ -954,8 +955,8 @@ const TablaPlayoff = () => {
                   {cuartosData.length > 0 && (
                     <div
                       className={`${octavosData.length > 0 && dieciseisavosData == 0
-                          ? "border-r-2 border-t-2 w-16 h-2 border-white "
-                          : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
+                        ? "border-r-2 border-t-2 w-16 h-2 border-white "
+                        : "border-green-400 border-b-2 border-r-2 w-16 h-2 -scale-x-100 translate-x-[69px]"
                         }`}
                     ></div>
                   )}

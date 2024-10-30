@@ -100,13 +100,13 @@ const TablaQually = () => {
                 {partido.Instancia}
               </td>
               <td className="px-6 py-4 text-center border-2 border-gray-100">
-                {partido.Equipo1}
+                {partido.Pareja1}
               </td>
               <td className="px-6 py-4 text-center border-2 border-gray-100">
-                {partido.Games1} - {partido.Games2}
+                {partido.GamesP1} - {partido.GamesP2}
               </td>
               <td className="px-6 py-4 text-center border-2 border-gray-100">
-                {partido.Equipo2}
+                {partido.Pareja2}
               </td>
               {/* <td className="px-6 py-4 text-center border-2 border-gray-100">
                 {partido.Cancha}

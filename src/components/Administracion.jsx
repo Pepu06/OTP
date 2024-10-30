@@ -203,8 +203,6 @@ const Administracion = () => {
         const additionalFields = [
           "Ranking",
           "CJ",
-          "UP",
-          "UR",
           "Cuartos",
           "Semis",
           "Finales",
@@ -625,20 +623,12 @@ const Administracion = () => {
                     PJ: "1",
                     Puntos: "0",
                     Semis: "0",
-                    UP: "-",
-                    UR: "-",
                   };
 
                   await setDoc(doc(jugadoresRef, playerId), newPlayer);
                   console.log("Jugador creado con éxito:", newPlayer);
                 } else {
-                  playerId = playerSnapshot.docs[0].id;
-                  // Update existing player
-                  const playerData = playerSnapshot.docs[0].data();
-                  await updateDoc(doc(jugadoresRef, playerId), {
-                    CJ: (parseInt(playerData.CJ) + 1).toString(),
-                    PJ: (parseInt(playerData.PJ) + 1).toString(),
-                  });
+                  continue;
                 }
 
                 // Add or update tournament history
@@ -763,175 +753,84 @@ const Administracion = () => {
   const actualizarJugadores = async () => {
     const jugadoresRef = collection(db, "jugadores");
     const partidosRef = collection(db, "partidos");
-    const torneosRef = collection(db, "torneos");
-
-    // Reiniciar todos los jugadores a 0
-    const jugadoresSnapshot = await getDocs(jugadoresRef);
-    const resetPromises = jugadoresSnapshot.docs.map((doc) =>
-      updateDoc(doc.ref, {
-        CJ: 0,
-        PJ: 0,
-        Finales: 0,
-        Semis: 0,
-        Cuartos: 0,
-        Octavos: 0,
-        Dieciseisavos: 0,
-        Qually: 0,
-        UP: "",
-        UR: "",
-        PG: 0,
-        Puntos: 0,
-        Efectividad: 0,
-      })
-    );
-    await Promise.all(resetPromises);
 
     // Obtener todos los jugadores
+    const jugadoresSnapshot = await getDocs(jugadoresRef);
     const jugadores = jugadoresSnapshot.docs.map((doc) => ({
       id: doc.id,
-      nombre: doc.data().Nombre,
-      categoria: doc.data().Categoria,
-      puntos: doc.data().Puntos, // Inicializar con puntos actuales del jugador
+      ...doc.data(),
+    }));
+
+    // Reiniciar datos de jugadores
+    const resetJugadores = jugadores.map((jugador) => ({
+      ...jugador,
+      CJ: "0",
+      Cuartos: "0",
+      Semis: "0",
+      Finales: "0",
+      PJ: "0",
+      PG: "0",
+      Puntos: "0",
+      Efectividad: "0",
     }));
 
     // Obtener todos los partidos
     const partidosSnapshot = await getDocs(partidosRef);
     const partidos = partidosSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      equipos: [doc.data().Pareja1, doc.data().Pareja2],
-      idTorneo: doc.data().IDTorneo,
-      instancia: doc.data().Instancia,
-      GamesP1: doc.data().GamesP1,
-      GamesP2: doc.data().GamesP2,
+      ...doc.data(),
     }));
 
-    console.log("Partidos:", partidos);
-    // Obtener todos los torneos para asociar las fechas y nombres
-    const torneosSnapshot = await getDocs(torneosRef);
-    const torneosMap = new Map(
-      torneosSnapshot.docs.map((doc) => [doc.id, doc.data().Nombre])
-    );
-    const torneosFechasMap = new Map(
-      torneosSnapshot.docs.map((doc) => [doc.id, doc.data().Fecha])
-    );
+    // Actualizar datos de jugadores basado en los partidos
+    for (const partido of partidos) {
+      const parejas = [
+        { pareja: partido.Pareja1, games: partido.GamesP1 },
+        { pareja: partido.Pareja2, games: partido.GamesP2 },
+      ];
 
-    // Crear un objeto para almacenar los datos del jugador
-    const jugadoresDatos = jugadores.reduce((acc, jugador) => {
-      acc[jugador.id] = {
-        torneos: new Map(),
-        partidos: new Set(),
-        instancias: new Map(),
-        conteoInstancias: {
-          Final: 0,
-          Semifinal: 0,
-          Cuartos: 0,
-          Octavos: 0,
-          Dieciseisavos: 0,
-          Qually: 0,
-        },
-        ultimoPartidoId: null,
-        parejaUltimoTorneo: null,
-        instanciaUltimoTorneo: null,
-        partidosGanados: 0,
-        puntos: jugador.puntos, // Inicializar con puntos actuales del jugador
-      };
-      return acc;
-    }, {});
+      for (const { pareja, games } of parejas) {
+        const jugadoresPareja = pareja.split("-").map((nombre) => nombre.trim());
+        for (const nombreJugador of jugadoresPareja) {
+          const jugador = resetJugadores.find((j) => j.Nombre === nombreJugador);
+          if (jugador) {
+            jugador.CJ = (parseInt(jugador.CJ) + 1).toString();
+            jugador.PJ = (parseInt(jugador.PJ) + 1).toString();
+            if (games > (pareja === partido.Pareja1 ? partido.GamesP2 : partido.GamesP1)) {
+              jugador.PG = (parseInt(jugador.PG) + 1).toString();
+            }
 
-    // Función para calcular puntos según la instancia
-    const calcularPuntosPorInstancia = (instancia) => {
-      if (instancia.includes("16avos")) return 2;
-      if (instancia.includes("Octavos")) return 3;
-      if (instancia.includes("Cuartos")) return 4;
-      if (instancia.includes("Semifinal")) return 5;
-      if (instancia.includes("Final")) return 6;
-      if (instancia === "Q1" || instancia === "Q2") return 1;
-      return 0;
-    };
-
-    // Recorrer los partidos y almacenar los datos
-    partidos.forEach((partido) => {
-      const {
-        id: partidoId,
-        idTorneo,
-        instancia,
-        equipos,
-        GamesP1,
-        GamesP2,
-      } = partido;
-      const torneoNombre = torneosMap.get(idTorneo);
-      const torneoFecha = torneosFechasMap.get(idTorneo);
-
-      equipos.forEach((equipo) => {
-        const jugadoresEnEquipo = equipo
-          .split(/[-]/)
-          .map((nombre) => nombre.trim());
-        jugadoresEnEquipo.forEach((nombre) => {
-          for (const jugador of jugadores) {
-            if (jugador.nombre === nombre) {
-              // Actualizar datos del jugador
-              jugadoresDatos[jugador.id].torneos.set(idTorneo, torneoNombre);
-              jugadoresDatos[jugador.id].partidos.add(partidoId);
-              jugadoresDatos[jugador.id].instancias.set(partidoId, instancia);
-
-              // Contar la instancia
-              if (instancia.includes("Final")) {
-                jugadoresDatos[jugador.id].conteoInstancias.Final++;
-              } else if (instancia.includes("Semifinal")) {
-                jugadoresDatos[jugador.id].conteoInstancias.Semifinal++;
-              } else if (instancia.includes("Cuartos")) {
-                jugadoresDatos[jugador.id].conteoInstancias.Cuartos++;
-              } else if (instancia.includes("Octavos")) {
-                jugadoresDatos[jugador.id].conteoInstancias.Octavos++;
-              } else if (instancia.includes("16avos")) {
-                jugadoresDatos[jugador.id].conteoInstancias.Dieciseisavos++;
-              } else if (instancia.includes("Qually")) {
-                jugadoresDatos[jugador.id].conteoInstancias.Qually++;
-              }
-
-              // Determinar el último torneo (fecha más reciente) y el último partido dentro del torneo
-              const torneoActualFecha = new Date(torneoFecha);
-              if (
-                !jugadoresDatos[jugador.id].ultimoTorneoFecha ||
-                torneoActualFecha >
-                  new Date(jugadoresDatos[jugador.id].ultimoTorneoFecha)
-              ) {
-                jugadoresDatos[jugador.id].ultimoTorneoFecha = torneoFecha;
-                // Limpiar el último partido dentro del torneo
-                jugadoresDatos[jugador.id].ultimoPartidoId = null;
-              }
-
-              if (
-                jugadoresDatos[jugador.id].ultimoTorneoFecha === torneoFecha &&
-                (!jugadoresDatos[jugador.id].ultimoPartidoId ||
-                  partidoId > jugadoresDatos[jugador.id].ultimoPartidoId)
-              ) {
-                jugadoresDatos[jugador.id].ultimoPartidoId = partidoId;
-                jugadoresDatos[jugador.id].instanciaUltimoTorneo = instancia;
-              }
-
-              // Contar partidos ganados y asignar puntos
-              const puntosPorPartido = parseInt(
-                calcularPuntosPorInstancia(instancia)
-              );
-              if (equipo === equipos[0]) {
-                // Si el jugador está en Pareja1
-                if (GamesP1 > GamesP2) {
-                  jugadoresDatos[jugador.id].partidosGanados++;
-                  jugadoresDatos[jugador.id].puntos += puntosPorPartido;
-                }
-              } else {
-                // Si el jugador está en Pareja2
-                if (GamesP2 > GamesP1) {
-                  jugadoresDatos[jugador.id].partidosGanados++;
-                  jugadoresDatos[jugador.id].puntos += puntosPorPartido;
-                }
-              }
+            // Actualizar puntos y etapas alcanzadas
+            if (partido.Instancia.toLowerCase().includes("cuartos")) {
+              jugador.Cuartos = (parseInt(jugador.Cuartos) + 1).toString();
+              jugador.Puntos = (parseInt(jugador.Puntos) + 1).toString();
+            } else if (partido.Instancia.toLowerCase().includes("semi")) {
+              jugador.Semis = (parseInt(jugador.Semis) + 1).toString();
+              jugador.Puntos = (parseInt(jugador.Puntos) + 2).toString();
+            } else if (partido.Instancia.toLowerCase().includes("final")) {
+              jugador.Finales = (parseInt(jugador.Finales) + 1).toString();
+              jugador.Puntos = (parseInt(jugador.Puntos) + 3).toString();
             }
           }
-        });
-      });
+        }
+      }
+    }
+
+    // Calcular efectividad
+    resetJugadores.forEach((jugador) => {
+      const partidosJugados = parseInt(jugador.PJ);
+      const partidosGanados = parseInt(jugador.PG);
+      jugador.Efectividad = partidosJugados
+        ? ((partidosGanados / partidosJugados) * 100).toFixed(2)
+        : "0";
     });
+
+    // Guardar los datos actualizados en la base de datos
+    await Promise.all(
+      resetJugadores.map((jugador) =>
+        updateDoc(doc(jugadoresRef, jugador.id), jugador)
+      )
+    );
+
+    setJugadores(resetJugadores);
   };
 
   const renderForm = (tableName) => {
@@ -950,8 +849,6 @@ const Administracion = () => {
         "Nombre",
         "Categoria",
         "CJ",
-        "UP",
-        "UR",
         "Cuartos",
         "Semis",
         "Finales",
@@ -1067,8 +964,6 @@ const Administracion = () => {
         "Ranking",
         "Categoria",
         "CJ",
-        "UP",
-        "UR",
         "Cuartos",
         "Semis",
         "Finales",
