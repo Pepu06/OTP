@@ -118,12 +118,12 @@ const PerfilJugador = () => {
                 <li className="flex justify-between border-b py-2">
                   <span>Competiciones jugadas</span> <span>{jugador.CJ}</span>
                 </li>
-                <li className="flex justify-between border-b py-2">
+                {/* <li className="flex justify-between border-b py-2">
                   <span>Última pareja</span> <span>{jugador.UP}</span>
                 </li>
                 <li className="flex justify-between border-b py-2">
                   <span>Último resultado</span> <span>{jugador.UR}</span>
-                </li>
+                </li> */}
                 <li className="flex justify-between border-b py-2">
                   <span>Cuartos de final</span> <span>{jugador.Cuartos}</span>
                 </li>

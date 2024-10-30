@@ -39,9 +39,10 @@ const Torneo = () => {
                 : "text-pgrey"
             } focus:outline-none`}
           >
-            Qualify
+            {/* Qualify */}
+            Partidos
           </button>
-          <button
+          {/* <button
             onClick={() => handleOptionClick("PlayOff")}
             className={`px-4 py-2 rounded-lg ${
               selectedOption === "PlayOff"
@@ -50,7 +51,7 @@ const Torneo = () => {
             } focus:outline-none`}
           >
             PlayOff
-          </button>
+          </button> */}
         </div>
       </div>
     </section>

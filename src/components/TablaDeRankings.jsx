@@ -210,7 +210,14 @@ const TablaDeRankings = () => {
                       >
                         <td className="px-4 py-2 text-left">{row.ranking}</td>
                         <td className="px-4 py-2 text-left">{row.ID}</td>
-                        <td className="px-4 py-2 text-center">{row.nombre}</td>
+                        <td className="px-4 py-2 text-center">
+                          <a
+                            href={`/perfil/${row.ID}`}
+                            className=""
+                          >
+                            {row.nombre}
+                          </a>
+                        </td>
                         <td className="px-4 py-2 text-right">
                           {row.categoria}
                         </td>

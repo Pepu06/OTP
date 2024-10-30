@@ -17,15 +17,44 @@ const TablaQually = () => {
         const querySnapshot = await getDocs(collection(db, "partidos"));
         const data = querySnapshot.docs.map((doc) => doc.data());
 
-        const filtered = data.filter(
-          (partido) =>
+        const filtered = data.filter((partido) => {
+          const instanciaLower = partido.Instancia.toLowerCase();
+          return (
             partido.IDTorneo == idTorneo &&
-            (partido.Instancia === "Q1" || partido.Instancia === "Q2")
-        );
+            (instanciaLower.includes("q1") ||
+              instanciaLower.includes("q2") ||
+              instanciaLower.includes("16avos") ||
+              instanciaLower.includes("dieciseisavos") ||
+              instanciaLower.includes("octavos") ||
+              instanciaLower.includes("cuartos") ||
+              instanciaLower.includes("semi") ||
+              instanciaLower.includes("semis") ||
+              instanciaLower.includes("final"))
+          );
+        });
+
+        const order = [
+          "q1",
+          "q2",
+          "16avos",
+          "octavos",
+          "cuartos",
+          "semis",
+          "final",
+        ];
+        const sortedFiltered = filtered.sort((a, b) => {
+          const aIndex = order.findIndex((instancia) =>
+            a.Instancia.toLowerCase().includes(instancia)
+          );
+          const bIndex = order.findIndex((instancia) =>
+            b.Instancia.toLowerCase().includes(instancia)
+          );
+          return aIndex - bIndex;
+        });
 
         setPartidos(data);
-        setFilteredPartidos(filtered);
-        console.log("Partidos filtrados:", filtered);
+        setFilteredPartidos(sortedFiltered);
+        console.log("Partidos filtrados:", sortedFiltered);
       } catch (error) {
         console.error(
           "Error cargando datos de partidos desde Firebase:",
@@ -80,17 +109,17 @@ const TablaQually = () => {
               Pareja 2
             </th>
             {/* <th
-              scope="col"
-              className="border-2 border-gray-100 px-6 py-3 bg-pgreen font-light"
-            >
-              Cancha
-            </th>
-            <th
-              scope="col"
-              className="border-2 border-gray-100 px-6 py-3 bg-pgreen font-light"
-            >
-              Horario
-            </th> */}
+                scope="col"
+                className="border-2 border-gray-100 px-6 py-3 bg-pgreen font-light"
+              >
+                Cancha
+              </th>
+              <th
+                scope="col"
+                className="border-2 border-gray-100 px-6 py-3 bg-pgreen font-light"
+              >
+                Horario
+              </th> */}
           </tr>
         </thead>
         <tbody>
@@ -109,11 +138,11 @@ const TablaQually = () => {
                 {partido.Pareja2}
               </td>
               {/* <td className="px-6 py-4 text-center border-2 border-gray-100">
-                {partido.Cancha}
-              </td>
-              <td className="px-6 py-4 text-center border-2 border-gray-100">
-                {partido.Horario}
-              </td> */}
+                  {partido.Cancha}
+                </td>
+                <td className="px-6 py-4 text-center border-2 border-gray-100">
+                  {partido.Horario}
+                </td> */}
             </tr>
           ))}
         </tbody>
