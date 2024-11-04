@@ -39,7 +39,10 @@ const App = () => {
   return (
     <Router>
       <ScrollToTop />
-      <MainContent isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+      <MainContent
+        isAuthenticated={isAuthenticated}
+        setIsAuthenticated={setIsAuthenticated}
+      />
     </Router>
   );
 };
