@@ -112,7 +112,7 @@ const PerfilJugador = () => {
         <div className="flex-grow p-4">
           <div className="flex flex-col sm:flex-row space-x-0 sm:space-x-8">
             {/* Estadísticas */}
-            <div className="flex-1 bg-white p-4 rounded-lg shadow-md mb-4 sm:mb-0">
+            <div className="flex-1 bg-white h-[330px] p-4 rounded-lg shadow-md mb-4 sm:mb-0">
               <h2 className="text-lg font-bold mb-4">ESTADÍSTICAS</h2>
               <ul>
                 <li className="flex justify-between border-b py-2">
@@ -137,7 +137,7 @@ const PerfilJugador = () => {
             </div>
 
             {/* Recorrido */}
-            <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
+            <div className="flex-1 bg-white p-4 h-[330px] rounded-lg shadow-md">
               <h2 className="text-lg font-bold mb-4">RECORRIDO</h2>
               <ul>
                 <li className="flex justify-between border-b py-2">
@@ -156,7 +156,7 @@ const PerfilJugador = () => {
       </div>
 
       {/* Histórico de Torneos */}
-      <div className="mt-8 bg-white p-4 rounded-lg shadow-md">
+      <div className="mt-10 bg-white p-4 rounded-lg shadow-md">
         <h2 className="text-lg font-bold mb-4">HISTÓRICO DE TORNEOS</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full">
@@ -174,7 +174,9 @@ const PerfilJugador = () => {
                   <td className="border-t text-center p-2">{torneo.Nombre}</td>
                   <td className="border-t text-center p-2">{torneo.Fecha}</td>
                   <td className="border-t text-center p-2">{torneo.Pareja}</td>
-                  <td className="border-t text-center p-2">{torneo.Categoria}</td>
+                  <td className="border-t text-center p-2">
+                    {torneo.Categoria}
+                  </td>
                 </tr>
               ))}
             </tbody>
